@@ -5,3 +5,4 @@ theme= "hugo-geekblog"
 
 [params]
   fancybox = true
+  toc = true
