@@ -2,3 +2,6 @@ baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'Wild Bill Blog'
 theme= "hugo-geekblog"
+
+[params]
+  fancybox = true
