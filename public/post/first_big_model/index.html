@@ -75,7 +75,7 @@
       "url" : "https://example.org/post/first_big_model/",
       "headline": "开发一个本地大模型应用",
       "description": "[TOC]\n一、大模型简介 1.1 什么是大模型 大语言模型（LLM，Large Language Model），也称大型语言模型，是一种旨在理解和生成人类语言的人工智能模型。 LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海量的文本数据上进行训练，从而获得对语言深层次的理解。目前，国外的知名 LLM 有 GPT-3.5、GPT-4、PaLM、Claude 和 LLaMA 等，国内的有文心一言、讯飞星火、通义千问、ChatGLM、百川等。 大模型实际上是个语言模型，用来处理复杂的语言任务，如文本生成、语言翻译、问题回答等。\n1.2 为什么叫大模型 大模型也是属于机器学习的一种，是深度学习的思想融入语言模型中的强大神经网络模型。 模型通俗的理解，就是数学模型，用公式来说就是y=fn(x1,x2) 大模型主要体现在这个大字。大的概念是一个参数多，能达到上亿个参数。对应公式中可能存在上亿个参数。另一个是数据量大，用于训练的数据可以达到PB级别。再者就是计算资源密集，训练和推理需要大量的计算资源。\n二、检索增强生成RAG简介 2.1 什么是RAG 大模型不是万能的，在某些情况下，无法提供准确的答案。为了提高模型的性能和输出质量，产生了一种新的模型架构方式：检索增强生成（RAG, Retrieval-Augmented Generation）",
-      "wordCount" : "531",
+      "wordCount" : "530",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
@@ -506,9 +506,9 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>ollama安装完成后，命令行输入ollama，会有对应的命令帮助。
-运行ollama pull llama3:8b，下载大模型。
-下载完成后，运行ollama run llama3:8b ，可以进行语言聊天。</p>
+<p>ollama安装完成后，命令行输入<code>ollama</code>，会有对应的命令帮助。
+运行<code>ollama pull llama3:8b</code>，下载大模型。
+下载完成后，运行<code>ollama run llama3:8b</code>，可以进行语言聊天。</p>
 <div class="flex align-center gblog-post__anchorwrap">
     <h2 id="42-开始开发"
     >
@@ -527,8 +527,8 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>在命令行中运行langflow，python -m langflow run
-然后访问http://127.0.0.1:7860，会弹出一个可视化编辑界面。
+<p>在命令行中运行langflow，<code>python -m langflow run</code>
+然后访问<code>http://127.0.0.1:7860</code>，会弹出一个可视化编辑界面。
 <img
   src="/img/ai/langflow_overview.img"
   alt=""
@@ -543,8 +543,8 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>ollama run llama3:8b
-访问http://localhost:11434，会有输出Ollama is running</p>
+<p><code>ollama run llama3:8b</code>
+访问<code>http://localhost:11434</code>，会有输出Ollama is running</p>
 <div class="flex align-center gblog-post__anchorwrap">
     <h3 id="423-选择一个模板进行开发"
     >

@@ -85,18 +85,19 @@ Ollama 是一种基于本地大语言模型的工具或框架，旨在让开发�
 OLLAMA_MODELS：OLLAMA模型的下载路径。
 OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认是只能被localhost访问的，设置这个为0.0.0.0，可以被网络访问。
 #### 4.1.3 下载大模型
-ollama安装完成后，命令行输入ollama，会有对应的命令帮助。
-运行ollama pull llama3:8b，下载大模型。
-下载完成后，运行ollama run llama3:8b ，可以进行语言聊天。
+ollama安装完成后，命令行输入`ollama`，会有对应的命令帮助。
+运行`ollama pull llama3:8b`，下载大模型。
+下载完成后，运行`ollama run llama3:8b`，可以进行语言聊天。
+
 ## 4.2 开始开发
 ### 4.2.1 运行langflow
-在命令行中运行langflow，python -m langflow run
-然后访问http://127.0.0.1:7860，会弹出一个可视化编辑界面。
+在命令行中运行langflow，`python -m langflow run`
+然后访问`http://127.0.0.1:7860`，会弹出一个可视化编辑界面。
 ![](/img/ai/langflow_overview.img)
 
 ### 4.2.2 运行大模型
-ollama run llama3:8b
-访问http://localhost:11434，会有输出Ollama is running
+`ollama run llama3:8b`
+访问`http://localhost:11434`，会有输出Ollama is running
 
 ### 4.2.3 选择一个模板进行开发
 点击new project，选择一个模板
