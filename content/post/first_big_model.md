@@ -77,7 +77,7 @@ embedding是什么，首先我们使用RAG来做增强检索，基于语言的�
 #### 4.1.1 langflow安装
 langflow是一个可视化编辑器。
 安装命令（要求python3.10以上）
-pip install langflow
+`pip install langflow`
 #### 4.1.2 ollama下载
 Ollama 是一种基于本地大语言模型的工具或框架，旨在让开发者能够在本地环境中运行和使用大语言模型，而无需依赖云端服务
 去https://ollama.com/官网下载，安装。
@@ -93,7 +93,7 @@ ollama安装完成后，命令行输入`ollama`，会有对应的命令帮助。
 ### 4.2.1 运行langflow
 在命令行中运行langflow，`python -m langflow run`
 然后访问`http://127.0.0.1:7860`，会弹出一个可视化编辑界面。
-![](/img/ai/langflow_overview.img)
+![](/img/ai/langflow_overview.png)
 
 ### 4.2.2 运行大模型
 `ollama run llama3:8b`
