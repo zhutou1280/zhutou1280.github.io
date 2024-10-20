@@ -1,6 +1,6 @@
 ## 基本命令
 ### 1. 发布文章
-hugo new posts/my-first-post.md
+hugo new post/my-first-post.md
 
 ### 2. 编译输出
 hugo
