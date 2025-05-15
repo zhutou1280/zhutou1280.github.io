@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="Hugo 0.135.0">
+<meta name="generator" content="Hugo 0.147.3">
   <meta name="robots" content="index, follow" />
 
     <title>Wild Bill Blog</title>
@@ -206,6 +206,200 @@
   
 
   
+  
+    <article class="gblog-post">
+      <header class="gblog-post__header">
+        <h1 class="gblog-post__title">
+          <a href="/post/etcd-auth/">Etcd Auth模块解析</a>
+        </h1>
+      </header>
+
+      <section class="gblog-markdown">
+        <p>Auth模块
+本文基于etcd 3.6版本源码进行分析
+auth模块文件列表如下：</p>
+<pre tabindex="0"><code>auth/
+    jwt.go         token的jwt实现
+    metrics.go     metric统计，内容是auth的版本号
+    nop.go         无token provider实现
+    options.go     token参数选项
+    range_perm_cache.go.   权限区间缓存
+    simple_token.go   简单token
+    store.go       用户、角色、权限的持久化存储逻辑    
+</code></pre><p>auth模块调用过程:</p>
+<pre tabindex="0"><code>    tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken,
+        func(index uint64) &lt;-chan struct{} {
+            return srv.applyWait.Wait(index)
+        },
+        time.Duration(cfg.TokenTTL)*time.Second,
+    )
+</code></pre><div class="flex align-center gblog-post__anchorwrap">
+    <h2 id="1-token签发逻辑"
+    >
+        1. Token签发逻辑
+    </h2>
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#1-token签发逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1. Token签发逻辑" href="#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="简单token"
+    >
+        简单token
+    </h3>
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#简单token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 简单token" href="#%e7%ae%80%e5%8d%95token">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<pre tabindex="0"><code>type simpleTokenTTLKeeper struct { // size=48 (0x30)
+    tokens          map[string]time.Time
+    donec           chan struct{}
+    stopc           chan struct{}
+    deleteTokenFunc func(string)
+    mu              *sync.Mutex
+    simpleTokenTTL  time.Duration
+}
+func (tm *simpleTokenTTLKeeper) addSimpleToken(token string)
+func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string)
+func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string)
+func (tm *simpleTokenTTLKeeper) run()
+func (tm *simpleTokenTTLKeeper) stop()
+
+
+type tokenSimple struct {
+    lg                *zap.Logger
+    indexWaiter       func(uint64) &lt;-chan struct{}
+    simpleTokenKeeper *simpleTokenTTLKeeper
+    simpleTokensMu    sync.Mutex
+    simpleTokens      map[string]string // token -&gt; username
+    simpleTokenTTL    time.Duration
+}
+func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error)
+func (t *tokenSimple) assignSimpleTokenToUser(username string, token string)
+func (t *tokenSimple) disable()
+func (t *tokenSimple) enable()
+func (t *tokenSimple) genTokenPrefix() (string, error)
+func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool)
+func (t *tokenSimple) invalidateUser(username string)
+func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool
+</code></pre><ul>
+<li>定时器默认每秒从内存中遍历淘汰过期token</li>
+<li>不持久化，token存储在内存中，服务重启即失效</li>
+<li>Go routine单线程运行</li>
+</ul>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="jwt-token"
+    >
+        Jwt Token
+    </h3>
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#jwt-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Jwt Token" href="#jwt-token">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<pre tabindex="0"><code>type tokenJWT struct {
+    lg         *zap.Logger
+    signMethod jwt.SigningMethod
+    key        any
+    ttl        time.Duration
+    verifyOnly bool
+}
+func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error)
+func (t *tokenJWT) disable()
+func (t *tokenJWT) enable()
+func (t *tokenJWT) genTokenPrefix() (string, error)
+func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool)
+func (t *tokenJWT) invalidateUser(string)
+</code></pre><ul>
+<li>支持不同签名参数选择</li>
+<li>无需存储token</li>
+<li>无法失效用户，invalidateUser，实现逻辑是空</li>
+</ul>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="无token实现"
+    >
+        无token实现
+    </h3>
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#无token实现" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 无token实现" href="#%e6%97%a0token%e5%ae%9e%e7%8e%b0">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<pre tabindex="0"><code>type tokenNop struct{}
+
+func (t *tokenNop) enable()                         {}
+func (t *tokenNop) disable()                        {}
+func (t *tokenNop) invalidateUser(string)           {}
+func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil }
+func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) {
+    return nil, false
+}
+
+func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) {
+    return &#34;&#34;, ErrAuthFailed
+}
+
+func newTokenProviderNop() (*tokenNop, error) {
+    return &amp;tokenNop{}, nil
+}
+</code></pre><ul>
+<li>无任何实现逻辑</li>
+</ul>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h2 id="2-metrics统计"
+    >
+        2. Metrics统计
+    </h2>
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#2-metrics统计" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2. Metrics统计" href="#2-metrics%e7%bb%9f%e8%ae%a1">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>metrics的普罗统计指标，仅包含authRevision</p>
+      </section>
+      <div class="gblog-post__readmore">
+        
+          <a
+            class="flex-inline align-center fake-link"
+            title="Read full post"
+            href="/post/etcd-auth/"
+          >
+            Read full post
+            <i class="gblog-icon">gblog_arrow_right</i>
+          </a>
+        
+      </div>
+
+      <footer class="gblog-post__footer">
+        <div class="flex flex-wrap align-center gblog-post__meta">
+          <span class="flex align-center no-wrap gblog-post__meta--update">
+  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
+  <span class="gblog-post__tag">
+    <time datetime="2025-05-14T11:44:21&#43;08:00">
+      
+      May 14, 2025
+    </time>
+  </span>
+</span>
+
+<span class="flex align-center no-wrap gblog-post__meta--readtime">
+  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
+  <span class="gblog-post__tag">5 min read</span>
+</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </footer>
+    </article>
   
     <article class="gblog-post">
       <header class="gblog-post__header">

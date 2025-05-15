@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="generator" content="Hugo 0.135.0">
+<meta name="generator" content="Hugo 0.147.3">
   <meta name="robots" content="index, follow" />
   <meta name="description" content=" 一、大模型简介 1.1 什么是大模型 大语言模型（LLM，Large Language Model），也称大型语言模型，是一种旨在理解和生成人类语言的人工智能模型。 LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海量的文本数据上进行训练，从而获得对语言深层次的理解。目前，国外的知名 LLM 有 GPT-3.5、GPT-4、PaLM、Claude 和 LLaMA 等，国内的有文心一言、讯飞星火、通义千问、ChatGLM、百川等。 大模型实际上是个语言模型，用来处理复杂的语言任务，如文本生成、语言翻译、问题回答等。
 1.2 为什么叫大模型 大模型也是属于机器学习的一种，是深度学习的思想融入语言模型中的强大神经网络模型。 模型通俗的理解，就是数学模型，用公式来说就是y=fn(x1,x2) 大模型主要体现在这个大字。大的概念是一个参数多，能达到上亿个参数。对应公式中可能存在上亿个参数。另一个是数据量大，用于训练的数据可以达到PB级别。再者就是计算资源密集，训练和推理需要大量的计算资源。
@@ -385,56 +385,56 @@ RAG和微调的对比：</p>
 <div class=table-wrap> <table>
   <thead>
       <tr>
-          <th style="text-align: left">特征比较</th>
-          <th style="text-align: left">RAG</th>
-          <th style="text-align: left">微调</th>
+          <th>特征比较</th>
+          <th>RAG</th>
+          <th>微调</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">知识更新</td>
-          <td style="text-align: left">直接更新检索知识库，无需重新训练。信息更新成本低，适合动态变化的数据。</td>
-          <td style="text-align: left">通常需要重新训练来保持知识和数据的更新。更新成本高，适合静态数据。</td>
+          <td>知识更新</td>
+          <td>直接更新检索知识库，无需重新训练。信息更新成本低，适合动态变化的数据。</td>
+          <td>通常需要重新训练来保持知识和数据的更新。更新成本高，适合静态数据。</td>
       </tr>
       <tr>
-          <td style="text-align: left">外部知识</td>
-          <td style="text-align: left">擅长利用外部资源，特别适合处理文档或其他结构化/非结构化数据库。</td>
-          <td style="text-align: left">将外部知识学习到 LLM 内部。</td>
+          <td>外部知识</td>
+          <td>擅长利用外部资源，特别适合处理文档或其他结构化/非结构化数据库。</td>
+          <td>将外部知识学习到 LLM 内部。</td>
       </tr>
       <tr>
-          <td style="text-align: left">数据处理</td>
-          <td style="text-align: left">对数据的处理和操作要求极低。</td>
-          <td style="text-align: left">依赖于构建高质量的数据集，有限的数据集可能无法显著提高性能。</td>
+          <td>数据处理</td>
+          <td>对数据的处理和操作要求极低。</td>
+          <td>依赖于构建高质量的数据集，有限的数据集可能无法显著提高性能。</td>
       </tr>
       <tr>
-          <td style="text-align: left">模型定制</td>
-          <td style="text-align: left">侧重于信息检索和融合外部知识，但可能无法充分定制模型行为或写作风格。</td>
-          <td style="text-align: left">可以根据特定风格或术语调整 LLM 行为、写作风格或特定领域知识。</td>
+          <td>模型定制</td>
+          <td>侧重于信息检索和融合外部知识，但可能无法充分定制模型行为或写作风格。</td>
+          <td>可以根据特定风格或术语调整 LLM 行为、写作风格或特定领域知识。</td>
       </tr>
       <tr>
-          <td style="text-align: left">可解释性</td>
-          <td style="text-align: left">可以追溯到具体的数据来源，有较好的可解释性和可追踪性。</td>
-          <td style="text-align: left">黑盒子，可解释性相对较低。</td>
+          <td>可解释性</td>
+          <td>可以追溯到具体的数据来源，有较好的可解释性和可追踪性。</td>
+          <td>黑盒子，可解释性相对较低。</td>
       </tr>
       <tr>
-          <td style="text-align: left">计算资源</td>
-          <td style="text-align: left">需要额外的资源来支持检索机制和数据库的维护。</td>
-          <td style="text-align: left">依赖高质量的训练数据集和微调目标，对计算资源的要求较高。</td>
+          <td>计算资源</td>
+          <td>需要额外的资源来支持检索机制和数据库的维护。</td>
+          <td>依赖高质量的训练数据集和微调目标，对计算资源的要求较高。</td>
       </tr>
       <tr>
-          <td style="text-align: left">推理延迟</td>
-          <td style="text-align: left">增加了检索步骤的耗时</td>
-          <td style="text-align: left">单纯 LLM 生成的耗时</td>
+          <td>推理延迟</td>
+          <td>增加了检索步骤的耗时</td>
+          <td>单纯 LLM 生成的耗时</td>
       </tr>
       <tr>
-          <td style="text-align: left">降低幻觉</td>
-          <td style="text-align: left">通过检索到的真实信息生成回答，降低了产生幻觉的概率。</td>
-          <td style="text-align: left">模型学习特定领域的数据有助于减少幻觉，但面对未见过的输入时仍可能出现幻觉。</td>
+          <td>降低幻觉</td>
+          <td>通过检索到的真实信息生成回答，降低了产生幻觉的概率。</td>
+          <td>模型学习特定领域的数据有助于减少幻觉，但面对未见过的输入时仍可能出现幻觉。</td>
       </tr>
       <tr>
-          <td style="text-align: left">伦理隐私</td>
-          <td style="text-align: left">检索和使用外部数据可能引发伦理和隐私方面的问题。</td>
-          <td style="text-align: left">训练数据中的敏感信息需要妥善处理，以防泄露。</td>
+          <td>伦理隐私</td>
+          <td>检索和使用外部数据可能引发伦理和隐私方面的问题。</td>
+          <td>训练数据中的敏感信息需要妥善处理，以防泄露。</td>
       </tr>
   </tbody>
 </table> </div>

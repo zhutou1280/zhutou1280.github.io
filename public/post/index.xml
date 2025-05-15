@@ -1,26 +1,1634 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <generator uri="https://gohugo.io/" version="0.147.3">Hugo</generator>
     <title>Posts on Wild Bill Blog</title>
-    <link>https://example.org/post/</link>
-    <description>Recent content in Posts on Wild Bill Blog</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 10 Oct 2024 19:47:25 +0800</lastBuildDate>
-    <atom:link href="https://example.org/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>一文搞懂IAM</title>
-      <link>https://example.org/post/iam/</link>
-      <pubDate>Thu, 10 Oct 2024 19:47:25 +0800</pubDate>
-      <guid>https://example.org/post/iam/</guid>
-      <description>&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h2 id=&#34;一前言&#34;&#xA;    &gt;&#xA;        一、前言&#xA;    &lt;/h2&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#一前言&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、前言&#34; href=&#34;#%e4%b8%80%e5%89%8d%e8%a8%80&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;上一份工作曾经部分iam的功能开发，但是没有深入的理解和认识IAM。碰巧最近新工作，需要有iam相关的功能。最近做了些整理，记录下。&lt;/p&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h2 id=&#34;二什么是iam&#34;&#xA;    &gt;&#xA;        二、什么是IAM&#xA;    &lt;/h2&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#二什么是iam&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、什么是IAM&#34; href=&#34;#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;直接问GPT，下面是GTP给出的结果。&lt;/p&gt;&#xA;&lt;p&gt;IAM（Identity and Access Management，身份与访问管理）是一套用于管理用户身份及其对资源访问权限的框架。它帮助组织控制谁（用户或设备）可以访问什么资源，并规定了在什么条件下可以访问这些资源。IAM主要有以下几个核心功能：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;身份管理：创建、修改和删除用户账户，确保每个用户有唯一的身份。&lt;/li&gt;&#xA;&lt;li&gt;访问控制：管理用户对系统资源的访问权限，决定用户能访问哪些资源以及可以执行哪些操作。&lt;/li&gt;&#xA;&lt;li&gt;认证：通过验证用户的身份，确保只有合法用户可以访问系统（常见认证方式有密码、双因素认证等）。&lt;/li&gt;&#xA;&lt;li&gt;授权：在用户身份得到验证后，根据分配的权限决定用户可以访问哪些资源及进行什么操作。&lt;/li&gt;&#xA;&lt;li&gt;审计和监控：跟踪和记录用户的活动，确保符合安全政策，并提供详细的日志用于事后审计。&#xA;IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统，帮助企业实现精细化的权限管理，提高系统的安全性。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;IAM也常被称为”3A“或者”4A“。4A主要有以下几个模块：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;账号（Account）&lt;/li&gt;&#xA;&lt;li&gt;认证（Authentication）&lt;/li&gt;&#xA;&lt;li&gt;权限（Authorization）&lt;/li&gt;&#xA;&lt;li&gt;审计（Audit）&#xA;3A就是不包含审计，审计这块由单独的日志模块承载。&#xA;审计这块本文不做探讨，仅探讨3A。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h3 id=&#34;21-身份管理&#34;&#xA;    &gt;&#xA;        2.1 身份管理&#xA;    &lt;/h3&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#21-身份管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 身份管理&#34; href=&#34;#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;什么管理很简单，就是用户，更简单的理解就是账号。每一个应用基本都有个账号系统，都需要登录。不管是云服务应用，还是独立设备应用，都得有账号。可能云服务应用支持注册账号，但设备软件应用，不支持注册，都是由默认的预制超级账号admin，创建出来。&lt;/p&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h4 id=&#34;211-账号管理的基本功能&#34;&#xA;    &gt;&#xA;        2.1.1 账号管理的基本功能&#xA;    &lt;/h4&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#211-账号管理的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.1 账号管理的基本功能&#34; href=&#34;#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;用户注册与创建&#xA;用户是整个系统的基本单元，一个账号对应一个用户。通常都会支持用户的增删改查。&lt;/li&gt;&#xA;&lt;li&gt;密码管理&#xA;用户可以创建修改密码、支持设置密码复杂度，支持多重密码认证等。&lt;/li&gt;&#xA;&lt;li&gt;账户生命周期管理&#xA;支持账户激活、停用、恢复等策略&lt;/li&gt;&#xA;&lt;li&gt;角色与用户组&#xA;支持归类用户，将不同类型的用户进行划分。这块有的概念叫用户组、有的概念叫工作组。&#xA;从划分的方向上来讲，可以分为横向划分和纵向划分。横向的概念是对多个同级账号进行划分，纵向的概念是将子账号进行组织。&#xA;角色的概念，实际上跟授权相关。角色是对用户所具有功能的一种权限集合抽象。常见的角色包含管理员、审计员、操作员等。&lt;/li&gt;&#xA;&lt;li&gt;属性和凭据管理&#xA;属性是指账号的个人信息，比如手机号、邮箱、图片等。这块又分为隐私数据和敏感数据。&#xA;凭据管理，通常是指账号的API密钥、证书等，这些凭据可以用于远端登录或API验证。&lt;/li&gt;&#xA;&lt;li&gt;身份认证&#xA;用户密码用于确认用户的身份，这块跟认证相关，常见的认证方式包括用户名和密码、双因子认证、生物识别认证（人脸）&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h4 id=&#34;212-访问控制的基本功能&#34;&#xA;    &gt;&#xA;        2.1.2 访问控制的基本功能&#xA;    &lt;/h4&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#212-访问控制的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.2 访问控制的基本功能&#34; href=&#34;#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h5 id=&#34;权限管理&#34;&#xA;    &gt;&#xA;        权限管理&#xA;    &lt;/h5&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#权限管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限管理&#34; href=&#34;#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;角色和权限分配&lt;/strong&gt;：根据用户的身份匹配不同资源的访问权限。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;最小权限原则&lt;/strong&gt;：用户或系统只获得其执行其工作的最小权限，避免不必要的权限滥用&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;基于角色的访问控制（RBAC）&lt;/strong&gt;：通过将用户分配到不同的角色中，角色拥有预定义的权限集合，简化权限管理。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;基于属性的访问控制（ABAC）&lt;/strong&gt;：根据用户的属性或资源的属性动态授予权限。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h5 id=&#34;会话管理&#34;&#xA;    &gt;&#xA;        会话管理&#xA;    &lt;/h5&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#会话管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 会话管理&#34; href=&#34;#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;会话时间控制&lt;/strong&gt;：限制用户会话的持续时间，强制定期重新认证。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;会话状态管理&lt;/strong&gt;：管理用户的登录会话，允许管理员强制终止异常或高风险的会话。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h4 id=&#34;213-认证方式&#34;&#xA;    &gt;&#xA;        2.1.3 认证方式&#xA;    &lt;/h4&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#213-认证方式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.3 认证方式&#34; href=&#34;#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;密码认证&lt;/li&gt;&#xA;&lt;li&gt;多因素认证：在输入密码的情况下，还需要额外的认证，手机邮箱等&lt;/li&gt;&#xA;&lt;li&gt;单点登录SSO：允许用户通过一次登录，访问多个系统或服务。&lt;/li&gt;&#xA;&lt;li&gt;一次性密码(OTP)&lt;/li&gt;&#xA;&lt;li&gt;基于公钥的认证：ssh密钥认证，x.509证书，常用于vpn，以及设备与管理系统通信的场景。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h4 id=&#34;214-授权&#34;&#xA;    &gt;&#xA;        2.1.4 授权&#xA;    &lt;/h4&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#214-授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.4 授权&#34; href=&#34;#214-%e6%8e%88%e6%9d%83&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;授权是身份验证后决定用户可以访问哪些资源、执行什么操作的关键步骤。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>开发一个本地大模型应用</title>
-      <link>https://example.org/post/first_big_model/</link>
-      <pubDate>Wed, 09 Oct 2024 14:45:23 +0800</pubDate>
-      <guid>https://example.org/post/first_big_model/</guid>
-      <description>&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h2 id=&#34;一大模型简介&#34;&#xA;    &gt;&#xA;        一、大模型简介&#xA;    &lt;/h2&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#一大模型简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、大模型简介&#34; href=&#34;#%e4%b8%80%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%ae%80%e4%bb%8b&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h3 id=&#34;11-什么是大模型&#34;&#xA;    &gt;&#xA;        1.1 什么是大模型&#xA;    &lt;/h3&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#11-什么是大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.1 什么是大模型&#34; href=&#34;#11-%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;大语言模型（LLM，Large Language Model），也称大型语言模型，是一种旨在理解和生成人类语言的人工智能模型。&#xA;LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海量的文本数据上进行训练，从而获得对语言深层次的理解。目前，国外的知名 LLM 有 GPT-3.5、GPT-4、PaLM、Claude 和 LLaMA 等，国内的有文心一言、讯飞星火、通义千问、ChatGLM、百川等。&#xA;大模型实际上是个语言模型，用来处理复杂的语言任务，如文本生成、语言翻译、问题回答等。&lt;/p&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h3 id=&#34;12-为什么叫大模型&#34;&#xA;    &gt;&#xA;        1.2 为什么叫大模型&#xA;    &lt;/h3&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#12-为什么叫大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.2 为什么叫大模型&#34; href=&#34;#12-%e4%b8%ba%e4%bb%80%e4%b9%88%e5%8f%ab%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;大模型也是属于机器学习的一种，是深度学习的思想融入语言模型中的强大神经网络模型。&#xA;模型通俗的理解，就是数学模型，用公式来说就是y=fn(x1,x2)&#xA;大模型主要体现在这个大字。大的概念是一个参数多，能达到上亿个参数。对应公式中可能存在上亿个参数。另一个是数据量大，用于训练的数据可以达到PB级别。再者就是计算资源密集，训练和推理需要大量的计算资源。&lt;/p&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h2 id=&#34;二检索增强生成rag简介&#34;&#xA;    &gt;&#xA;        二、检索增强生成RAG简介&#xA;    &lt;/h2&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#二检索增强生成rag简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、检索增强生成RAG简介&#34; href=&#34;#%e4%ba%8c%e6%a3%80%e7%b4%a2%e5%a2%9e%e5%bc%ba%e7%94%9f%e6%88%90rag%e7%ae%80%e4%bb%8b&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;&#xA;    &lt;h3 id=&#34;21-什么是rag&#34;&#xA;    &gt;&#xA;        2.1 什么是RAG&#xA;    &lt;/h3&gt;&#xA;    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#21-什么是rag&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 什么是RAG&#34; href=&#34;#21-%e4%bb%80%e4%b9%88%e6%98%afrag&#34;&gt;&#xA;        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;&#xA;    &lt;/a&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;大模型不是万能的，在某些情况下，无法提供准确的答案。为了提高模型的性能和输出质量，产生了一种新的模型架构方式：检索增强生成（RAG, Retrieval-Augmented Generation）&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+            <link href="https://example.org/post/" rel="alternate" type="text/html" title="html" />
+            <link href="https://example.org/post/index.xml" rel="alternate" type="application/rss+xml" title="rss" />
+    <updated>2025-05-15T16:24:23+08:00</updated>
+    <id>https://example.org/post/</id>
+        <entry>
+            <title>Etcd Auth模块解析</title>
+            <link href="https://example.org/post/etcd-auth/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://example.org/post/etcd-auth/</id>
+            <published>2025-05-14T11:44:21+08:00</published>
+            <updated>2025-05-14T11:44:21+08:00</updated>
+            <content type="html">
+                &lt;p&gt;Auth模块
+本文基于etcd 3.6版本源码进行分析
+auth模块文件列表如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;auth/
+    jwt.go         token的jwt实现
+    metrics.go     metric统计，内容是auth的版本号
+    nop.go         无token provider实现
+    options.go     token参数选项
+    range_perm_cache.go.   权限区间缓存
+    simple_token.go   简单token
+    store.go       用户、角色、权限的持久化存储逻辑    
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;auth模块调用过程:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;    tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken,
+        func(index uint64) &amp;lt;-chan struct{} {
+            return srv.applyWait.Wait(index)
+        },
+        time.Duration(cfg.TokenTTL)*time.Second,
+    )
+&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;1-token签发逻辑&#34;
+    &gt;
+        1. Token签发逻辑
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#1-token签发逻辑&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1. Token签发逻辑&#34; href=&#34;#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;简单token&#34;
+    &gt;
+        简单token
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#简单token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 简单token&#34; href=&#34;#%e7%ae%80%e5%8d%95token&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type simpleTokenTTLKeeper struct { // size=48 (0x30)
+    tokens          map[string]time.Time
+    donec           chan struct{}
+    stopc           chan struct{}
+    deleteTokenFunc func(string)
+    mu              *sync.Mutex
+    simpleTokenTTL  time.Duration
+}
+func (tm *simpleTokenTTLKeeper) addSimpleToken(token string)
+func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string)
+func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string)
+func (tm *simpleTokenTTLKeeper) run()
+func (tm *simpleTokenTTLKeeper) stop()
+
+
+type tokenSimple struct {
+    lg                *zap.Logger
+    indexWaiter       func(uint64) &amp;lt;-chan struct{}
+    simpleTokenKeeper *simpleTokenTTLKeeper
+    simpleTokensMu    sync.Mutex
+    simpleTokens      map[string]string // token -&amp;gt; username
+    simpleTokenTTL    time.Duration
+}
+func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error)
+func (t *tokenSimple) assignSimpleTokenToUser(username string, token string)
+func (t *tokenSimple) disable()
+func (t *tokenSimple) enable()
+func (t *tokenSimple) genTokenPrefix() (string, error)
+func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool)
+func (t *tokenSimple) invalidateUser(username string)
+func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;定时器默认每秒从内存中遍历淘汰过期token&lt;/li&gt;
+&lt;li&gt;不持久化，token存储在内存中，服务重启即失效&lt;/li&gt;
+&lt;li&gt;Go routine单线程运行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;jwt-token&#34;
+    &gt;
+        Jwt Token
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#jwt-token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Jwt Token&#34; href=&#34;#jwt-token&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type tokenJWT struct {
+    lg         *zap.Logger
+    signMethod jwt.SigningMethod
+    key        any
+    ttl        time.Duration
+    verifyOnly bool
+}
+func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error)
+func (t *tokenJWT) disable()
+func (t *tokenJWT) enable()
+func (t *tokenJWT) genTokenPrefix() (string, error)
+func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool)
+func (t *tokenJWT) invalidateUser(string)
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;支持不同签名参数选择&lt;/li&gt;
+&lt;li&gt;无需存储token&lt;/li&gt;
+&lt;li&gt;无法失效用户，invalidateUser，实现逻辑是空&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;无token实现&#34;
+    &gt;
+        无token实现
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#无token实现&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 无token实现&#34; href=&#34;#%e6%97%a0token%e5%ae%9e%e7%8e%b0&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type tokenNop struct{}
+
+func (t *tokenNop) enable()                         {}
+func (t *tokenNop) disable()                        {}
+func (t *tokenNop) invalidateUser(string)           {}
+func (t *tokenNop) genTokenPrefix() (string, error) { return &amp;#34;&amp;#34;, nil }
+func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) {
+    return nil, false
+}
+
+func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) {
+    return &amp;#34;&amp;#34;, ErrAuthFailed
+}
+
+func newTokenProviderNop() (*tokenNop, error) {
+    return &amp;amp;tokenNop{}, nil
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;无任何实现逻辑&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;2-metrics统计&#34;
+    &gt;
+        2. Metrics统计
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#2-metrics统计&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2. Metrics统计&#34; href=&#34;#2-metrics%e7%bb%9f%e8%ae%a1&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;metrics的普罗统计指标，仅包含authRevision&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;var (
+    currentAuthRevision = prometheus.NewGaugeFunc(
+        prometheus.GaugeOpts{
+            Namespace: &amp;#34;etcd_debugging&amp;#34;,
+            Subsystem: &amp;#34;auth&amp;#34;,
+            Name:      &amp;#34;revision&amp;#34;,
+            Help:      &amp;#34;The current revision of auth store.&amp;#34;,
+        },
+        func() float64 {
+            reportCurrentAuthRevMu.RLock()
+            defer reportCurrentAuthRevMu.RUnlock()
+            return reportCurrentAuthRev()
+        },
+    )
+    // overridden by auth store initialization
+    reportCurrentAuthRevMu sync.RWMutex
+    reportCurrentAuthRev   = func() float64 { return 0 }
+)
+
+func init() {
+    prometheus.MustRegister(currentAuthRevision)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;统计auth的revision数目&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;3-权限实现逻辑&#34;
+    &gt;
+        3. 权限实现逻辑
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#3-权限实现逻辑&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3. 权限实现逻辑&#34; href=&#34;#3-%e6%9d%83%e9%99%90%e5%ae%9e%e7%8e%b0%e9%80%bb%e8%be%91&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;功能列表&#34;
+    &gt;
+        功能列表
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#功能列表&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 功能列表&#34; href=&#34;#%e5%8a%9f%e8%83%bd%e5%88%97%e8%a1%a8&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;用户、角色、权限的功能接口如下&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type AuthInfo struct {
+    Username string
+    Revision uint64
+}
+
+// AuthenticateParamIndex is used for a key of context in the parameters of Authenticate()
+type AuthenticateParamIndex struct{}
+
+// AuthenticateParamSimpleTokenPrefix is used for a key of context in the parameters of Authenticate()
+type AuthenticateParamSimpleTokenPrefix struct{}
+
+// authstore定义了存储的接口
+type AuthStore interface {
+    // 启动auth特性
+    AuthEnable() error
+
+    // 关闭auth特性
+    AuthDisable()
+
+    // auth是否打开
+    IsAuthEnabled() bool
+
+    // 用户名密码认证
+    Authenticate(ctx context.Context, username, password string) (*pb.AuthenticateResponse, error)
+
+    // Recover recovers the state of auth store from the given backend
+    Recover(be AuthBackend)
+
+    // 添加新用户
+    UserAdd(r *pb.AuthUserAddRequest) (*pb.AuthUserAddResponse, error)
+
+    // 删除用户
+    UserDelete(r *pb.AuthUserDeleteRequest) (*pb.AuthUserDeleteResponse, error)
+
+    // 修改用户密码
+    UserChangePassword(r *pb.AuthUserChangePasswordRequest) (*pb.AuthUserChangePasswordResponse, error)
+
+    // 角色绑定用户
+    UserGrantRole(r *pb.AuthUserGrantRoleRequest) (*pb.AuthUserGrantRoleResponse, error)
+
+    // 查询某个用户的详细信息
+    UserGet(r *pb.AuthUserGetRequest) (*pb.AuthUserGetResponse, error)
+
+    // 撤销用户角色
+    UserRevokeRole(r *pb.AuthUserRevokeRoleRequest) (*pb.AuthUserRevokeRoleResponse, error)
+
+    // 创建新角色
+    RoleAdd(r *pb.AuthRoleAddRequest) (*pb.AuthRoleAddResponse, error)
+
+    // 角色添加新权限
+    RoleGrantPermission(r *pb.AuthRoleGrantPermissionRequest) (*pb.AuthRoleGrantPermissionResponse, error)
+
+    // 获取角色的详细信息
+    RoleGet(r *pb.AuthRoleGetRequest) (*pb.AuthRoleGetResponse, error)
+
+    // 撤销角色中的权限点
+    RoleRevokePermission(r *pb.AuthRoleRevokePermissionRequest) (*pb.AuthRoleRevokePermissionResponse, error)
+
+    // 删除角色
+    RoleDelete(r *pb.AuthRoleDeleteRequest) (*pb.AuthRoleDeleteResponse, error)
+
+    // 查询用户列表
+    UserList(r *pb.AuthUserListRequest) (*pb.AuthUserListResponse, error)
+
+    // 查询角色列表
+    RoleList(r *pb.AuthRoleListRequest) (*pb.AuthRoleListResponse, error)
+
+    // 检查用户的put权限
+    IsPutPermitted(authInfo *AuthInfo, key []byte) error
+
+    // 检查用户的range权限
+    IsRangePermitted(authInfo *AuthInfo, key, rangeEnd []byte) error
+
+    // 检查用户的delete_range权限
+    IsDeleteRangePermitted(authInfo *AuthInfo, key, rangeEnd []byte) error
+
+    // 检查用户的admin操作
+    IsAdminPermitted(authInfo *AuthInfo) error
+
+    // 生成简单token的前缀，jwt不适用
+    GenTokenPrefix() (string, error)
+
+    // 获取当前authstore的修订版本号
+    Revision() uint64
+
+    // 检查用户名密码是否匹配
+    CheckPassword(username, password string) (uint64, error)
+
+    // 关闭authStore资源
+    Close() error
+
+    // 从RPC上下文获取auth信息
+    AuthInfoFromCtx(ctx context.Context) (*AuthInfo, error)
+
+    // 从TLS RPC上下文获取auth信息
+    AuthInfoFromTLS(ctx context.Context) *AuthInfo
+
+    // 产生一个可用作root凭据的token
+    WithRoot(ctx context.Context) context.Context
+
+    // 检查用户是否有这个角色
+    HasRole(user, role string) bool
+
+    // 获取哈希加密的授权密码的强度
+    BcryptCost() int
+}
+
+
+type authStore struct {
+    // atomic operations; need 64-bit align, or 32-bit tests will crash
+    revision uint64
+
+    lg        *zap.Logger
+    be        AuthBackend
+    enabled   bool
+    enabledMu sync.RWMutex
+
+    // rangePermCache needs to be protected by rangePermCacheMu
+    // rangePermCacheMu needs to be write locked only in initialization phase or configuration changes
+    // Hot paths like Range(), needs to acquire read lock for improving performance
+    //
+    // Note that BatchTx and ReadTx cannot be a mutex for rangePermCache because they are independent resources
+    // see also: https://github.com/etcd-io/etcd/pull/13920#discussion_r849114855
+    rangePermCache   map[string]*unifiedRangePermissions // username -&amp;gt; unifiedRangePermissions
+    rangePermCacheMu sync.RWMutex
+
+    tokenProvider TokenProvider
+    bcryptCost    int // the algorithm cost / strength for hashing auth passwords
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;etcd的持久化存储是boltdb&lt;/li&gt;
+&lt;li&gt;在boltdb存储层面，etcd封装了一层backend，实现了事务、压缩、MVCC ，快照机制。&lt;/li&gt;
+&lt;li&gt;Authstore的后端存储，用了etcd封装的boltdb能力，主要是以下几个方法:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type AuthBackend interface {
+    CreateAuthBuckets()    // 创建auth的bucket    
+    ForceCommit()    // 强制提交
+    ReadTx() AuthReadTx    // 读事务
+    BatchTx() AuthBatchTx    // 操作事务    
+
+    GetUser(string) *authpb.User    // 获取用户
+    GetAllUsers() []*authpb.User    // 获取用户列表
+    GetRole(string) *authpb.Role    // 获取角色    
+    GetAllRoles() []*authpb.Role    // 获取角色列表
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;权限定义&#34;
+    &gt;
+        权限定义
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#权限定义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限定义&#34; href=&#34;#%e6%9d%83%e9%99%90%e5%ae%9a%e4%b9%89&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;权限类型分为3种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;READ  值为0&lt;/li&gt;
+&lt;li&gt;WRITE  值为1&lt;/li&gt;
+&lt;li&gt;READWRITE 值为2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;User {
+  name bytes       -&amp;gt; 用户名
+  password  bytes   -&amp;gt; 密码
+  roles  []string      -&amp;gt; 这个用户拥有的角色列表
+  options     -&amp;gt; 选项（是否设置密码）
+}
+
+Role {
+  name      bytes       -&amp;gt; 角色名
+  keyPermissions []Permission  -&amp;gt; 针对 key 的权限列表
+}
+
+Permission {
+  permType  enum     -&amp;gt; 权限类型（READ / WRITE / READWRITE）
+  key       bytes      -&amp;gt; 起始 key
+  range_end  bytes   -&amp;gt; 结束 key
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;从这个模型定义来看：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户关联多个角色，使用数组存储角色列表。&lt;/li&gt;
+&lt;li&gt;角色关联权限数组&lt;/li&gt;
+&lt;li&gt;权限包含权限key，权限类型（3种），结束key。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;权限区间缓存&#34;
+    &gt;
+        权限区间缓存
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#权限区间缓存&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限区间缓存&#34; href=&#34;#%e6%9d%83%e9%99%90%e5%8c%ba%e9%97%b4%e7%bc%93%e5%ad%98&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;etcd的权限key，更多的场景是区间逻辑。区间内key按字典序排列。所以使用区间树来进行组织。
+缓存定义:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;as.rangePermCache = make(map[string]*unifiedRangePermissions)  // map结构，key是用户名，value是下面的结构体指针。
+
+type unifiedRangePermissions struct {
+    readPerms  adt.IntervalTree        // 读权限点区间树
+    writePerms adt.IntervalTree        // 写权限点区间数
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在每次触发用户角色、或者权限变更时，都会重新构建缓存。
+在以下函数中会触发重建：
+&lt;code&gt;Recover、UserAdd、UserDelete、UserChangePassword、UserGrantRole、UserRevokeRole、RoleRevokePermission、RoleDelete、RoleGrantPermission&lt;/code&gt;
+refreshRangePermCache构建逻辑&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;遍历系统中的所有用户    时间复杂度：O(N)&lt;/li&gt;
+&lt;li&gt;合并角色中的所有权限，按unifiedRangePermissions结构体组织。
+&lt;ul&gt;
+&lt;li&gt;遍历该用户的所有角色   时间复杂度：O(N)&lt;/li&gt;
+&lt;li&gt;遍历角色中的所有权限 时间复杂度：O(N)&lt;/li&gt;
+&lt;li&gt;插入区间树        O(logN)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;etcd区间树定义&#34;
+    &gt;
+        etcd区间树定义
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#etcd区间树定义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor etcd区间树定义&#34; href=&#34;#etcd%e5%8c%ba%e9%97%b4%e6%a0%91%e5%ae%9a%e4%b9%89&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;etcd 的 key 是字节序列，正常的 keys 是从 []byte{} 逐渐增长到各种内容&lt;/li&gt;
+&lt;li&gt;etcd的key区间，权限范围是一个半开区间[Key，RangeEnd）
+&lt;ul&gt;
+&lt;li&gt;包含从key开始的所有key&lt;/li&gt;
+&lt;li&gt;直到RangeEnd（不包含RangeEnd本身）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;整个key空间（即root角色）
+&lt;ul&gt;
+&lt;li&gt;起点用空字节切片&lt;/li&gt;
+&lt;li&gt;终点用字节 0x00（[]byte{0}）表示“终点是所有正常 key 的最大可能范围的下一个字节”，也就是说 从空 key 到所有合法 key 的最末尾&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;4-总结分析&#34;
+    &gt;
+        4. 总结分析
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#4-总结分析&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4. 总结分析&#34; href=&#34;#4-%e6%80%bb%e7%bb%93%e5%88%86%e6%9e%90&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;认证分为2种方式，用户名密码认证、证书认证。 密码使用blowfish hash加密存储。如果频繁的用户名密码登录，会有较大的性能开销。&lt;/li&gt;
+&lt;li&gt;每次修改用户、角色、权限信息，都会触发权限区间缓存重建。重建时间复杂度较高，当随着用户量和角色数目增加，呈指数级上升。这块也会出现性能瓶颈。&lt;/li&gt;
+&lt;li&gt;Etcd权限模型使用RBAC，权限key类型对应的值分为读写、读、写。&lt;/li&gt;
+&lt;/ul&gt;
+
+            </content>  
+        </entry>
+        <entry>
+            <title>一文搞懂IAM</title>
+            <link href="https://example.org/post/iam/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://example.org/post/iam/</id>
+            <published>2024-10-10T19:47:25+08:00</published>
+            <updated>2024-10-10T19:47:25+08:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;一前言&#34;
+    &gt;
+        一、前言
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#一前言&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、前言&#34; href=&#34;#%e4%b8%80%e5%89%8d%e8%a8%80&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;上一份工作曾经部分iam的功能开发，但是没有深入的理解和认识IAM。碰巧最近新工作，需要有iam相关的功能。最近做了些整理，记录下。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;二什么是iam&#34;
+    &gt;
+        二、什么是IAM
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#二什么是iam&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、什么是IAM&#34; href=&#34;#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;直接问GPT，下面是GTP给出的结果。&lt;/p&gt;
+&lt;p&gt;IAM（Identity and Access Management，身份与访问管理）是一套用于管理用户身份及其对资源访问权限的框架。它帮助组织控制谁（用户或设备）可以访问什么资源，并规定了在什么条件下可以访问这些资源。IAM主要有以下几个核心功能：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;身份管理：创建、修改和删除用户账户，确保每个用户有唯一的身份。&lt;/li&gt;
+&lt;li&gt;访问控制：管理用户对系统资源的访问权限，决定用户能访问哪些资源以及可以执行哪些操作。&lt;/li&gt;
+&lt;li&gt;认证：通过验证用户的身份，确保只有合法用户可以访问系统（常见认证方式有密码、双因素认证等）。&lt;/li&gt;
+&lt;li&gt;授权：在用户身份得到验证后，根据分配的权限决定用户可以访问哪些资源及进行什么操作。&lt;/li&gt;
+&lt;li&gt;审计和监控：跟踪和记录用户的活动，确保符合安全政策，并提供详细的日志用于事后审计。
+IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统，帮助企业实现精细化的权限管理，提高系统的安全性。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;IAM也常被称为”3A“或者”4A“。4A主要有以下几个模块：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;账号（Account）&lt;/li&gt;
+&lt;li&gt;认证（Authentication）&lt;/li&gt;
+&lt;li&gt;权限（Authorization）&lt;/li&gt;
+&lt;li&gt;审计（Audit）
+3A就是不包含审计，审计这块由单独的日志模块承载。
+审计这块本文不做探讨，仅探讨3A。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;21-身份管理&#34;
+    &gt;
+        2.1 身份管理
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#21-身份管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 身份管理&#34; href=&#34;#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;什么管理很简单，就是用户，更简单的理解就是账号。每一个应用基本都有个账号系统，都需要登录。不管是云服务应用，还是独立设备应用，都得有账号。可能云服务应用支持注册账号，但设备软件应用，不支持注册，都是由默认的预制超级账号admin，创建出来。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;211-账号管理的基本功能&#34;
+    &gt;
+        2.1.1 账号管理的基本功能
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#211-账号管理的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.1 账号管理的基本功能&#34; href=&#34;#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;用户注册与创建
+用户是整个系统的基本单元，一个账号对应一个用户。通常都会支持用户的增删改查。&lt;/li&gt;
+&lt;li&gt;密码管理
+用户可以创建修改密码、支持设置密码复杂度，支持多重密码认证等。&lt;/li&gt;
+&lt;li&gt;账户生命周期管理
+支持账户激活、停用、恢复等策略&lt;/li&gt;
+&lt;li&gt;角色与用户组
+支持归类用户，将不同类型的用户进行划分。这块有的概念叫用户组、有的概念叫工作组。
+从划分的方向上来讲，可以分为横向划分和纵向划分。横向的概念是对多个同级账号进行划分，纵向的概念是将子账号进行组织。
+角色的概念，实际上跟授权相关。角色是对用户所具有功能的一种权限集合抽象。常见的角色包含管理员、审计员、操作员等。&lt;/li&gt;
+&lt;li&gt;属性和凭据管理
+属性是指账号的个人信息，比如手机号、邮箱、图片等。这块又分为隐私数据和敏感数据。
+凭据管理，通常是指账号的API密钥、证书等，这些凭据可以用于远端登录或API验证。&lt;/li&gt;
+&lt;li&gt;身份认证
+用户密码用于确认用户的身份，这块跟认证相关，常见的认证方式包括用户名和密码、双因子认证、生物识别认证（人脸）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;212-访问控制的基本功能&#34;
+    &gt;
+        2.1.2 访问控制的基本功能
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#212-访问控制的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.2 访问控制的基本功能&#34; href=&#34;#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;权限管理&#34;
+    &gt;
+        权限管理
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#权限管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限管理&#34; href=&#34;#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;角色和权限分配&lt;/strong&gt;：根据用户的身份匹配不同资源的访问权限。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最小权限原则&lt;/strong&gt;：用户或系统只获得其执行其工作的最小权限，避免不必要的权限滥用&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基于角色的访问控制（RBAC）&lt;/strong&gt;：通过将用户分配到不同的角色中，角色拥有预定义的权限集合，简化权限管理。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基于属性的访问控制（ABAC）&lt;/strong&gt;：根据用户的属性或资源的属性动态授予权限。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;会话管理&#34;
+    &gt;
+        会话管理
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#会话管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 会话管理&#34; href=&#34;#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;会话时间控制&lt;/strong&gt;：限制用户会话的持续时间，强制定期重新认证。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;会话状态管理&lt;/strong&gt;：管理用户的登录会话，允许管理员强制终止异常或高风险的会话。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;213-认证方式&#34;
+    &gt;
+        2.1.3 认证方式
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#213-认证方式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.3 认证方式&#34; href=&#34;#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;密码认证&lt;/li&gt;
+&lt;li&gt;多因素认证：在输入密码的情况下，还需要额外的认证，手机邮箱等&lt;/li&gt;
+&lt;li&gt;单点登录SSO：允许用户通过一次登录，访问多个系统或服务。&lt;/li&gt;
+&lt;li&gt;一次性密码(OTP)&lt;/li&gt;
+&lt;li&gt;基于公钥的认证：ssh密钥认证，x.509证书，常用于vpn，以及设备与管理系统通信的场景。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;214-授权&#34;
+    &gt;
+        2.1.4 授权
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#214-授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.4 授权&#34; href=&#34;#214-%e6%8e%88%e6%9d%83&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;授权是身份验证后决定用户可以访问哪些资源、执行什么操作的关键步骤。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;静态授权&#34;
+    &gt;
+        静态授权
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#静态授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 静态授权&#34; href=&#34;#%e9%9d%99%e6%80%81%e6%8e%88%e6%9d%83&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;基于角色的访问控制（RBAC）&lt;/li&gt;
+&lt;li&gt;基于属性的访问控制（ABAC）&lt;/li&gt;
+&lt;li&gt;权限精细化控制：
+&lt;ol&gt;
+&lt;li&gt;对象级控制：控制用户对具体对象的访问权限，如只能查看用户自己的资源&lt;/li&gt;
+&lt;li&gt;字段级控制：控制用户对具体字段的访问权限，如不能查看某个记录的敏感字段&lt;/li&gt;
+&lt;li&gt;操作级控制：控制用户对资源的具体操作权限，比如Read、Write、Delete、Execute&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;动态授权&#34;
+    &gt;
+        动态授权
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#动态授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 动态授权&#34; href=&#34;#%e5%8a%a8%e6%80%81%e6%8e%88%e6%9d%83&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;基于时间或条件的访问控制：
+&lt;ul&gt;
+&lt;li&gt;根据时间段设置访问权限，用户不在有效时间段内无法访问。&lt;/li&gt;
+&lt;li&gt;条件性访问：基于特定条件对用户进行授权，用户必须满足某些特定条件才能访问。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;权限的委派与临时权限
+&lt;ul&gt;
+&lt;li&gt;权限委派：允许用户将其权限的一部分委派给其他用户，这个典型场景就是代维，将自己账号的权限代维给其他用户，有其他用户登录代维用户，帮其做业务操作。&lt;/li&gt;
+&lt;li&gt;临时权限：设置某些权限的有效时间范围，用户只能在授权的时间段内访问资源，通常用于临时权限授予或应急。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;三如何实现iam&#34;
+    &gt;
+        三、如何实现IAM
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#三如何实现iam&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 三、如何实现IAM&#34; href=&#34;#%e4%b8%89%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0iam&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;实现一个iam，可以用开源组件自己组合，也可以选用商业的iam解决方案。下面是一些整理。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;31-iam选型&#34;
+    &gt;
+        3.1 iam选型
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#31-iam选型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1 iam选型&#34; href=&#34;#31-iam%e9%80%89%e5%9e%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;311-商业方案&#34;
+    &gt;
+        3.1.1 商业方案
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#311-商业方案&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.1 商业方案&#34; href=&#34;#311-%e5%95%86%e4%b8%9a%e6%96%b9%e6%a1%88&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;竹云的iam方案:&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.bamboocloud.com/&#34;
+&gt;https://www.bamboocloud.com/&lt;/a&gt;
+这块不细说，官网有介绍。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;312-开源组件选型&#34;
+    &gt;
+        3.1.2 开源组件选型
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#312-开源组件选型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2 开源组件选型&#34; href=&#34;#312-%e5%bc%80%e6%ba%90%e7%bb%84%e4%bb%b6%e9%80%89%e5%9e%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;3121-java&#34;
+    &gt;
+        3.1.2.1 Java
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#3121-java&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2.1 Java&#34; href=&#34;#3121-java&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Spring Security
+spring security支持认证、授权，支持OAuth2，SAML2&lt;/li&gt;
+&lt;li&gt;Apache Shiro
+Shiro支持认证、授权、会话管理&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;3122-python&#34;
+    &gt;
+        3.1.2.2 python
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#3122-python&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2.2 python&#34; href=&#34;#3122-python&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Flask-Security
+支持基于会话、token的认证，注册、角色和权限管理、账号激活、密码管理、双因子认证&lt;/li&gt;
+&lt;li&gt;FastAPI+OAuth2
+支持搭配oauth&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;32-自研&#34;
+    &gt;
+        3.2 自研
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#32-自研&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2 自研&#34; href=&#34;#32-%e8%87%aa%e7%a0%94&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;自研这块，目前微服务是趋势，3A模块，考虑到单一服务职责，可以将iam分为3个模块。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;321-session模块&#34;
+    &gt;
+        3.2.1 session模块
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#321-session模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.1 session模块&#34; href=&#34;#321-session%e6%a8%a1%e5%9d%97&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;会话模块，提供会话管理，保存会话信息，会话一般不考虑持久化，在分布式场景下，可以考虑使用redis做存储。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;322-authentication模块&#34;
+    &gt;
+        3.2.2 Authentication模块
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#322-authentication模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.2 Authentication模块&#34; href=&#34;#322-authentication%e6%a8%a1%e5%9d%97&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;登录认证模块，包含各种登录功能实现，比如单点登录、用户名密码登录、双因子登录、二维码登录等。这个模块也不涉及持久化存储。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;323-authorization模块&#34;
+    &gt;
+        3.2.3 Authorization模块
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#323-authorization模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.3 Authorization模块&#34; href=&#34;#323-authorization%e6%a8%a1%e5%9d%97&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;在这个模块将用户管理也放进去，角色模型及权限控制等功能。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;324-sdk&#34;
+    &gt;
+        3.2.4 SDK
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#324-sdk&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.4 SDK&#34; href=&#34;#324-sdk&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;大型系统，3A服务独立，为了方便业务应用接入3A，需要提供sdk实现，业务方只做配置即可，无需编写太多代码逻辑。
+sdk主要实现的功能是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;基于HTTP接口的会话有效性验证&lt;/li&gt;
+&lt;li&gt;基于HTTP接口的统一权限校验&lt;/li&gt;
+&lt;li&gt;获取当前会话的用户信息&lt;/li&gt;
+&lt;li&gt;角色和权限以及功能接口的注册&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;四认证协议&#34;
+    &gt;
+        四、认证协议
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#四认证协议&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 四、认证协议&#34; href=&#34;#%e5%9b%9b%e8%ae%a4%e8%af%81%e5%8d%8f%e8%ae%ae&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;目前应用和API基本都需要认证，授权、和访问控制。现在有很多标准，比如JSON Web Tokens（JWT），OAuth 2.0，OpenID Connect（OIDC）和SAML。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;41-jwt&#34;
+    &gt;
+        4.1 JWT
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#41-jwt&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1 JWT&#34; href=&#34;#41-jwt&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;jwt是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准。
+JWT的声明一般被用来在身份提供者和服务者见传递被认证的用户信息，该token也可直接被用于认证或者加密。
+&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://example.org/img/iam/jwt.png&#34;
+&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;411-传统session认证&#34;
+    &gt;
+        4.1.1 传统session认证
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#411-传统session认证&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.1 传统session认证&#34; href=&#34;#411-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;http是无状态协议，如果用户通过账号和密码发起一次请求登录。下一次请求还需要在次指定账号密码等信息。因为http协议是无状态的，并不知道是哪个用户发出的请求。
+为了解决这个问题，服务器会存储一份用户登录的信息，这个信息会返回给浏览器，存在cookie中。下次http请求调用时，带上这个cookie，则服务器就能识别到是哪个用户的请求。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;412-传统session认证缺点&#34;
+    &gt;
+        4.1.2 传统session认证缺点
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#412-传统session认证缺点&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.2 传统session认证缺点&#34; href=&#34;#412-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81%e7%bc%ba%e7%82%b9&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;传统session信息需要服务端存储，可以存redis，可以存内存。随着认证用户增多，服务端开销会大。&lt;/li&gt;
+&lt;li&gt;CSRF：浏览器会对发起的请求，自动携带对应站点的cookie，这导致可以从恶意站点应用发起一个当前站点应用的请求，从而携带当前站点的cookie到恶意应用后端。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;413-基于token的鉴权机制&#34;
+    &gt;
+        4.1.3 基于token的鉴权机制
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#413-基于token的鉴权机制&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.3 基于token的鉴权机制&#34; href=&#34;#413-%e5%9f%ba%e4%ba%8etoken%e7%9a%84%e9%89%b4%e6%9d%83%e6%9c%ba%e5%88%b6&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;token类似于session的产生过程，只不过将token值传递给前端时，前端发起请求是将token字段放到header里。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;414-jwt具体是什么&#34;
+    &gt;
+        4.1.4 jwt具体是什么
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#414-jwt具体是什么&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4 jwt具体是什么&#34; href=&#34;#414-jwt%e5%85%b7%e4%bd%93%e6%98%af%e4%bb%80%e4%b9%88&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;jwt是一个字符串，由三段信息构成，通过&lt;code&gt;.&lt;/code&gt;连接。比如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;4141-jwt构成&#34;
+    &gt;
+        4.1.4.1 jwt构成
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4141-jwt构成&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4.1 jwt构成&#34; href=&#34;#4141-jwt%e6%9e%84%e6%88%90&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;第一部分是header，第二部分是payload，第三部分是signature&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;header：指定token类型和算法&lt;/li&gt;
+&lt;li&gt;payload：包含json对象，用于存储数据&lt;/li&gt;
+&lt;li&gt;signature：根据header和payload及secret生成的签名信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这里面header和payload都是只是通过base64加密的字符串，signature是根据header中的算法以及jwt服务端定义的私钥生成的数字签名。
+所以payload里面不要存储敏感数据，因为是公开的。但是这个jwt token也无法篡改，因为签名是基于前两部分生成的。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;4142-jwt安全性&#34;
+    &gt;
+        4.1.4.2 jwt安全性
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4142-jwt安全性&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4.2 jwt安全性&#34; href=&#34;#4142-jwt%e5%ae%89%e5%85%a8%e6%80%a7&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;jwt的安全性就在于私钥，如果私钥泄漏了，客户端就能生成jwt了。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;415-什么是bearer-token&#34;
+    &gt;
+        4.1.5 什么是Bearer Token
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#415-什么是bearer-token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.5 什么是Bearer Token&#34; href=&#34;#415-%e4%bb%80%e4%b9%88%e6%98%afbearer-token&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;任何一种通过Authorization: Bearer &lt;!-- raw HTML omitted --&gt;传输的访问令牌。
+JWT是Bearer Token的一种实现。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;42-oauth-20&#34;
+    &gt;
+        4.2 OAuth 2.0
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#42-oauth-20&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2 OAuth 2.0&#34; href=&#34;#42-oauth-20&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;oauth时一个授权机制，用来授权第三方应用，获取用户数据，而不需要共享用户的凭据（如密码）&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;421-工作原理&#34;
+    &gt;
+        4.2.1 工作原理
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#421-工作原理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.1 工作原理&#34; href=&#34;#421-%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;用户在授权服务器上登录，并授权应用程序访问其资源&lt;/li&gt;
+&lt;li&gt;授权服务器发送一个访问令牌（Access Token），应用程序使用该令牌访问用户资源。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://example.org/img/iam/oauth.png&#34;
+&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;422-核心组件&#34;
+    &gt;
+        4.2.2 核心组件
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#422-核心组件&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.2 核心组件&#34; href=&#34;#422-%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;几个核心概念：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Third-party application：第三方应用程序（可以理解为client）&lt;/li&gt;
+&lt;li&gt;Resource Owner：资源所有者&lt;/li&gt;
+&lt;li&gt;Authorization server：认证服务器，即服务提供商用来处理认证的服务器&lt;/li&gt;
+&lt;li&gt;Resource Server：资源服务器，即服务提供商存放用户生成的资源的服务器。可以跟认证服务器是同一个，也可以区分开。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;423-客户端的授权模式&#34;
+    &gt;
+        4.2.3 客户端的授权模式
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#423-客户端的授权模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3 客户端的授权模式&#34; href=&#34;#423-%e5%ae%a2%e6%88%b7%e7%ab%af%e7%9a%84%e6%8e%88%e6%9d%83%e6%a8%a1%e5%bc%8f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;这里面的客户端，不是指浏览器，而是指你正在访问的应用。举个例子，你想要访问一个beer网站，这个网站要登录才能获取资源，他提供了github的登录入口，点击github登录，就能弹出github的授权界面，然后点击确定，就能将github登录后的用户名信息登录到当前beer网站中了。
+这个beer网站就是客户端client。
+服务提供商和认证服务器都是github&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;4231-授权码模式&#34;
+    &gt;
+        4.2.3.1 授权码模式
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4231-授权码模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.1 授权码模式&#34; href=&#34;#4231-%e6%8e%88%e6%9d%83%e7%a0%81%e6%a8%a1%e5%bc%8f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;授权码模式是功能最完整、流程最严密的授权模式。步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用户访问浏览器客户端，后者将浏览器地址导向认证服务器。&lt;/li&gt;
+&lt;li&gt;用户在界面上选择是否给予客户端授权&lt;/li&gt;
+&lt;li&gt;用户给予授权，认证服务器导向客户端事先指定的重定向URI，同时附上一个授权码&lt;/li&gt;
+&lt;li&gt;客户端收到授权码，附上早先的重定向URI，向认证服务器申请令牌。（这一步在客户端的后端的服务器上完成，对客户不可见）&lt;/li&gt;
+&lt;li&gt;认证服务器核对授权码和重定向URI，确认无误后，向客户端发送访问令牌（Access Token）和更新令牌（refresh Token）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;4232-简化模式&#34;
+    &gt;
+        4.2.3.2 简化模式
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4232-简化模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.2 简化模式&#34; href=&#34;#4232-%e7%ae%80%e5%8c%96%e6%a8%a1%e5%bc%8f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;简化模式不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过授权码这个步骤。
+步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;客户端将用户导向认证服务器&lt;/li&gt;
+&lt;li&gt;用户决定是否给予客户端授权&lt;/li&gt;
+&lt;li&gt;用户给予授权，认证服务器将用户导向客户端指定的重定向URI，并在URI的hash部分包含访问令牌。&lt;/li&gt;
+&lt;li&gt;浏览器向资源服务器发出请求，其中不包括上一步收到的Hash值&lt;/li&gt;
+&lt;li&gt;资源服务器返回一个网页，其中包含的代码可以获取Hash值中的令牌。&lt;/li&gt;
+&lt;li&gt;浏览器执行上一步获得的脚本，提取出令牌&lt;/li&gt;
+&lt;li&gt;浏览器将令牌发送给客户端&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h5 id=&#34;4233-密码模式&#34;
+    &gt;
+        4.2.3.3 密码模式
+    &lt;/h5&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4233-密码模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.3 密码模式&#34; href=&#34;#4233-%e5%af%86%e7%a0%81%e6%a8%a1%e5%bc%8f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;密码模式（Resource Owner Password Credentials Grant),中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向“服务提供商“索要授权。
+在这种模式中，用户把自己的密码给客户端。但是客户端不得存储密码。
+步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用户向客户端提供用户名和密码&lt;/li&gt;
+&lt;li&gt;客户端将用户名和密码发送给认证服务器，向后者请求令牌。&lt;/li&gt;
+&lt;li&gt;认证服务器确认无误后，向客户端提供了令牌。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;424-更新令牌&#34;
+    &gt;
+        4.2.4 更新令牌
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#424-更新令牌&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.4 更新令牌&#34; href=&#34;#424-%e6%9b%b4%e6%96%b0%e4%bb%a4%e7%89%8c&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;如果用户访问的时候，客户端的访问令牌已经过期，则需要使用更新令牌申请一个新的访问令牌。
+客户端发出更新令牌的HTTP请求，包含以下参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;granttype：授权模式，此处固定值refreshToken&lt;/li&gt;
+&lt;li&gt;refresh_token: 早前收到的更新令牌，必选项&lt;/li&gt;
+&lt;li&gt;scope：表示申请的授权范围，不可以超出上一次申请的范围。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;43-oidc协议&#34;
+    &gt;
+        4.3 OIDC协议
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#43-oidc协议&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.3 OIDC协议&#34; href=&#34;#43-oidc%e5%8d%8f%e8%ae%ae&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;OpenID Connect（OIDC）是一种基于 OAuth 2.0 的身份认证协议，用于在不同的应用和系统之间实现单点登录（SSO）和身份验证。它允许应用程序从身份提供者（如 Google、GitHub 等）获取用户的身份信息，而无需管理用户的凭据。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;431-id令牌字段含义&#34;
+    &gt;
+        4.3.1 ID令牌字段含义
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#431-id令牌字段含义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.3.1 ID令牌字段含义&#34; href=&#34;#431-id%e4%bb%a4%e7%89%8c%e5%ad%97%e6%ae%b5%e5%90%ab%e4%b9%89&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;以下面内容举例：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{
+  &amp;#34;iss&amp;#34;: &amp;#34;https://dex.example.com/&amp;#34;,
+  &amp;#34;sub&amp;#34;: &amp;#34;R29vZCBqb2IhIEdpdmUgdXMgYSBzdGFyIG9uIGdpdGh1Yg&amp;#34;,
+  &amp;#34;aud&amp;#34;: [
+    &amp;#34;kubernetes&amp;#34;,
+    &amp;#34;kubeconfig-generator&amp;#34;
+  ],
+  &amp;#34;exp&amp;#34;: 1712945837,
+  &amp;#34;iat&amp;#34;: 1712945237,
+  &amp;#34;azp&amp;#34;: &amp;#34;kubeconfig-generator&amp;#34;,
+  &amp;#34;at_hash&amp;#34;: &amp;#34;OamCo8c60Zdj3dVho3Km5oxA&amp;#34;,
+  &amp;#34;c_hash&amp;#34;: &amp;#34;HT04XtwtlUhfHvm7zf19qsGw&amp;#34;,
+  &amp;#34;email&amp;#34;: &amp;#34;maksim.nabokikh@palark.com&amp;#34;,
+  &amp;#34;email_verified&amp;#34;: true,
+  &amp;#34;groups&amp;#34;: [
+    &amp;#34;administrators&amp;#34;,
+    &amp;#34;developers&amp;#34;
+  ],
+  &amp;#34;name&amp;#34;: &amp;#34;Maksim Nabokikh&amp;#34;,
+  &amp;#34;preferred_username&amp;#34;: &amp;#34;maksim.nabokikh&amp;#34;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;iss: &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://dex.example.com/&#34;
+&gt;https://dex.example.com/&lt;/a&gt;
+这是 Issuer，即签发此令牌的服务器。在这个例子中，签发者是 &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://dex.example.com/&#34;
+&gt;https://dex.example.com/&lt;/a&gt;，表明令牌来自该身份提供者 (Identity Provider, IdP)。&lt;/li&gt;
+&lt;li&gt;sub: R29vZCBqb2IhIEdpdmUgdXMgYSBzdGFyIG9uIGdpdGh1Yg
+Subject，通常是唯一标识用户的 ID。这是用户的标识符，可能经过了编码处理，但它在身份提供者中唯一地表示这个用户。&lt;/li&gt;
+&lt;li&gt;aud: [&amp;ldquo;kubernetes&amp;rdquo;, &amp;ldquo;kubeconfig-generator&amp;rdquo;]
+Audience，这个令牌的目标受众，通常是应用的标识符。在这个例子中，令牌是为 kubernetes 和 kubeconfig-generator 这两个客户端生成的。这意味着只有这些客户端可以使用此令牌。&lt;/li&gt;
+&lt;li&gt;exp: 1712945837
+Expiration Time，表示令牌过期的时间（Unix 时间戳格式）。在此时间之后，令牌将不再有效。&lt;/li&gt;
+&lt;li&gt;iat: 1712945237
+Issued At，表示令牌签发的时间（Unix 时间戳格式）。&lt;/li&gt;
+&lt;li&gt;azp: kubeconfig-generator
+Authorized Party，即最终被授权使用此令牌的客户端。在这里是 kubeconfig-generator。&lt;/li&gt;
+&lt;li&gt;at_hash: OamCo8c60Zdj3dVho3Km5oxA
+Access Token Hash，如果该令牌是在认证和授权请求中产生的，at_hash 是 Access Token 的哈希值，用于验证 Access Token。&lt;/li&gt;
+&lt;li&gt;c_hash: HT04XtwtlUhfHvm7zf19qsGw
+Code Hash，类似于 at_hash，c_hash 是 Authorization Code 的哈希值，用于验证授权码的完整性。&lt;/li&gt;
+&lt;li&gt;email: &lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;mailto:maksim.nabokikh@palark.com&#34;
+&gt;maksim.nabokikh@palark.com&lt;/a&gt;
+用户的 电子邮件地址。这是一个自定义的 claim，提供了用户的联系信息。&lt;/li&gt;
+&lt;li&gt;email_verified: true
+电子邮件是否已经经过验证。true 表示该电子邮件地址已经过验证。&lt;/li&gt;
+&lt;li&gt;groups: [&amp;ldquo;administrators&amp;rdquo;, &amp;ldquo;developers&amp;rdquo;]
+用户所属的 组，这些组可能决定用户在不同系统中的权限或角色。&lt;/li&gt;
+&lt;li&gt;name: Maksim Nabokikh
+用户的 全名。这是一个自定义的 claim，用于更好地识别用户。&lt;/li&gt;
+&lt;li&gt;preferred_username: maksim.nabokikh
+用户的 首选用户名。这通常是在系统中显示给其他人的用户名。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;参考文档&#34;
+    &gt;
+        参考文档
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#参考文档&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 参考文档&#34; href=&#34;#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://docs.authing.cn/v2/concepts/authentication.html&#34;
+&gt;https://docs.authing.cn/v2/concepts/authentication.html&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://guptadeepak.com/demystifying-jwt-oauth-oidc-and-saml-a-technical-guide/&#34;
+&gt;https://guptadeepak.com/demystifying-jwt-oauth-oidc-and-saml-a-technical-guide/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://ssojet.com/blog/saml-vs-openid-vs-oauth-vs-jwt/&#34;
+&gt;https://ssojet.com/blog/saml-vs-openid-vs-oauth-vs-jwt/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html&#34;
+&gt;https://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+            </content>  
+        </entry>
+        <entry>
+            <title>开发一个本地大模型应用</title>
+            <link href="https://example.org/post/first_big_model/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://example.org/post/first_big_model/</id>
+            <published>2024-10-09T14:45:23+08:00</published>
+            <updated>2024-10-09T14:45:23+08:00</updated>
+            <content type="html">
+                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;一大模型简介&#34;
+    &gt;
+        一、大模型简介
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#一大模型简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、大模型简介&#34; href=&#34;#%e4%b8%80%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%ae%80%e4%bb%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;11-什么是大模型&#34;
+    &gt;
+        1.1 什么是大模型
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#11-什么是大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.1 什么是大模型&#34; href=&#34;#11-%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;大语言模型（LLM，Large Language Model），也称大型语言模型，是一种旨在理解和生成人类语言的人工智能模型。
+LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海量的文本数据上进行训练，从而获得对语言深层次的理解。目前，国外的知名 LLM 有 GPT-3.5、GPT-4、PaLM、Claude 和 LLaMA 等，国内的有文心一言、讯飞星火、通义千问、ChatGLM、百川等。
+大模型实际上是个语言模型，用来处理复杂的语言任务，如文本生成、语言翻译、问题回答等。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;12-为什么叫大模型&#34;
+    &gt;
+        1.2 为什么叫大模型
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#12-为什么叫大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.2 为什么叫大模型&#34; href=&#34;#12-%e4%b8%ba%e4%bb%80%e4%b9%88%e5%8f%ab%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;大模型也是属于机器学习的一种，是深度学习的思想融入语言模型中的强大神经网络模型。
+模型通俗的理解，就是数学模型，用公式来说就是y=fn(x1,x2)
+大模型主要体现在这个大字。大的概念是一个参数多，能达到上亿个参数。对应公式中可能存在上亿个参数。另一个是数据量大，用于训练的数据可以达到PB级别。再者就是计算资源密集，训练和推理需要大量的计算资源。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;二检索增强生成rag简介&#34;
+    &gt;
+        二、检索增强生成RAG简介
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#二检索增强生成rag简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、检索增强生成RAG简介&#34; href=&#34;#%e4%ba%8c%e6%a3%80%e7%b4%a2%e5%a2%9e%e5%bc%ba%e7%94%9f%e6%88%90rag%e7%ae%80%e4%bb%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;21-什么是rag&#34;
+    &gt;
+        2.1 什么是RAG
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#21-什么是rag&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 什么是RAG&#34; href=&#34;#21-%e4%bb%80%e4%b9%88%e6%98%afrag&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;大模型不是万能的，在某些情况下，无法提供准确的答案。为了提高模型的性能和输出质量，产生了一种新的模型架构方式：检索增强生成（RAG, Retrieval-Augmented Generation）&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;211-llm面临的问题&#34;
+    &gt;
+        2.1.1 LLM面临的问题
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#211-llm面临的问题&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.1 LLM面临的问题&#34; href=&#34;#211-llm%e9%9d%a2%e4%b8%b4%e7%9a%84%e9%97%ae%e9%a2%98&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;知识更新滞后：LLM训练时用的静态数据集训练，比如说，训练的基础模型是24年前爬取的各类数据。那么原则上说，模型不可能知道2024年之后的信息内容。你问2024年发生了哪些大事件，模型肯定给不出对应的答案。所以通过RAG实时检索当前搜索引擎最新数据，保证内容的时效性，确保信息的持续更新和准确性。&lt;/li&gt;
+&lt;li&gt;专业领域知识欠缺：LLM在处理特定领域的专业知识时，效果不太理想。因为训练LLM的数据集都是公开的互联网数据以及各类公开发行的书籍之类的资源。但是如果是某个企业的私有业务功能及数据，LLM是不认识的，RAG可以检索特定领域的相关文档，为模型提供丰富上下文信息，从而提升专业领域内的问题回答质量和深度。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;22-rag工作流程&#34;
+    &gt;
+        2.2 RAG工作流程
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#22-rag工作流程&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.2 RAG工作流程&#34; href=&#34;#22-rag%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;数据处理：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对原始数据进行清洗和处理&lt;/li&gt;
+&lt;li&gt;将处理后的数据转化为检索模型可以使用&lt;/li&gt;
+&lt;li&gt;将处理后的数据存储在特定数据库中
+信息检索：检索器会根据用户的问题，从一个预先构建的知识库中找到最相关的文档或段落。
+信息生成：生成器利用检索器提供的相关信息，再结合用户的输入，生成回答。
+输出：返回基于外部知识增强后的生成结果给用户。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;23-提高大模型准确性的其他方式&#34;
+    &gt;
+        2.3 提高大模型准确性的其他方式
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#23-提高大模型准确性的其他方式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.3 提高大模型准确性的其他方式&#34; href=&#34;#23-%e6%8f%90%e9%ab%98%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%87%86%e7%a1%ae%e6%80%a7%e7%9a%84%e5%85%b6%e4%bb%96%e6%96%b9%e5%bc%8f&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;目前在提升大语言模型效果中，RAG和微调(Finetune)是两种主流的方法。
+微调：在特定数据集上进一步训练大语言模型，来提升模型在特定任务上的表现。
+RAG和微调的对比：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;特征比较&lt;/th&gt;
+          &lt;th&gt;RAG&lt;/th&gt;
+          &lt;th&gt;微调&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;知识更新&lt;/td&gt;
+          &lt;td&gt;直接更新检索知识库，无需重新训练。信息更新成本低，适合动态变化的数据。&lt;/td&gt;
+          &lt;td&gt;通常需要重新训练来保持知识和数据的更新。更新成本高，适合静态数据。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;外部知识&lt;/td&gt;
+          &lt;td&gt;擅长利用外部资源，特别适合处理文档或其他结构化/非结构化数据库。&lt;/td&gt;
+          &lt;td&gt;将外部知识学习到 LLM 内部。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;数据处理&lt;/td&gt;
+          &lt;td&gt;对数据的处理和操作要求极低。&lt;/td&gt;
+          &lt;td&gt;依赖于构建高质量的数据集，有限的数据集可能无法显著提高性能。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;模型定制&lt;/td&gt;
+          &lt;td&gt;侧重于信息检索和融合外部知识，但可能无法充分定制模型行为或写作风格。&lt;/td&gt;
+          &lt;td&gt;可以根据特定风格或术语调整 LLM 行为、写作风格或特定领域知识。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;可解释性&lt;/td&gt;
+          &lt;td&gt;可以追溯到具体的数据来源，有较好的可解释性和可追踪性。&lt;/td&gt;
+          &lt;td&gt;黑盒子，可解释性相对较低。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;计算资源&lt;/td&gt;
+          &lt;td&gt;需要额外的资源来支持检索机制和数据库的维护。&lt;/td&gt;
+          &lt;td&gt;依赖高质量的训练数据集和微调目标，对计算资源的要求较高。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;推理延迟&lt;/td&gt;
+          &lt;td&gt;增加了检索步骤的耗时&lt;/td&gt;
+          &lt;td&gt;单纯 LLM 生成的耗时&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;降低幻觉&lt;/td&gt;
+          &lt;td&gt;通过检索到的真实信息生成回答，降低了产生幻觉的概率。&lt;/td&gt;
+          &lt;td&gt;模型学习特定领域的数据有助于减少幻觉，但面对未见过的输入时仍可能出现幻觉。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;伦理隐私&lt;/td&gt;
+          &lt;td&gt;检索和使用外部数据可能引发伦理和隐私方面的问题。&lt;/td&gt;
+          &lt;td&gt;训练数据中的敏感信息需要妥善处理，以防泄露。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;微调这块比较吃优质的数据集，并且还伴随大量的计算资源。成本比较高。优质的数据集，目前大部分是人工标注，都是人力堆出来的。而且一般个人开发者或者小公司，很少有资源能够去做这个微调。更关键的是，如果微调训练后的模型裂化了，那么这个模型就没用了，无法恢复到之前的某个状态。
+LangChain简介
+LangChain 是一个用于构建基于大语言模型（LLM）应用的框架，它使得开发者能够更容易地将语言模型与外部工具、数据源或环境集成起来，从而实现更复杂的应用。LangChain 的设计目标是帮助开发者搭建能够进行复杂推理、增强记忆、检索外部信息等功能的应用。
+LangChain 的核心功能是将大语言模型（如 GPT、BERT 等）与多个外部系统结合起来，比如数据库、API、文件系统等，使得模型不仅能基于自身训练的知识进行推理，还能实时获取外部信息进行更准确或实时的回答。
+&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;LangChain&#34;
+&gt;langchain官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;LangChain 的主要组件：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;语言模型（LLM）接口：LangChain 支持与多种大语言模型交互，比如 OpenAI 的 GPT 系列、HuggingFace 的模型、Cohere 等。开发者可以利用这些模型生成文本、回答问题、进行对话等。&lt;/li&gt;
+&lt;li&gt;链（Chain）：链是 LangChain 中的一个核心概念，它允许将多个步骤或模型串联起来。例如，你可以先从数据库中检索信息，然后让大语言模型对这些信息进行总结，最后输出给用户。每个步骤都可以是一个独立的处理逻辑。&lt;/li&gt;
+&lt;li&gt;工具（Tools）：LangChain 可以集成外部工具或 API，让大语言模型调用这些工具来扩展其功能。例如，模型可以通过查询数据库、访问网络 API 或者从文档库中检索信息来增强回答的质量。&lt;/li&gt;
+&lt;li&gt;记忆（Memory）：LangChain 提供了一种“记忆”机制，使得语言模型可以在会话过程中记住之前的上下文。这对于实现对话机器人或长期交互系统非常有用，它可以让模型基于之前的对话内容生成连续、相关的回应。&lt;/li&gt;
+&lt;li&gt;检索增强生成（RAG）：LangChain 也支持通过 RAG 技术来增强生成能力，结合外部的文档库或数据库，使模型生成更加准确和基于事实的内容。&lt;/li&gt;
+&lt;li&gt;代理（Agents）：LangChain 支持创建智能代理系统，允许语言模型根据上下文和规则，动态选择要执行的动作。例如，一个代理系统可以根据用户的输入来决定是否需要从外部系统检索信息、执行计算，或与用户对话
+一句话总结，这就是个大模型应用的开发框架，里面封装了各个组件，能够开箱即用，简化开发过程。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;三什么是大模型开发&#34;
+    &gt;
+        三、什么是大模型开发
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#三什么是大模型开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 三、什么是大模型开发&#34; href=&#34;#%e4%b8%89%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;以大语言模型为功能核心、通过大语言模型的强大理解能力和生成能力、结合特殊的数据或业务逻辑来提供独特功能的应用称为大模型开发。
+开发大模型相关应用，其技术核心点虽然在大语言模型上，但一般通过调用 API 或开源模型来实现核心的理解与生成，通过 Prompt Enginnering 来实现大语言模型的控制，因此，虽然大模型是深度学习领域的集大成之作，大模型开发却更多是一个工程问题。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;31-大模型开发与ai应用开发的差异&#34;
+    &gt;
+        3.1 大模型开发与AI应用开发的差异
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#31-大模型开发与ai应用开发的差异&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1 大模型开发与AI应用开发的差异&#34; href=&#34;#31-%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91%e4%b8%8eai%e5%ba%94%e7%94%a8%e5%bc%80%e5%8f%91%e7%9a%84%e5%b7%ae%e5%bc%82&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;以调用、发挥大模型为核心的大模型开发与传统的 AI 开发在整体思路上有着较大的不同。大语言模型的两个核心能力：指令遵循与文本生成提供了复杂业务逻辑的简单平替方案。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;传统的 AI 开发：首先需要将非常复杂的业务逻辑依次拆解，对于每一个子业务构造训练数据与验证数据，对于每一个子业务训练优化模型，最后形成完整的模型链路来解决整个业务逻辑。&lt;/li&gt;
+&lt;li&gt;大模型开发：用 Prompt Engineering 来替代子模型的训练调优，通过 Prompt 链路组合来实现业务逻辑，用一个通用大模型 + 若干业务 Prompt 来解决任务，从而将传统的模型训练调优转变成了更简单、轻松、低成本的 Prompt 设计调优。
+同时，在评估思路上，大模型开发与传统 AI 开发也有质的差异。&lt;/li&gt;
+&lt;li&gt;传统 AI 开发：需要首先构造训练集、测试集、验证集，通过在训练集上训练模型、在测试集上调优模型、在验证集上最终验证模型效果来实现性能的评估。&lt;/li&gt;
+&lt;li&gt;大模型开发：流程更为灵活和敏捷。从实际业务需求出发构造小批量验证集，设计合理 Prompt 来满足验证集效果。然后，将不断从业务逻辑中收集当下 Prompt 的 Bad Case，并将 Bad Case 加入到验证集中，针对性优化 Prompt，最后实现较好的泛化效果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;32-大模型开发基础要素&#34;
+    &gt;
+        3.2 大模型开发基础要素
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#32-大模型开发基础要素&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2 大模型开发基础要素&#34; href=&#34;#32-%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91%e5%9f%ba%e7%a1%80%e8%a6%81%e7%b4%a0&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;框架：LangChain
+框架可以使用langchain，为了方便小白玩，langflow这个可视化编辑挺好用。&lt;/li&gt;
+&lt;li&gt;Embedding模型
+embedding是什么，首先我们使用RAG来做增强检索，基于语言的检索不同于常规的关系数据库检索，而是向量检索，对于一段文本，用什么模型进行向量化，就是这个embedding模型需要做的。&lt;/li&gt;
+&lt;li&gt;数据库
+同样的，构建的知识库或者本地文档库，用什么来存储，就是这个数据库需要做的。一般这个数据库是个向量数据库。&lt;/li&gt;
+&lt;li&gt;基础大模型
+这个很容易理解，是openAI的chatgpt、还是文心一言、通义千问&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;四开发一个本地大模型应用&#34;
+    &gt;
+        四、开发一个本地大模型应用
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#四开发一个本地大模型应用&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 四、开发一个本地大模型应用&#34; href=&#34;#%e5%9b%9b%e5%bc%80%e5%8f%91%e4%b8%80%e4%b8%aa%e6%9c%ac%e5%9c%b0%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%ba%94%e7%94%a8&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;上面介绍了很多，下面来实战。先最简单做一个应用。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;41-依赖安装&#34;
+    &gt;
+        4.1 依赖安装
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#41-依赖安装&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1 依赖安装&#34; href=&#34;#41-%e4%be%9d%e8%b5%96%e5%ae%89%e8%a3%85&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;411-langflow安装&#34;
+    &gt;
+        4.1.1 langflow安装
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#411-langflow安装&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.1 langflow安装&#34; href=&#34;#411-langflow%e5%ae%89%e8%a3%85&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;langflow是一个可视化编辑器。
+安装命令（要求python3.10以上）
+&lt;code&gt;pip install langflow&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;412-ollama下载&#34;
+    &gt;
+        4.1.2 ollama下载
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#412-ollama下载&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.2 ollama下载&#34; href=&#34;#412-ollama%e4%b8%8b%e8%bd%bd&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;Ollama 是一种基于本地大语言模型的工具或框架，旨在让开发者能够在本地环境中运行和使用大语言模型，而无需依赖云端服务
+去https://ollama.com/官网下载，安装。
+有两个环境变量需要注意：
+OLLAMA_MODELS：OLLAMA模型的下载路径。
+OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认是只能被localhost访问的，设置这个为0.0.0.0，可以被网络访问。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h4 id=&#34;413-下载大模型&#34;
+    &gt;
+        4.1.3 下载大模型
+    &lt;/h4&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#413-下载大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.3 下载大模型&#34; href=&#34;#413-%e4%b8%8b%e8%bd%bd%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;ollama安装完成后，命令行输入&lt;code&gt;ollama&lt;/code&gt;，会有对应的命令帮助。
+运行&lt;code&gt;ollama pull llama3:8b&lt;/code&gt;，下载大模型。
+下载完成后，运行&lt;code&gt;ollama run llama3:8b&lt;/code&gt;，可以进行语言聊天。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;42-开始开发&#34;
+    &gt;
+        4.2 开始开发
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#42-开始开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2 开始开发&#34; href=&#34;#42-%e5%bc%80%e5%a7%8b%e5%bc%80%e5%8f%91&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;421-运行langflow&#34;
+    &gt;
+        4.2.1 运行langflow
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#421-运行langflow&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.1 运行langflow&#34; href=&#34;#421-%e8%bf%90%e8%a1%8clangflow&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;在命令行中运行langflow，&lt;code&gt;python -m langflow run&lt;/code&gt;
+然后访问&lt;code&gt;http://127.0.0.1:7860&lt;/code&gt;，会弹出一个可视化编辑界面。
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/langflow_overview.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/langflow_overview.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;422-运行大模型&#34;
+    &gt;
+        4.2.2 运行大模型
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#422-运行大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.2 运行大模型&#34; href=&#34;#422-%e8%bf%90%e8%a1%8c%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;ollama run llama3:8b&lt;/code&gt;
+访问&lt;code&gt;http://localhost:11434&lt;/code&gt;，会有输出Ollama is running&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;423-选择一个模板进行开发&#34;
+    &gt;
+        4.2.3 选择一个模板进行开发
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#423-选择一个模板进行开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3 选择一个模板进行开发&#34; href=&#34;#423-%e9%80%89%e6%8b%a9%e4%b8%80%e4%b8%aa%e6%a8%a1%e6%9d%bf%e8%bf%9b%e8%a1%8c%e5%bc%80%e5%8f%91&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;点击new project，选择一个模板
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/template.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/template.png&#34; alt=&#34;alt text&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+我选择Vector Store RAG，跟我目前的需求比较匹配。
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/flow_demo.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/flow_demo.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+具体修改点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;将模型换成ollama，找到左边组件中model，替换成本地我们下载的模型。如果用其他模型，都需要api_key，大部分都是要收钱。&lt;/li&gt;
+&lt;li&gt;向量数据库使用ChromaDB，chromadb是本地存储。&lt;/li&gt;
+&lt;li&gt;embedding选择ollama对应的值&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;424-构建&#34;
+    &gt;
+        4.2.4 构建
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#424-构建&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.4 构建&#34; href=&#34;#424-%e6%9e%84%e5%bb%ba&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;从图中，可以看到2条路径，一条是构建向量数据库，一条是运行应用。
+我们先构建向量数据库数据，点击Chroma DB的运行按钮，就能构建。
+我选择了一个零一万物福利手册pdf作为文件录入数据库。点击运行
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/build_flow.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/build_flow.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+然后点击Retriever，可以看到建模的数据。
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/retriver.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/retriver.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;425-对比效果&#34;
+    &gt;
+        4.2.5 对比效果
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#425-对比效果&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.5 对比效果&#34; href=&#34;#425-%e5%af%b9%e6%af%94%e6%95%88%e6%9e%9c&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;点击playground，可以在线测试效果。
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/test_flow.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/test_flow.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;我们看下不用RAG的大模型输出。
+输入是零一万物有哪些福利？&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;零一万物 (Zhēng Yī Wàn Wù) is a Chinese term that literally means 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;#34;Zero to Ten Thousand Things&amp;#34; or &amp;#34;All Under Heaven&amp;#34;. It refers to the vast 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;and diverse universe, encompassing all existence, phenomena, and beings. 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;In this context, &amp;#34;福利&amp;#34; (fèi lì) means benefits or advantages.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;So, when we talk about the welfare of zero to ten thousand things, it&amp;#39;s a 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;philosophical and cosmological concept that considers the well-being and 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;flourishing of all existence within the vast expanse of the universe. Here 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;are some potential benefits:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1. **Interconnectedness**: Recognizing the intricate web of relationships 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;between all phenomena, fostering harmony and cooperation.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2. **Dynamic Balance**: Understanding the ever-changing nature of the 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;universe, allowing for adaptation and resilience in the face of 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uncertainty.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3. **Compassion and Empathy**: Cultivating a sense of shared humanity (and 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;non-humanity) across the vast expanse of existence, promoting kindness and 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;understanding.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;4. **Cyclical Renewal**: Embracing the cycles of birth, growth, decay, and 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rebirth, acknowledging the eternal nature of change and transformation.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5. **Holistic Awareness**: Integrating the wisdom of various disciplines 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(e.g., science, philosophy, spirituality) to grasp the complexity and 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;beauty of existence.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;6. **Non-dualism**: Recognizing that distinctions between subject-object, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;self-other, and being-non-being are ultimately illusory, promoting a 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;deeper sense of unity and wholeness.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;7. **Evolving Intelligence**: Honoring the evolutionary nature of 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;intelligence, acknowledging the potential for growth and development 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;within all beings.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;These benefits can guide our understanding of the universe, inspiring us 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;to live in harmony with the natural world, appreciate the intricate web of 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;relationships, and cultivate a sense of compassion and connection with all 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;existence. 🌊💖
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;让大模型用中文回答一遍，结果是这样的：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;零一万物（Zhēng Yī Wàn Wù）的福利指的是宇宙中所有事物的福利，这是一个哲
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;学和宇宙学概念，考虑宇宙中所有存在的福祉和 процветание。以下是可
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;能的福利：
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;1. **互连关系**：认清宇宙中所有事物之间的 intricate 网络关系，培养和谐和合作
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2. **动态平衡**：理解宇宙的变化性质，使其在不确定的情况下适应和恢复。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3. **同情心和同体共感**：培养对所有存在的同情心和同体共感，促进慷慨和理解。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;4. **循环更新**：承认宇宙中的生、长、衰、更新的循环，表彰变化和更新的永恒性
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;质。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5. **holistic Awareness**：整合各种学科（例如科学、哲学、精神）来理解宇宙的
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;复杂和美丽。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;6. **非二元论**：认清主题-客体、自我他人的区别和有-无之间的 illusion，促进更
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;深入的 unity 和整体感。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;7. **演化智慧**：表彰智能的演化性质，使其在所有存在中增长和发展。
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;这些福利可以指导我们对宇宙的理解，鼓励我们与自然世界和谐，欣赏事物之间的 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;intricate 网络关系，并培养同情心和连接所有存在。 🌊💖
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后我们用langflow的playground，运行我们的查询，得到的结果：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;根据提供的文本内容，零一万物（可能指的是某种保险或医疗服务）的福利包括：
+原发性血小板增多症
+自身免疫性溶血性贫血
+骨髓异常增生综合症
+慢性胃炎
+克罗恩病
+重症肌无力
+慢性乙型肝炎、慢性丙型肝炎、慢性丁型肝炎
+肝硬化
+慢性肾炎、慢性肾功能不全（非透析治疗）
+系统性红斑狼疮
+慢性再生障碍性贫血
+颅内良性肿瘤
+骨髓纤维化
+这些福利可能与某种保险或医疗服务有关，具体内容需要根据上下文进行理解。
+当然结果不算很正确，但是至少靠近了。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;说明RAG的作用还是有的，剩下就是更好的构建向量数据库，挑选合适的embedding模型，并且搭配合理的Prompt。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h3 id=&#34;425-发布api&#34;
+    &gt;
+        4.2.5 发布api
+    &lt;/h3&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#425-发布api&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.5 发布api&#34; href=&#34;#425-%e5%8f%91%e5%b8%83api&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;p&gt;langflow支持api调用，点击api可以看到对应的api调用方式模板。
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/flow_api.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/flow_api.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+当调试好应用后，就可以通过这个api发布出去，可以通过http请求调用。&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+    &lt;h2 id=&#34;五参考资料&#34;
+    &gt;
+        五、参考资料
+    &lt;/h2&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#五参考资料&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 五、参考资料&#34; href=&#34;#%e4%ba%94%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99&#34;&gt;
+        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://datawhalechina.github.io/llm-universe/#/./C1/1.%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%20LLM%20%E7%90%86%E8%AE%BA%E7%AE%80%E4%BB%8B&#34;
+&gt;动手学大模型应用开发&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.langchain.com/&#34;
+&gt;langchain&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://www.langflow.org/&#34;
+&gt;langflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+  class=&#34;gblog-markdown__link&#34;
+  href=&#34;https://gitcode.csdn.net/66c6d3551016441633659a8f.html&#34;
+&gt;langchain+ollama构建本地大模型应用&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+            </content>  
+        </entry>
+</feed>
