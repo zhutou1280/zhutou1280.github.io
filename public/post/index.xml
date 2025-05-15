@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <generator uri="https://gohugo.io/" version="0.147.3">Hugo</generator>
     <title>Posts on Wild Bill Blog</title>
-            <link href="http://localhost:1313/post/" rel="alternate" type="text/html" title="html" />
-            <link href="http://localhost:1313/post/index.xml" rel="alternate" type="application/rss+xml" title="rss" />
-    <updated>2025-05-15T16:26:12+08:00</updated>
-    <id>http://localhost:1313/post/</id>
+            <link href="https://example.org/post/" rel="alternate" type="text/html" title="html" />
+            <link href="https://example.org/post/index.xml" rel="alternate" type="application/rss+xml" title="rss" />
+    <updated>2025-05-15T16:49:13+08:00</updated>
+    <id>https://example.org/post/</id>
         <entry>
             <title>Etcd Auth模块解析</title>
-            <link href="http://localhost:1313/post/etcd-auth/" rel="alternate" type="text/html"  hreflang="en" />
-            <id>http://localhost:1313/post/etcd-auth/</id>
+            <link href="https://example.org/post/etcd-auth/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://example.org/post/etcd-auth/</id>
             <published>2025-05-14T11:44:21+08:00</published>
             <updated>2025-05-14T11:44:21+08:00</updated>
             <content type="html">
@@ -31,12 +31,20 @@ auth模块文件列表如下：&lt;/p&gt;
         },
         time.Duration(cfg.TokenTTL)*time.Second,
     )
-&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;etcd鉴权模块整体路径如下图所示:
+
+&lt;div class=&#34;post-img-view&#34;&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/etcd/auth.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/etcd/auth.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h2 id=&#34;1-token签发逻辑&#34;
     &gt;
         1. Token签发逻辑
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#1-token签发逻辑&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1. Token签发逻辑&#34; href=&#34;#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#1-token签发逻辑&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1. Token签发逻辑&#34; href=&#34;#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -46,7 +54,7 @@ auth模块文件列表如下：&lt;/p&gt;
     &gt;
         简单token
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#简单token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 简单token&#34; href=&#34;#%e7%ae%80%e5%8d%95token&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#简单token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 简单token&#34; href=&#34;#%e7%ae%80%e5%8d%95token&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -91,7 +99,7 @@ func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool
     &gt;
         Jwt Token
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#jwt-token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Jwt Token&#34; href=&#34;#jwt-token&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#jwt-token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Jwt Token&#34; href=&#34;#jwt-token&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -118,7 +126,7 @@ func (t *tokenJWT) invalidateUser(string)
     &gt;
         无token实现
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#无token实现&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 无token实现&#34; href=&#34;#%e6%97%a0token%e5%ae%9e%e7%8e%b0&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#无token实现&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 无token实现&#34; href=&#34;#%e6%97%a0token%e5%ae%9e%e7%8e%b0&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -147,7 +155,7 @@ func newTokenProviderNop() (*tokenNop, error) {
     &gt;
         2. Metrics统计
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#2-metrics统计&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2. Metrics统计&#34; href=&#34;#2-metrics%e7%bb%9f%e8%ae%a1&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#2-metrics统计&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2. Metrics统计&#34; href=&#34;#2-metrics%e7%bb%9f%e8%ae%a1&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -182,7 +190,7 @@ func init() {
     &gt;
         3. 权限实现逻辑
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#3-权限实现逻辑&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3. 权限实现逻辑&#34; href=&#34;#3-%e6%9d%83%e9%99%90%e5%ae%9e%e7%8e%b0%e9%80%bb%e8%be%91&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#3-权限实现逻辑&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3. 权限实现逻辑&#34; href=&#34;#3-%e6%9d%83%e9%99%90%e5%ae%9e%e7%8e%b0%e9%80%bb%e8%be%91&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -191,7 +199,7 @@ func init() {
     &gt;
         功能列表
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#功能列表&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 功能列表&#34; href=&#34;#%e5%8a%9f%e8%83%bd%e5%88%97%e8%a1%a8&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#功能列表&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 功能列表&#34; href=&#34;#%e5%8a%9f%e8%83%bd%e5%88%97%e8%a1%a8&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -346,7 +354,7 @@ type authStore struct {
     &gt;
         权限定义
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#权限定义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限定义&#34; href=&#34;#%e6%9d%83%e9%99%90%e5%ae%9a%e4%b9%89&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#权限定义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限定义&#34; href=&#34;#%e6%9d%83%e9%99%90%e5%ae%9a%e4%b9%89&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -384,7 +392,7 @@ Permission {
     &gt;
         权限区间缓存
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#权限区间缓存&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限区间缓存&#34; href=&#34;#%e6%9d%83%e9%99%90%e5%8c%ba%e9%97%b4%e7%bc%93%e5%ad%98&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#权限区间缓存&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限区间缓存&#34; href=&#34;#%e6%9d%83%e9%99%90%e5%8c%ba%e9%97%b4%e7%bc%93%e5%ad%98&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -415,7 +423,7 @@ refreshRangePermCache构建逻辑&lt;/p&gt;
     &gt;
         etcd区间树定义
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#etcd区间树定义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor etcd区间树定义&#34; href=&#34;#etcd%e5%8c%ba%e9%97%b4%e6%a0%91%e5%ae%9a%e4%b9%89&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#etcd区间树定义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor etcd区间树定义&#34; href=&#34;#etcd%e5%8c%ba%e9%97%b4%e6%a0%91%e5%ae%9a%e4%b9%89&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -439,7 +447,7 @@ refreshRangePermCache构建逻辑&lt;/p&gt;
     &gt;
         4. 总结分析
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/etcd-auth/#4-总结分析&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4. 总结分析&#34; href=&#34;#4-%e6%80%bb%e7%bb%93%e5%88%86%e6%9e%90&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/etcd-auth/#4-总结分析&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4. 总结分析&#34; href=&#34;#4-%e6%80%bb%e7%bb%93%e5%88%86%e6%9e%90&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -452,192 +460,9 @@ refreshRangePermCache构建逻辑&lt;/p&gt;
             </content>  
         </entry>
         <entry>
-            <title>Llm</title>
-            <link href="http://localhost:1313/post/llm/" rel="alternate" type="text/html"  hreflang="en" />
-            <id>http://localhost:1313/post/llm/</id>
-            <published>2025-01-08T11:17:50+08:00</published>
-            <updated>2025-01-08T11:17:50+08:00</updated>
-            <content type="html">
-                &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h2 id=&#34;一些问题&#34;
-    &gt;
-        一些问题
-    &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#一些问题&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一些问题&#34; href=&#34;#%e4%b8%80%e4%ba%9b%e9%97%ae%e9%a2%98&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;什么是 embeddings&lt;/li&gt;
-&lt;li&gt;神经网络模型是什么&lt;/li&gt;
-&lt;li&gt;embedding 的类型有哪些？&lt;/li&gt;
-&lt;li&gt;RNN 是什么，可以做什么？&lt;/li&gt;
-&lt;li&gt;Transformer 构型&lt;/li&gt;
-&lt;li&gt;BERT 构型&lt;/li&gt;
-&lt;li&gt;什么是基础模型，pre-training&lt;/li&gt;
-&lt;li&gt;Fine-tuning 和 post-training 是什么意思&lt;/li&gt;
-&lt;li&gt;如何让模型认识文本&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h2 id=&#34;tokens-and-embeddings&#34;
-    &gt;
-        tokens and embeddings
-    &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#tokens-and-embeddings&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor tokens and embeddings&#34; href=&#34;#tokens-and-embeddings&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;llm 模型处理的一块文本称之为 token&lt;/li&gt;
-&lt;li&gt;将 token 转成数字化的表达，叫 embeddings&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h2 id=&#34;llm-tokenization&#34;
-    &gt;
-        LLM Tokenization
-    &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#llm-tokenization&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor LLM Tokenization&#34; href=&#34;#llm-tokenization&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;我们目前接触的大模型用法，都是在一个聊天对话框进行交互，并且模型不是立即生成回答，而是一个 token，一个 token 的出来。&lt;/p&gt;
-&lt;p&gt;但是 token 不是仅仅只用于输出，模型的输入也是 token。&lt;/p&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h3 id=&#34;分词器如何为模型准备输入&#34;
-    &gt;
-        分词器如何为模型准备输入
-    &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#分词器如何为模型准备输入&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 分词器如何为模型准备输入&#34; href=&#34;#%e5%88%86%e8%af%8d%e5%99%a8%e5%a6%82%e4%bd%95%e4%b8%ba%e6%a8%a1%e5%9e%8b%e5%87%86%e5%a4%87%e8%be%93%e5%85%a5&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;在 prompt 给模型时，首先会被分词器分成多个部分，&lt;/p&gt;
-&lt;p&gt;每一个 token 都是一个数字，这个数字存在一个表中，这个分词器中的表，代表他所知的所有 token。&lt;/p&gt;
-&lt;p&gt;token 不完全是一个单次一个 token，有些 token 是代表文本开始，有些 token 是整个单词，有些 token 是单词的一部分。&lt;/p&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h3 id=&#34;tokenizer-如何拆分文本&#34;
-    &gt;
-        tokenizer 如何拆分文本
-    &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#tokenizer-如何拆分文本&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor tokenizer 如何拆分文本&#34; href=&#34;#tokenizer-%e5%a6%82%e4%bd%95%e6%8b%86%e5%88%86%e6%96%87%e6%9c%ac&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;有三个因素影响拆分文本&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;在模型设计阶段，模型创建者选择一个分词方法。
-常见的是 BEP（byte pair encoding），广泛被 GTP 模型使用。
-WordPiece 被 BERT 使用。&lt;/li&gt;
-&lt;li&gt;选择了分词方法后，需要对参数做一些选择，比如词汇大小，如何表征特殊 token。&lt;/li&gt;
-&lt;li&gt;分词器需要基于一个特殊的数据集被训练，从而达到最好的词汇来表征特征集。英文文本数据集和代码数据集或者多种语言数据集都是有区别的。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;除了处理语言模型的输入，还会生成对应的输出，将 token ID 转换成对应的文字。&lt;/p&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h3 id=&#34;单词部分单词字符字节-token&#34;
-    &gt;
-        单词、部分单词、字符、字节 token
-    &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#单词部分单词字符字节-token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 单词、部分单词、字符、字节 token&#34; href=&#34;#%e5%8d%95%e8%af%8d%e9%83%a8%e5%88%86%e5%8d%95%e8%af%8d%e5%ad%97%e7%ac%a6%e5%ad%97%e8%8a%82-token&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Word tokens
-word2vec 现在在 NLP 中用的越来越少。但是在 NLP 领域之外，比如推荐系统，用的比较多。
-缺点是，tokenizer 可能无法处理分词器训练后进入数据集的新单词。也会产生包含大量差异最小的标记的词汇表。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;subWord tokens
-这个包含全部和部分单词，能解决 word token 中的问题。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Character Tokens
-这个对于训练模型更难，比如说 play 这个单词，subWord 方法一个 token 就够，但是字符需要 4 个 token，并且需要对这 4 个 token 进行建模，才能表征这个含义。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Byte Tokens
-这个是用字节&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h3 id=&#34;galactica&#34;
-    &gt;
-        Galactica
-    &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#galactica&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Galactica&#34; href=&#34;#galactica&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;科学大模型&lt;/p&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h2 id=&#34;模型生成机制&#34;
-    &gt;
-        模型生成机制
-    &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#模型生成机制&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 模型生成机制&#34; href=&#34;#%e6%a8%a1%e5%9e%8b%e7%94%9f%e6%88%90%e6%9c%ba%e5%88%b6&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;模型一次生成一个 token，一个 token 的输入会追加到下一次 token 生成。这种方式是自回归模型（autoRegressive model）
-BERT 文本表现模型不是自回归的。&lt;/p&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h2 id=&#34;transformer-构型&#34;
-    &gt;
-        Transformer 构型
-    &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#transformer-构型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor Transformer 构型&#34; href=&#34;#transformer-%e6%9e%84%e5%9e%8b&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;transformer 构型的 LLM 是由 tokennizer、a stack of transformer blocks、a language modeling head 组成。&lt;/p&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h2 id=&#34;decode-strategy&#34;
-    &gt;
-        decode strategy
-    &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#decode-strategy&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor decode strategy&#34; href=&#34;#decode-strategy&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;p&gt;从概率分布中选择单个 token 的方法称为解码策略。&lt;/p&gt;
-&lt;p&gt;每次选择最高得分的 token，称为 greedy decoding。 当你设置 temperature parameter 为 0 时，就是这个策略。&lt;/p&gt;
-&lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
-    &lt;h2 id=&#34;prompt-工程&#34;
-    &gt;
-        prompt 工程
-    &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/llm/#prompt-工程&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor prompt 工程&#34; href=&#34;#prompt-%e5%b7%a5%e7%a8%8b&#34;&gt;
-        &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;prompt 优化方式&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;提问要具体&lt;/li&gt;
-&lt;li&gt;减少幻觉产生&lt;/li&gt;
-&lt;li&gt;顺序很重要。长对话内容，中间的部分往往可能被忽略。开头和结尾往往影响很大。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;更复杂的 prompt 手段&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;人员角色（指明 LLM 是什么角色的，比如你是一个宇宙学专家）&lt;/li&gt;
-&lt;li&gt;指令（即 llm 需要做的事情）&lt;/li&gt;
-&lt;li&gt;上下文。 对任务描述的额外补充信息&lt;/li&gt;
-&lt;li&gt;输出格式，如果不指定，llm 会按他自己的格式输出&lt;/li&gt;
-&lt;li&gt;受众&lt;/li&gt;
-&lt;li&gt;预期&lt;/li&gt;
-&lt;li&gt;数据&lt;/li&gt;
-&lt;/ul&gt;
-
-            </content>  
-        </entry>
-        <entry>
             <title>一文搞懂IAM</title>
-            <link href="http://localhost:1313/post/iam/" rel="alternate" type="text/html"  hreflang="en" />
-            <id>http://localhost:1313/post/iam/</id>
+            <link href="https://example.org/post/iam/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://example.org/post/iam/</id>
             <published>2024-10-10T19:47:25+08:00</published>
             <updated>2024-10-10T19:47:25+08:00</updated>
             <content type="html">
@@ -646,7 +471,7 @@ BERT 文本表现模型不是自回归的。&lt;/p&gt;
     &gt;
         一、前言
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#一前言&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、前言&#34; href=&#34;#%e4%b8%80%e5%89%8d%e8%a8%80&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#一前言&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、前言&#34; href=&#34;#%e4%b8%80%e5%89%8d%e8%a8%80&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -656,7 +481,7 @@ BERT 文本表现模型不是自回归的。&lt;/p&gt;
     &gt;
         二、什么是IAM
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#二什么是iam&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、什么是IAM&#34; href=&#34;#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#二什么是iam&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、什么是IAM&#34; href=&#34;#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -684,7 +509,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         2.1 身份管理
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#21-身份管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 身份管理&#34; href=&#34;#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#21-身份管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 身份管理&#34; href=&#34;#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -694,7 +519,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         2.1.1 账号管理的基本功能
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#211-账号管理的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.1 账号管理的基本功能&#34; href=&#34;#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#211-账号管理的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.1 账号管理的基本功能&#34; href=&#34;#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -720,7 +545,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         2.1.2 访问控制的基本功能
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#212-访问控制的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.2 访问控制的基本功能&#34; href=&#34;#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#212-访问控制的基本功能&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.2 访问控制的基本功能&#34; href=&#34;#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -729,7 +554,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         权限管理
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#权限管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限管理&#34; href=&#34;#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#权限管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 权限管理&#34; href=&#34;#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -744,7 +569,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         会话管理
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#会话管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 会话管理&#34; href=&#34;#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#会话管理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 会话管理&#34; href=&#34;#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -757,7 +582,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         2.1.3 认证方式
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#213-认证方式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.3 认证方式&#34; href=&#34;#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#213-认证方式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.3 认证方式&#34; href=&#34;#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -773,7 +598,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         2.1.4 授权
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#214-授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.4 授权&#34; href=&#34;#214-%e6%8e%88%e6%9d%83&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#214-授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.4 授权&#34; href=&#34;#214-%e6%8e%88%e6%9d%83&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -783,7 +608,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         静态授权
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#静态授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 静态授权&#34; href=&#34;#%e9%9d%99%e6%80%81%e6%8e%88%e6%9d%83&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#静态授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 静态授权&#34; href=&#34;#%e9%9d%99%e6%80%81%e6%8e%88%e6%9d%83&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -803,7 +628,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         动态授权
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#动态授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 动态授权&#34; href=&#34;#%e5%8a%a8%e6%80%81%e6%8e%88%e6%9d%83&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#动态授权&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 动态授权&#34; href=&#34;#%e5%8a%a8%e6%80%81%e6%8e%88%e6%9d%83&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -826,7 +651,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         三、如何实现IAM
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#三如何实现iam&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 三、如何实现IAM&#34; href=&#34;#%e4%b8%89%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0iam&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#三如何实现iam&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 三、如何实现IAM&#34; href=&#34;#%e4%b8%89%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0iam&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -836,7 +661,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         3.1 iam选型
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#31-iam选型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1 iam选型&#34; href=&#34;#31-iam%e9%80%89%e5%9e%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#31-iam选型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1 iam选型&#34; href=&#34;#31-iam%e9%80%89%e5%9e%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -845,7 +670,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         3.1.1 商业方案
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#311-商业方案&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.1 商业方案&#34; href=&#34;#311-%e5%95%86%e4%b8%9a%e6%96%b9%e6%a1%88&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#311-商业方案&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.1 商业方案&#34; href=&#34;#311-%e5%95%86%e4%b8%9a%e6%96%b9%e6%a1%88&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -859,7 +684,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         3.1.2 开源组件选型
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#312-开源组件选型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2 开源组件选型&#34; href=&#34;#312-%e5%bc%80%e6%ba%90%e7%bb%84%e4%bb%b6%e9%80%89%e5%9e%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#312-开源组件选型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2 开源组件选型&#34; href=&#34;#312-%e5%bc%80%e6%ba%90%e7%bb%84%e4%bb%b6%e9%80%89%e5%9e%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -868,7 +693,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     &gt;
         3.1.2.1 Java
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#3121-java&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2.1 Java&#34; href=&#34;#3121-java&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#3121-java&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2.1 Java&#34; href=&#34;#3121-java&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -883,7 +708,7 @@ Shiro支持认证、授权、会话管理&lt;/li&gt;
     &gt;
         3.1.2.2 python
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#3122-python&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2.2 python&#34; href=&#34;#3122-python&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#3122-python&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1.2.2 python&#34; href=&#34;#3122-python&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -898,7 +723,7 @@ Shiro支持认证、授权、会话管理&lt;/li&gt;
     &gt;
         3.2 自研
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#32-自研&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2 自研&#34; href=&#34;#32-%e8%87%aa%e7%a0%94&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#32-自研&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2 自研&#34; href=&#34;#32-%e8%87%aa%e7%a0%94&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -908,7 +733,7 @@ Shiro支持认证、授权、会话管理&lt;/li&gt;
     &gt;
         3.2.1 session模块
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#321-session模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.1 session模块&#34; href=&#34;#321-session%e6%a8%a1%e5%9d%97&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#321-session模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.1 session模块&#34; href=&#34;#321-session%e6%a8%a1%e5%9d%97&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -918,7 +743,7 @@ Shiro支持认证、授权、会话管理&lt;/li&gt;
     &gt;
         3.2.2 Authentication模块
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#322-authentication模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.2 Authentication模块&#34; href=&#34;#322-authentication%e6%a8%a1%e5%9d%97&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#322-authentication模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.2 Authentication模块&#34; href=&#34;#322-authentication%e6%a8%a1%e5%9d%97&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -928,7 +753,7 @@ Shiro支持认证、授权、会话管理&lt;/li&gt;
     &gt;
         3.2.3 Authorization模块
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#323-authorization模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.3 Authorization模块&#34; href=&#34;#323-authorization%e6%a8%a1%e5%9d%97&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#323-authorization模块&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.3 Authorization模块&#34; href=&#34;#323-authorization%e6%a8%a1%e5%9d%97&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -938,7 +763,7 @@ Shiro支持认证、授权、会话管理&lt;/li&gt;
     &gt;
         3.2.4 SDK
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#324-sdk&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.4 SDK&#34; href=&#34;#324-sdk&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#324-sdk&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2.4 SDK&#34; href=&#34;#324-sdk&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -955,7 +780,7 @@ sdk主要实现的功能是：&lt;/p&gt;
     &gt;
         四、认证协议
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#四认证协议&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 四、认证协议&#34; href=&#34;#%e5%9b%9b%e8%ae%a4%e8%af%81%e5%8d%8f%e8%ae%ae&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#四认证协议&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 四、认证协议&#34; href=&#34;#%e5%9b%9b%e8%ae%a4%e8%af%81%e5%8d%8f%e8%ae%ae&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -965,7 +790,7 @@ sdk主要实现的功能是：&lt;/p&gt;
     &gt;
         4.1 JWT
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#41-jwt&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1 JWT&#34; href=&#34;#41-jwt&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#41-jwt&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1 JWT&#34; href=&#34;#41-jwt&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -973,14 +798,14 @@ sdk主要实现的功能是：&lt;/p&gt;
 JWT的声明一般被用来在身份提供者和服务者见传递被认证的用户信息，该token也可直接被用于认证或者加密。
 &lt;a
   class=&#34;gblog-markdown__link&#34;
-  href=&#34;http://localhost:1313/img/iam/jwt.png&#34;
+  href=&#34;https://example.org/img/iam/jwt.png&#34;
 &gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h4 id=&#34;411-传统session认证&#34;
     &gt;
         4.1.1 传统session认证
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#411-传统session认证&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.1 传统session认证&#34; href=&#34;#411-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#411-传统session认证&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.1 传统session认证&#34; href=&#34;#411-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -991,7 +816,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     &gt;
         4.1.2 传统session认证缺点
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#412-传统session认证缺点&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.2 传统session认证缺点&#34; href=&#34;#412-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81%e7%bc%ba%e7%82%b9&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#412-传统session认证缺点&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.2 传统session认证缺点&#34; href=&#34;#412-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81%e7%bc%ba%e7%82%b9&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1004,7 +829,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     &gt;
         4.1.3 基于token的鉴权机制
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#413-基于token的鉴权机制&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.3 基于token的鉴权机制&#34; href=&#34;#413-%e5%9f%ba%e4%ba%8etoken%e7%9a%84%e9%89%b4%e6%9d%83%e6%9c%ba%e5%88%b6&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#413-基于token的鉴权机制&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.3 基于token的鉴权机制&#34; href=&#34;#413-%e5%9f%ba%e4%ba%8etoken%e7%9a%84%e9%89%b4%e6%9d%83%e6%9c%ba%e5%88%b6&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1014,7 +839,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     &gt;
         4.1.4 jwt具体是什么
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#414-jwt具体是什么&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4 jwt具体是什么&#34; href=&#34;#414-jwt%e5%85%b7%e4%bd%93%e6%98%af%e4%bb%80%e4%b9%88&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#414-jwt具体是什么&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4 jwt具体是什么&#34; href=&#34;#414-jwt%e5%85%b7%e4%bd%93%e6%98%af%e4%bb%80%e4%b9%88&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1025,7 +850,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     &gt;
         4.1.4.1 jwt构成
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#4141-jwt构成&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4.1 jwt构成&#34; href=&#34;#4141-jwt%e6%9e%84%e6%88%90&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4141-jwt构成&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4.1 jwt构成&#34; href=&#34;#4141-jwt%e6%9e%84%e6%88%90&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1042,7 +867,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     &gt;
         4.1.4.2 jwt安全性
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#4142-jwt安全性&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4.2 jwt安全性&#34; href=&#34;#4142-jwt%e5%ae%89%e5%85%a8%e6%80%a7&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4142-jwt安全性&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.4.2 jwt安全性&#34; href=&#34;#4142-jwt%e5%ae%89%e5%85%a8%e6%80%a7&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1052,7 +877,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     &gt;
         4.1.5 什么是Bearer Token
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#415-什么是bearer-token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.5 什么是Bearer Token&#34; href=&#34;#415-%e4%bb%80%e4%b9%88%e6%98%afbearer-token&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#415-什么是bearer-token&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.5 什么是Bearer Token&#34; href=&#34;#415-%e4%bb%80%e4%b9%88%e6%98%afbearer-token&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1063,7 +888,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.2 OAuth 2.0
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#42-oauth-20&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2 OAuth 2.0&#34; href=&#34;#42-oauth-20&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#42-oauth-20&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2 OAuth 2.0&#34; href=&#34;#42-oauth-20&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1073,7 +898,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.2.1 工作原理
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#421-工作原理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.1 工作原理&#34; href=&#34;#421-%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#421-工作原理&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.1 工作原理&#34; href=&#34;#421-%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1083,14 +908,14 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;a
   class=&#34;gblog-markdown__link&#34;
-  href=&#34;http://localhost:1313/img/iam/oauth.png&#34;
+  href=&#34;https://example.org/img/iam/oauth.png&#34;
 &gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div class=&#34;flex align-center gblog-post__anchorwrap&#34;&gt;
     &lt;h4 id=&#34;422-核心组件&#34;
     &gt;
         4.2.2 核心组件
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#422-核心组件&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.2 核心组件&#34; href=&#34;#422-%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#422-核心组件&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.2 核心组件&#34; href=&#34;#422-%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1106,7 +931,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.2.3 客户端的授权模式
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#423-客户端的授权模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3 客户端的授权模式&#34; href=&#34;#423-%e5%ae%a2%e6%88%b7%e7%ab%af%e7%9a%84%e6%8e%88%e6%9d%83%e6%a8%a1%e5%bc%8f&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#423-客户端的授权模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3 客户端的授权模式&#34; href=&#34;#423-%e5%ae%a2%e6%88%b7%e7%ab%af%e7%9a%84%e6%8e%88%e6%9d%83%e6%a8%a1%e5%bc%8f&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1118,7 +943,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.2.3.1 授权码模式
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#4231-授权码模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.1 授权码模式&#34; href=&#34;#4231-%e6%8e%88%e6%9d%83%e7%a0%81%e6%a8%a1%e5%bc%8f&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4231-授权码模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.1 授权码模式&#34; href=&#34;#4231-%e6%8e%88%e6%9d%83%e7%a0%81%e6%a8%a1%e5%bc%8f&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1135,7 +960,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.2.3.2 简化模式
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#4232-简化模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.2 简化模式&#34; href=&#34;#4232-%e7%ae%80%e5%8c%96%e6%a8%a1%e5%bc%8f&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4232-简化模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.2 简化模式&#34; href=&#34;#4232-%e7%ae%80%e5%8c%96%e6%a8%a1%e5%bc%8f&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1155,7 +980,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.2.3.3 密码模式
     &lt;/h5&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#4233-密码模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.3 密码模式&#34; href=&#34;#4233-%e5%af%86%e7%a0%81%e6%a8%a1%e5%bc%8f&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#4233-密码模式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3.3 密码模式&#34; href=&#34;#4233-%e5%af%86%e7%a0%81%e6%a8%a1%e5%bc%8f&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1172,7 +997,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.2.4 更新令牌
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#424-更新令牌&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.4 更新令牌&#34; href=&#34;#424-%e6%9b%b4%e6%96%b0%e4%bb%a4%e7%89%8c&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#424-更新令牌&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.4 更新令牌&#34; href=&#34;#424-%e6%9b%b4%e6%96%b0%e4%bb%a4%e7%89%8c&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1188,7 +1013,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.3 OIDC协议
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#43-oidc协议&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.3 OIDC协议&#34; href=&#34;#43-oidc%e5%8d%8f%e8%ae%ae&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#43-oidc协议&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.3 OIDC协议&#34; href=&#34;#43-oidc%e5%8d%8f%e8%ae%ae&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1198,7 +1023,7 @@ JWT是Bearer Token的一种实现。&lt;/p&gt;
     &gt;
         4.3.1 ID令牌字段含义
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#431-id令牌字段含义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.3.1 ID令牌字段含义&#34; href=&#34;#431-id%e4%bb%a4%e7%89%8c%e5%ad%97%e6%ae%b5%e5%90%ab%e4%b9%89&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#431-id令牌字段含义&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.3.1 ID令牌字段含义&#34; href=&#34;#431-id%e4%bb%a4%e7%89%8c%e5%ad%97%e6%ae%b5%e5%90%ab%e4%b9%89&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1266,7 +1091,7 @@ Code Hash，类似于 at_hash，c_hash 是 Authorization Code 的哈希值，用
     &gt;
         参考文档
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/iam/#参考文档&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 参考文档&#34; href=&#34;#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/iam/#参考文档&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 参考文档&#34; href=&#34;#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1301,8 +1126,8 @@ Code Hash，类似于 at_hash，c_hash 是 Authorization Code 的哈希值，用
         </entry>
         <entry>
             <title>开发一个本地大模型应用</title>
-            <link href="http://localhost:1313/post/first_big_model/" rel="alternate" type="text/html"  hreflang="en" />
-            <id>http://localhost:1313/post/first_big_model/</id>
+            <link href="https://example.org/post/first_big_model/" rel="alternate" type="text/html"  hreflang="en" />
+            <id>https://example.org/post/first_big_model/</id>
             <published>2024-10-09T14:45:23+08:00</published>
             <updated>2024-10-09T14:45:23+08:00</updated>
             <content type="html">
@@ -1311,7 +1136,7 @@ Code Hash，类似于 at_hash，c_hash 是 Authorization Code 的哈希值，用
     &gt;
         一、大模型简介
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#一大模型简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、大模型简介&#34; href=&#34;#%e4%b8%80%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%ae%80%e4%bb%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#一大模型简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 一、大模型简介&#34; href=&#34;#%e4%b8%80%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%ae%80%e4%bb%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1320,7 +1145,7 @@ Code Hash，类似于 at_hash，c_hash 是 Authorization Code 的哈希值，用
     &gt;
         1.1 什么是大模型
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#11-什么是大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.1 什么是大模型&#34; href=&#34;#11-%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#11-什么是大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.1 什么是大模型&#34; href=&#34;#11-%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1332,7 +1157,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     &gt;
         1.2 为什么叫大模型
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#12-为什么叫大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.2 为什么叫大模型&#34; href=&#34;#12-%e4%b8%ba%e4%bb%80%e4%b9%88%e5%8f%ab%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#12-为什么叫大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 1.2 为什么叫大模型&#34; href=&#34;#12-%e4%b8%ba%e4%bb%80%e4%b9%88%e5%8f%ab%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1344,7 +1169,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     &gt;
         二、检索增强生成RAG简介
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#二检索增强生成rag简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、检索增强生成RAG简介&#34; href=&#34;#%e4%ba%8c%e6%a3%80%e7%b4%a2%e5%a2%9e%e5%bc%ba%e7%94%9f%e6%88%90rag%e7%ae%80%e4%bb%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#二检索增强生成rag简介&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 二、检索增强生成RAG简介&#34; href=&#34;#%e4%ba%8c%e6%a3%80%e7%b4%a2%e5%a2%9e%e5%bc%ba%e7%94%9f%e6%88%90rag%e7%ae%80%e4%bb%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1353,7 +1178,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     &gt;
         2.1 什么是RAG
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#21-什么是rag&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 什么是RAG&#34; href=&#34;#21-%e4%bb%80%e4%b9%88%e6%98%afrag&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#21-什么是rag&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1 什么是RAG&#34; href=&#34;#21-%e4%bb%80%e4%b9%88%e6%98%afrag&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1363,7 +1188,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     &gt;
         2.1.1 LLM面临的问题
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#211-llm面临的问题&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.1 LLM面临的问题&#34; href=&#34;#211-llm%e9%9d%a2%e4%b8%b4%e7%9a%84%e9%97%ae%e9%a2%98&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#211-llm面临的问题&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.1.1 LLM面临的问题&#34; href=&#34;#211-llm%e9%9d%a2%e4%b8%b4%e7%9a%84%e9%97%ae%e9%a2%98&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1376,7 +1201,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     &gt;
         2.2 RAG工作流程
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#22-rag工作流程&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.2 RAG工作流程&#34; href=&#34;#22-rag%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#22-rag工作流程&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.2 RAG工作流程&#34; href=&#34;#22-rag%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1394,7 +1219,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     &gt;
         2.3 提高大模型准确性的其他方式
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#23-提高大模型准确性的其他方式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.3 提高大模型准确性的其他方式&#34; href=&#34;#23-%e6%8f%90%e9%ab%98%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%87%86%e7%a1%ae%e6%80%a7%e7%9a%84%e5%85%b6%e4%bb%96%e6%96%b9%e5%bc%8f&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#23-提高大模型准确性的其他方式&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 2.3 提高大模型准确性的其他方式&#34; href=&#34;#23-%e6%8f%90%e9%ab%98%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%87%86%e7%a1%ae%e6%80%a7%e7%9a%84%e5%85%b6%e4%bb%96%e6%96%b9%e5%bc%8f&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1480,7 +1305,7 @@ LangChain 的核心功能是将大语言模型（如 GPT、BERT 等）与多个�
     &gt;
         三、什么是大模型开发
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#三什么是大模型开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 三、什么是大模型开发&#34; href=&#34;#%e4%b8%89%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#三什么是大模型开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 三、什么是大模型开发&#34; href=&#34;#%e4%b8%89%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1491,7 +1316,7 @@ LangChain 的核心功能是将大语言模型（如 GPT、BERT 等）与多个�
     &gt;
         3.1 大模型开发与AI应用开发的差异
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#31-大模型开发与ai应用开发的差异&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1 大模型开发与AI应用开发的差异&#34; href=&#34;#31-%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91%e4%b8%8eai%e5%ba%94%e7%94%a8%e5%bc%80%e5%8f%91%e7%9a%84%e5%b7%ae%e5%bc%82&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#31-大模型开发与ai应用开发的差异&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.1 大模型开发与AI应用开发的差异&#34; href=&#34;#31-%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91%e4%b8%8eai%e5%ba%94%e7%94%a8%e5%bc%80%e5%8f%91%e7%9a%84%e5%b7%ae%e5%bc%82&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1508,7 +1333,7 @@ LangChain 的核心功能是将大语言模型（如 GPT、BERT 等）与多个�
     &gt;
         3.2 大模型开发基础要素
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#32-大模型开发基础要素&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2 大模型开发基础要素&#34; href=&#34;#32-%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91%e5%9f%ba%e7%a1%80%e8%a6%81%e7%b4%a0&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#32-大模型开发基础要素&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 3.2 大模型开发基础要素&#34; href=&#34;#32-%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%bc%80%e5%8f%91%e5%9f%ba%e7%a1%80%e8%a6%81%e7%b4%a0&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1527,7 +1352,7 @@ embedding是什么，首先我们使用RAG来做增强检索，基于语言的�
     &gt;
         四、开发一个本地大模型应用
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#四开发一个本地大模型应用&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 四、开发一个本地大模型应用&#34; href=&#34;#%e5%9b%9b%e5%bc%80%e5%8f%91%e4%b8%80%e4%b8%aa%e6%9c%ac%e5%9c%b0%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%ba%94%e7%94%a8&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#四开发一个本地大模型应用&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 四、开发一个本地大模型应用&#34; href=&#34;#%e5%9b%9b%e5%bc%80%e5%8f%91%e4%b8%80%e4%b8%aa%e6%9c%ac%e5%9c%b0%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%ba%94%e7%94%a8&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1537,7 +1362,7 @@ embedding是什么，首先我们使用RAG来做增强检索，基于语言的�
     &gt;
         4.1 依赖安装
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#41-依赖安装&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1 依赖安装&#34; href=&#34;#41-%e4%be%9d%e8%b5%96%e5%ae%89%e8%a3%85&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#41-依赖安装&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1 依赖安装&#34; href=&#34;#41-%e4%be%9d%e8%b5%96%e5%ae%89%e8%a3%85&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1546,7 +1371,7 @@ embedding是什么，首先我们使用RAG来做增强检索，基于语言的�
     &gt;
         4.1.1 langflow安装
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#411-langflow安装&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.1 langflow安装&#34; href=&#34;#411-langflow%e5%ae%89%e8%a3%85&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#411-langflow安装&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.1 langflow安装&#34; href=&#34;#411-langflow%e5%ae%89%e8%a3%85&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1558,7 +1383,7 @@ embedding是什么，首先我们使用RAG来做增强检索，基于语言的�
     &gt;
         4.1.2 ollama下载
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#412-ollama下载&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.2 ollama下载&#34; href=&#34;#412-ollama%e4%b8%8b%e8%bd%bd&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#412-ollama下载&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.2 ollama下载&#34; href=&#34;#412-ollama%e4%b8%8b%e8%bd%bd&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1572,7 +1397,7 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.1.3 下载大模型
     &lt;/h4&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#413-下载大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.3 下载大模型&#34; href=&#34;#413-%e4%b8%8b%e8%bd%bd%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#413-下载大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.1.3 下载大模型&#34; href=&#34;#413-%e4%b8%8b%e8%bd%bd%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1584,7 +1409,7 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.2 开始开发
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#42-开始开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2 开始开发&#34; href=&#34;#42-%e5%bc%80%e5%a7%8b%e5%bc%80%e5%8f%91&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#42-开始开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2 开始开发&#34; href=&#34;#42-%e5%bc%80%e5%a7%8b%e5%bc%80%e5%8f%91&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1593,7 +1418,7 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.2.1 运行langflow
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#421-运行langflow&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.1 运行langflow&#34; href=&#34;#421-%e8%bf%90%e8%a1%8clangflow&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#421-运行langflow&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.1 运行langflow&#34; href=&#34;#421-%e8%bf%90%e8%a1%8clangflow&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1601,8 +1426,8 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
 然后访问&lt;code&gt;http://127.0.0.1:7860&lt;/code&gt;，会弹出一个可视化编辑界面。
 
 &lt;div class=&#34;post-img-view&#34;&gt;
-  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;http://localhost:1313/img/ai/langflow_overview.png&#34;&gt;
-    &lt;img src=&#34;http://localhost:1313/img/ai/langflow_overview.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/langflow_overview.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/langflow_overview.png&#34; alt=&#34;&#34;  /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 &lt;/p&gt;
@@ -1611,7 +1436,7 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.2.2 运行大模型
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#422-运行大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.2 运行大模型&#34; href=&#34;#422-%e8%bf%90%e8%a1%8c%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#422-运行大模型&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.2 运行大模型&#34; href=&#34;#422-%e8%bf%90%e8%a1%8c%e5%a4%a7%e6%a8%a1%e5%9e%8b&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1622,23 +1447,23 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.2.3 选择一个模板进行开发
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#423-选择一个模板进行开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3 选择一个模板进行开发&#34; href=&#34;#423-%e9%80%89%e6%8b%a9%e4%b8%80%e4%b8%aa%e6%a8%a1%e6%9d%bf%e8%bf%9b%e8%a1%8c%e5%bc%80%e5%8f%91&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#423-选择一个模板进行开发&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.3 选择一个模板进行开发&#34; href=&#34;#423-%e9%80%89%e6%8b%a9%e4%b8%80%e4%b8%aa%e6%a8%a1%e6%9d%bf%e8%bf%9b%e8%a1%8c%e5%bc%80%e5%8f%91&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
 &lt;p&gt;点击new project，选择一个模板
 
 &lt;div class=&#34;post-img-view&#34;&gt;
-  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;http://localhost:1313/img/ai/template.png&#34;&gt;
-    &lt;img src=&#34;http://localhost:1313/img/ai/template.png&#34; alt=&#34;alt text&#34;  /&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/template.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/template.png&#34; alt=&#34;alt text&#34;  /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
 我选择Vector Store RAG，跟我目前的需求比较匹配。
 
 &lt;div class=&#34;post-img-view&#34;&gt;
-  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;http://localhost:1313/img/ai/flow_demo.png&#34;&gt;
-    &lt;img src=&#34;http://localhost:1313/img/ai/flow_demo.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/flow_demo.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/flow_demo.png&#34; alt=&#34;&#34;  /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -1653,7 +1478,7 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.2.4 构建
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#424-构建&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.4 构建&#34; href=&#34;#424-%e6%9e%84%e5%bb%ba&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#424-构建&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.4 构建&#34; href=&#34;#424-%e6%9e%84%e5%bb%ba&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
@@ -1662,16 +1487,16 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
 我选择了一个零一万物福利手册pdf作为文件录入数据库。点击运行
 
 &lt;div class=&#34;post-img-view&#34;&gt;
-  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;http://localhost:1313/img/ai/build_flow.png&#34;&gt;
-    &lt;img src=&#34;http://localhost:1313/img/ai/build_flow.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/build_flow.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/build_flow.png&#34; alt=&#34;&#34;  /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
 然后点击Retriever，可以看到建模的数据。
 
 &lt;div class=&#34;post-img-view&#34;&gt;
-  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;http://localhost:1313/img/ai/retriver.png&#34;&gt;
-    &lt;img src=&#34;http://localhost:1313/img/ai/retriver.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/retriver.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/retriver.png&#34; alt=&#34;&#34;  /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 &lt;/p&gt;
@@ -1680,15 +1505,15 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.2.5 对比效果
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#425-对比效果&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.5 对比效果&#34; href=&#34;#425-%e5%af%b9%e6%af%94%e6%95%88%e6%9e%9c&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#425-对比效果&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.5 对比效果&#34; href=&#34;#425-%e5%af%b9%e6%af%94%e6%95%88%e6%9e%9c&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
 &lt;p&gt;点击playground，可以在线测试效果。
 
 &lt;div class=&#34;post-img-view&#34;&gt;
-  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;http://localhost:1313/img/ai/test_flow.png&#34;&gt;
-    &lt;img src=&#34;http://localhost:1313/img/ai/test_flow.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/test_flow.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/test_flow.png&#34; alt=&#34;&#34;  /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 &lt;/p&gt;
@@ -1771,15 +1596,15 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         4.2.5 发布api
     &lt;/h3&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#425-发布api&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.5 发布api&#34; href=&#34;#425-%e5%8f%91%e5%b8%83api&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#425-发布api&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 4.2.5 发布api&#34; href=&#34;#425-%e5%8f%91%e5%b8%83api&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;
 &lt;p&gt;langflow支持api调用，点击api可以看到对应的api调用方式模板。
 
 &lt;div class=&#34;post-img-view&#34;&gt;
-  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;http://localhost:1313/img/ai/flow_api.png&#34;&gt;
-    &lt;img src=&#34;http://localhost:1313/img/ai/flow_api.png&#34; alt=&#34;&#34;  /&gt;
+  &lt;a data-fancybox=&#34;gallery&#34; href=&#34;https://example.org/img/ai/flow_api.png&#34;&gt;
+    &lt;img src=&#34;https://example.org/img/ai/flow_api.png&#34; alt=&#34;&#34;  /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -1789,7 +1614,7 @@ OLLAMA_HOST: OLLAMA模型以服务方式运行的时候，即提供API，默认�
     &gt;
         五、参考资料
     &lt;/h2&gt;
-    &lt;a data-clipboard-text=&#34;http://localhost:1313/post/first_big_model/#五参考资料&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 五、参考资料&#34; href=&#34;#%e4%ba%94%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99&#34;&gt;
+    &lt;a data-clipboard-text=&#34;https://example.org/post/first_big_model/#五参考资料&#34; class=&#34;gblog-post__anchor clip flex align-center&#34; aria-label=&#34;Anchor 五、参考资料&#34; href=&#34;#%e4%ba%94%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99&#34;&gt;
         &lt;svg class=&#34;gblog-icon gblog_link&#34;&gt;&lt;use xlink:href=&#34;#gblog_link&#34;&gt;&lt;/use&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/div&gt;

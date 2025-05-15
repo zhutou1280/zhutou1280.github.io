@@ -6,7 +6,7 @@
   class="color-toggle-hidden"
   
 >
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +34,7 @@
     
   <meta property="og:site_name" content="Wild Bill Blog" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://localhost:1313/" />
+<meta property="og:url" content="https://example.org/" />
 
 
 
@@ -49,7 +49,7 @@
       "@type": "WebSite",
       
       "name": "Wild Bill Blog",
-      "url": "http://localhost:1313/",
+      "url": "https://example.org/",
       "inLanguage": "en"
   }
   </script>
@@ -124,8 +124,8 @@
   href="/custom.css"
   media="all"
 />
-  <link href="http://localhost:1313/" rel="canonical" type="text/html" />
-    <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="Wild Bill Blog rss Feed" />
+  <link href="https://example.org/" rel="canonical" type="text/html" />
+    <link href="https://example.org/index.xml" rel="alternate" type="application/rss+xml" title="Wild Bill Blog rss Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
 
@@ -148,7 +148,7 @@
   <div class="container flex flex-wrap">
     <div class="gblog-header__col-1 flex justify-start hidden-mobile"></div>
     <div class="gblog-header__col-2 flex align-center justify-center ">
-      <a class="gblog-header__link" rel="me" href="http://localhost:1313/">
+      <a class="gblog-header__link" rel="me" href="https://example.org/">
         <span class="gblog-brand flex align-center justify-center">
           <img
             class="gblog-brand__img"
@@ -233,12 +233,20 @@ auth模块文件列表如下：</p>
         },
         time.Duration(cfg.TokenTTL)*time.Second,
     )
-</code></pre><div class="flex align-center gblog-post__anchorwrap">
+</code></pre><p>etcd鉴权模块整体路径如下图所示:
+
+<div class="post-img-view">
+  <a data-fancybox="gallery" href="/img/etcd/auth.png">
+    <img src="/img/etcd/auth.png" alt=""  />
+  </a>
+</div>
+</p>
+<div class="flex align-center gblog-post__anchorwrap">
     <h2 id="1-token签发逻辑"
     >
         1. Token签发逻辑
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#1-token签发逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1. Token签发逻辑" href="#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#1-token签发逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1. Token签发逻辑" href="#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -248,7 +256,7 @@ auth模块文件列表如下：</p>
     >
         简单token
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#简单token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 简单token" href="#%e7%ae%80%e5%8d%95token">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#简单token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 简单token" href="#%e7%ae%80%e5%8d%95token">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -293,7 +301,7 @@ func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool
     >
         Jwt Token
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#jwt-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Jwt Token" href="#jwt-token">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#jwt-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Jwt Token" href="#jwt-token">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -320,7 +328,7 @@ func (t *tokenJWT) invalidateUser(string)
     >
         无token实现
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#无token实现" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 无token实现" href="#%e6%97%a0token%e5%ae%9e%e7%8e%b0">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#无token实现" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 无token实现" href="#%e6%97%a0token%e5%ae%9e%e7%8e%b0">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -349,7 +357,7 @@ func newTokenProviderNop() (*tokenNop, error) {
     >
         2. Metrics统计
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#2-metrics统计" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2. Metrics统计" href="#2-metrics%e7%bb%9f%e8%ae%a1">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#2-metrics统计" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2. Metrics统计" href="#2-metrics%e7%bb%9f%e8%ae%a1">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -404,104 +412,6 @@ func newTokenProviderNop() (*tokenNop, error) {
     <article class="gblog-post">
       <header class="gblog-post__header">
         <h1 class="gblog-post__title">
-          <a href="/post/llm/">Llm</a>
-        </h1>
-      </header>
-
-      <section class="gblog-markdown">
-        <div class="flex align-center gblog-post__anchorwrap">
-    <h2 id="一些问题"
-    >
-        一些问题
-    </h2>
-    <a data-clipboard-text="http://localhost:1313/post/llm/#一些问题" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一些问题" href="#%e4%b8%80%e4%ba%9b%e9%97%ae%e9%a2%98">
-        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
-    </a>
-</div>
-<ol>
-<li>什么是 embeddings</li>
-<li>神经网络模型是什么</li>
-<li>embedding 的类型有哪些？</li>
-<li>RNN 是什么，可以做什么？</li>
-<li>Transformer 构型</li>
-<li>BERT 构型</li>
-<li>什么是基础模型，pre-training</li>
-<li>Fine-tuning 和 post-training 是什么意思</li>
-<li>如何让模型认识文本</li>
-</ol>
-<div class="flex align-center gblog-post__anchorwrap">
-    <h2 id="tokens-and-embeddings"
-    >
-        tokens and embeddings
-    </h2>
-    <a data-clipboard-text="http://localhost:1313/post/llm/#tokens-and-embeddings" class="gblog-post__anchor clip flex align-center" aria-label="Anchor tokens and embeddings" href="#tokens-and-embeddings">
-        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
-    </a>
-</div>
-<ol>
-<li>llm 模型处理的一块文本称之为 token</li>
-<li>将 token 转成数字化的表达，叫 embeddings</li>
-</ol>
-<div class="flex align-center gblog-post__anchorwrap">
-    <h2 id="llm-tokenization"
-    >
-        LLM Tokenization
-    </h2>
-    <a data-clipboard-text="http://localhost:1313/post/llm/#llm-tokenization" class="gblog-post__anchor clip flex align-center" aria-label="Anchor LLM Tokenization" href="#llm-tokenization">
-        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
-    </a>
-</div>
-<p>我们目前接触的大模型用法，都是在一个聊天对话框进行交互，并且模型不是立即生成回答，而是一个 token，一个 token 的出来。</p>
-      </section>
-      <div class="gblog-post__readmore">
-        
-          <a
-            class="flex-inline align-center fake-link"
-            title="Read full post"
-            href="/post/llm/"
-          >
-            Read full post
-            <i class="gblog-icon">gblog_arrow_right</i>
-          </a>
-        
-      </div>
-
-      <footer class="gblog-post__footer">
-        <div class="flex flex-wrap align-center gblog-post__meta">
-          <span class="flex align-center no-wrap gblog-post__meta--update">
-  <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
-  <span class="gblog-post__tag">
-    <time datetime="2025-01-08T11:17:50&#43;08:00">
-      
-      Jan 8, 2025
-    </time>
-  </span>
-</span>
-
-<span class="flex align-center no-wrap gblog-post__meta--readtime">
-  <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">1 min read</span>
-</span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-      </footer>
-    </article>
-  
-    <article class="gblog-post">
-      <header class="gblog-post__header">
-        <h1 class="gblog-post__title">
           <a href="/post/iam/">一文搞懂IAM</a>
         </h1>
       </header>
@@ -512,7 +422,7 @@ func newTokenProviderNop() (*tokenNop, error) {
     >
         一、前言
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#一前言" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一、前言" href="#%e4%b8%80%e5%89%8d%e8%a8%80">
+    <a data-clipboard-text="https://example.org/post/iam/#一前言" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一、前言" href="#%e4%b8%80%e5%89%8d%e8%a8%80">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -522,7 +432,7 @@ func newTokenProviderNop() (*tokenNop, error) {
     >
         二、什么是IAM
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#二什么是iam" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 二、什么是IAM" href="#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam">
+    <a data-clipboard-text="https://example.org/post/iam/#二什么是iam" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 二、什么是IAM" href="#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -550,7 +460,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1 身份管理
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#21-身份管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1 身份管理" href="#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86">
+    <a data-clipboard-text="https://example.org/post/iam/#21-身份管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1 身份管理" href="#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -560,7 +470,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.1 账号管理的基本功能
     </h4>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#211-账号管理的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.1 账号管理的基本功能" href="#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
+    <a data-clipboard-text="https://example.org/post/iam/#211-账号管理的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.1 账号管理的基本功能" href="#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -586,7 +496,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.2 访问控制的基本功能
     </h4>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#212-访问控制的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.2 访问控制的基本功能" href="#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
+    <a data-clipboard-text="https://example.org/post/iam/#212-访问控制的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.2 访问控制的基本功能" href="#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -595,7 +505,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         权限管理
     </h5>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#权限管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限管理" href="#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86">
+    <a data-clipboard-text="https://example.org/post/iam/#权限管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限管理" href="#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -610,7 +520,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         会话管理
     </h5>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#会话管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 会话管理" href="#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86">
+    <a data-clipboard-text="https://example.org/post/iam/#会话管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 会话管理" href="#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -623,7 +533,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.3 认证方式
     </h4>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#213-认证方式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.3 认证方式" href="#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f">
+    <a data-clipboard-text="https://example.org/post/iam/#213-认证方式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.3 认证方式" href="#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -639,7 +549,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.4 授权
     </h4>
-    <a data-clipboard-text="http://localhost:1313/post/iam/#214-授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.4 授权" href="#214-%e6%8e%88%e6%9d%83">
+    <a data-clipboard-text="https://example.org/post/iam/#214-授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.4 授权" href="#214-%e6%8e%88%e6%9d%83">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -704,7 +614,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         一、大模型简介
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/first_big_model/#一大模型简介" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一、大模型简介" href="#%e4%b8%80%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%ae%80%e4%bb%8b">
+    <a data-clipboard-text="https://example.org/post/first_big_model/#一大模型简介" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一、大模型简介" href="#%e4%b8%80%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%ae%80%e4%bb%8b">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -713,7 +623,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         1.1 什么是大模型
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/first_big_model/#11-什么是大模型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1.1 什么是大模型" href="#11-%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b">
+    <a data-clipboard-text="https://example.org/post/first_big_model/#11-什么是大模型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1.1 什么是大模型" href="#11-%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%a7%e6%a8%a1%e5%9e%8b">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -725,7 +635,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     >
         1.2 为什么叫大模型
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/first_big_model/#12-为什么叫大模型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1.2 为什么叫大模型" href="#12-%e4%b8%ba%e4%bb%80%e4%b9%88%e5%8f%ab%e5%a4%a7%e6%a8%a1%e5%9e%8b">
+    <a data-clipboard-text="https://example.org/post/first_big_model/#12-为什么叫大模型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1.2 为什么叫大模型" href="#12-%e4%b8%ba%e4%bb%80%e4%b9%88%e5%8f%ab%e5%a4%a7%e6%a8%a1%e5%9e%8b">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -737,7 +647,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     >
         二、检索增强生成RAG简介
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/first_big_model/#二检索增强生成rag简介" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 二、检索增强生成RAG简介" href="#%e4%ba%8c%e6%a3%80%e7%b4%a2%e5%a2%9e%e5%bc%ba%e7%94%9f%e6%88%90rag%e7%ae%80%e4%bb%8b">
+    <a data-clipboard-text="https://example.org/post/first_big_model/#二检索增强生成rag简介" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 二、检索增强生成RAG简介" href="#%e4%ba%8c%e6%a3%80%e7%b4%a2%e5%a2%9e%e5%bc%ba%e7%94%9f%e6%88%90rag%e7%ae%80%e4%bb%8b">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -746,7 +656,7 @@ LLM 通常指包含数百亿（或更多）参数的语言模型，它们在海�
     >
         2.1 什么是RAG
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/first_big_model/#21-什么是rag" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1 什么是RAG" href="#21-%e4%bb%80%e4%b9%88%e6%98%afrag">
+    <a data-clipboard-text="https://example.org/post/first_big_model/#21-什么是rag" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1 什么是RAG" href="#21-%e4%bb%80%e4%b9%88%e6%98%afrag">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>

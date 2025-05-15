@@ -6,7 +6,7 @@
   class="color-toggle-hidden"
   
 >
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +14,7 @@
   <meta name="robots" content="index, follow" />
   <meta name="description" content="Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：
 auth/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:
-tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
+tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) etcd鉴权模块整体路径如下图所示: 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
 简单token type simpleTokenTTLKeeper struct { // size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) &lt;-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string // token -&gt; username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return &#34;&#34;, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return &amp;tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision" />
 
     <title>Etcd Auth模块解析 | Wild Bill Blog</title>
@@ -43,10 +43,10 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
   <meta property="og:site_name" content="Wild Bill Blog" />
   <meta property="og:description" content="Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：
 auth/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:
-tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
+tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) etcd鉴权模块整体路径如下图所示: 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
 简单token type simpleTokenTTLKeeper struct { // size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) &lt;-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string // token -&gt; username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return &#34;&#34;, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return &amp;tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://localhost:1313/post/etcd-auth/" />
+<meta property="og:url" content="https://example.org/post/etcd-auth/" />
 
 <meta property="article:section" content="Post" />
     <meta
@@ -63,7 +63,7 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
 <meta name="twitter:title" content="Etcd Auth模块解析" />
   <meta name="twitter:description" content="Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：
 auth/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:
-tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
+tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) etcd鉴权模块整体路径如下图所示: 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
 简单token type simpleTokenTTLKeeper struct { // size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) &lt;-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string // token -&gt; username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return &#34;&#34;, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return &amp;tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision" />
 
 <script type="application/ld+json">
@@ -72,15 +72,15 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
       "@type": "BlogPosting",
       "articleSection": "Post",
       "name": "Etcd Auth模块解析",
-      "url" : "http://localhost:1313/post/etcd-auth/",
+      "url" : "https://example.org/post/etcd-auth/",
       "headline": "Etcd Auth模块解析",
-      "description": "Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：\nauth\/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:\ntp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) \u003c-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。\n简单token type simpleTokenTTLKeeper struct { \/\/ size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) \u003c-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string \/\/ token -\u003e username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return \u0022\u0022, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return \u0022\u0022, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return \u0026tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision",
-      "wordCount" : "871",
+      "description": "Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：\nauth\/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:\ntp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) \u003c-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) etcd鉴权模块整体路径如下图所示: 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。\n简单token type simpleTokenTTLKeeper struct { \/\/ size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) \u003c-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string \/\/ token -\u003e username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return \u0022\u0022, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return \u0022\u0022, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return \u0026tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision",
+      "wordCount" : "872",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "http://localhost:1313/post/etcd-auth/"
+          "@id": "https://example.org/post/etcd-auth/"
       },
       "author" : [
       ],
@@ -92,10 +92,10 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
       "publisher":{
           "@type":"Organization",
           "name": "Wild Bill Blog",
-          "url": "http://localhost:1313/",
+          "url": "https://example.org/",
           "logo": {
               "@type": "ImageObject",
-              "url": "http://localhost:1313/brand.svg",
+              "url": "https://example.org/brand.svg",
               "width":"32",
               "height":"32"
           }
@@ -173,8 +173,8 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
   href="/custom.css"
   media="all"
 />
-  <link href="http://localhost:1313/post/etcd-auth/" rel="canonical" type="text/html" />
-    <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="Wild Bill Blog rss Feed" />
+  <link href="https://example.org/post/etcd-auth/" rel="canonical" type="text/html" />
+    <link href="https://example.org/index.xml" rel="alternate" type="application/rss+xml" title="Wild Bill Blog rss Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
 
@@ -197,7 +197,7 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
   <div class="container flex flex-wrap">
     <div class="gblog-header__col-1 flex justify-start hidden-mobile"></div>
     <div class="gblog-header__col-2 flex align-center justify-center ">
-      <a class="gblog-header__link" rel="me" href="http://localhost:1313/">
+      <a class="gblog-header__link" rel="me" href="https://example.org/">
         <span class="gblog-brand flex align-center justify-center">
           <img
             class="gblog-brand__img"
@@ -308,12 +308,20 @@ auth模块文件列表如下：</p>
         },
         time.Duration(cfg.TokenTTL)*time.Second,
     )
-</code></pre><div class="flex align-center gblog-post__anchorwrap">
+</code></pre><p>etcd鉴权模块整体路径如下图所示:
+
+<div class="post-img-view">
+  <a data-fancybox="gallery" href="/img/etcd/auth.png">
+    <img src="/img/etcd/auth.png" alt=""  />
+  </a>
+</div>
+</p>
+<div class="flex align-center gblog-post__anchorwrap">
     <h2 id="1-token签发逻辑"
     >
         1. Token签发逻辑
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#1-token签发逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1. Token签发逻辑" href="#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#1-token签发逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1. Token签发逻辑" href="#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -323,7 +331,7 @@ auth模块文件列表如下：</p>
     >
         简单token
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#简单token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 简单token" href="#%e7%ae%80%e5%8d%95token">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#简单token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 简单token" href="#%e7%ae%80%e5%8d%95token">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -368,7 +376,7 @@ func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool
     >
         Jwt Token
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#jwt-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Jwt Token" href="#jwt-token">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#jwt-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Jwt Token" href="#jwt-token">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -395,7 +403,7 @@ func (t *tokenJWT) invalidateUser(string)
     >
         无token实现
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#无token实现" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 无token实现" href="#%e6%97%a0token%e5%ae%9e%e7%8e%b0">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#无token实现" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 无token实现" href="#%e6%97%a0token%e5%ae%9e%e7%8e%b0">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -424,7 +432,7 @@ func newTokenProviderNop() (*tokenNop, error) {
     >
         2. Metrics统计
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#2-metrics统计" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2. Metrics统计" href="#2-metrics%e7%bb%9f%e8%ae%a1">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#2-metrics统计" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2. Metrics统计" href="#2-metrics%e7%bb%9f%e8%ae%a1">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -459,7 +467,7 @@ func init() {
     >
         3. 权限实现逻辑
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#3-权限实现逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3. 权限实现逻辑" href="#3-%e6%9d%83%e9%99%90%e5%ae%9e%e7%8e%b0%e9%80%bb%e8%be%91">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#3-权限实现逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3. 权限实现逻辑" href="#3-%e6%9d%83%e9%99%90%e5%ae%9e%e7%8e%b0%e9%80%bb%e8%be%91">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -468,7 +476,7 @@ func init() {
     >
         功能列表
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#功能列表" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 功能列表" href="#%e5%8a%9f%e8%83%bd%e5%88%97%e8%a1%a8">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#功能列表" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 功能列表" href="#%e5%8a%9f%e8%83%bd%e5%88%97%e8%a1%a8">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -623,7 +631,7 @@ type authStore struct {
     >
         权限定义
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#权限定义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限定义" href="#%e6%9d%83%e9%99%90%e5%ae%9a%e4%b9%89">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#权限定义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限定义" href="#%e6%9d%83%e9%99%90%e5%ae%9a%e4%b9%89">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -661,7 +669,7 @@ Permission {
     >
         权限区间缓存
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#权限区间缓存" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限区间缓存" href="#%e6%9d%83%e9%99%90%e5%8c%ba%e9%97%b4%e7%bc%93%e5%ad%98">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#权限区间缓存" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限区间缓存" href="#%e6%9d%83%e9%99%90%e5%8c%ba%e9%97%b4%e7%bc%93%e5%ad%98">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -692,7 +700,7 @@ refreshRangePermCache构建逻辑</p>
     >
         etcd区间树定义
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#etcd区间树定义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor etcd区间树定义" href="#etcd%e5%8c%ba%e9%97%b4%e6%a0%91%e5%ae%9a%e4%b9%89">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#etcd区间树定义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor etcd区间树定义" href="#etcd%e5%8c%ba%e9%97%b4%e6%a0%91%e5%ae%9a%e4%b9%89">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -716,7 +724,7 @@ refreshRangePermCache构建逻辑</p>
     >
         4. 总结分析
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#4-总结分析" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4. 总结分析" href="#4-%e6%80%bb%e7%bb%93%e5%88%86%e6%9e%90">
+    <a data-clipboard-text="https://example.org/post/etcd-auth/#4-总结分析" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4. 总结分析" href="#4-%e6%80%bb%e7%bb%93%e5%88%86%e6%9e%90">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>

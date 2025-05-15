@@ -27,6 +27,10 @@ auth模块调用过程:
         time.Duration(cfg.TokenTTL)*time.Second,
     )
 ```
+
+etcd鉴权模块整体路径如下图所示:
+![](/img/etcd/auth.png)
+
 ## 1. Token签发逻辑
 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
 ### 简单token
