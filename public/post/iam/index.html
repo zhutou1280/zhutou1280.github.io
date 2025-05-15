@@ -6,7 +6,7 @@
   class="color-toggle-hidden"
   
 >
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8" />
 <meta name="referrer" content="no-referrer" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,7 +50,7 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
 账号（Account） 认证（Authentication） 权限（Authorization） 审计（Audit） 3A就是不包含审计，审计这块由单独的日志模块承载。 审计这块本文不做探讨，仅探讨3A。 2.1 身份管理 什么管理很简单，就是用户，更简单的理解就是账号。每一个应用基本都有个账号系统，都需要登录。不管是云服务应用，还是独立设备应用，都得有账号。可能云服务应用支持注册账号，但设备软件应用，不支持注册，都是由默认的预制超级账号admin，创建出来。
 2.1.1 账号管理的基本功能 用户注册与创建 用户是整个系统的基本单元，一个账号对应一个用户。通常都会支持用户的增删改查。 密码管理 用户可以创建修改密码、支持设置密码复杂度，支持多重密码认证等。 账户生命周期管理 支持账户激活、停用、恢复等策略 角色与用户组 支持归类用户，将不同类型的用户进行划分。这块有的概念叫用户组、有的概念叫工作组。 从划分的方向上来讲，可以分为横向划分和纵向划分。横向的概念是对多个同级账号进行划分，纵向的概念是将子账号进行组织。 角色的概念，实际上跟授权相关。角色是对用户所具有功能的一种权限集合抽象。常见的角色包含管理员、审计员、操作员等。 属性和凭据管理 属性是指账号的个人信息，比如手机号、邮箱、图片等。这块又分为隐私数据和敏感数据。 凭据管理，通常是指账号的API密钥、证书等，这些凭据可以用于远端登录或API验证。 身份认证 用户密码用于确认用户的身份，这块跟认证相关，常见的认证方式包括用户名和密码、双因子认证、生物识别认证（人脸） 2.1.2 访问控制的基本功能 权限管理 角色和权限分配：根据用户的身份匹配不同资源的访问权限。 最小权限原则：用户或系统只获得其执行其工作的最小权限，避免不必要的权限滥用 基于角色的访问控制（RBAC）：通过将用户分配到不同的角色中，角色拥有预定义的权限集合，简化权限管理。 基于属性的访问控制（ABAC）：根据用户的属性或资源的属性动态授予权限。 会话管理 会话时间控制：限制用户会话的持续时间，强制定期重新认证。 会话状态管理：管理用户的登录会话，允许管理员强制终止异常或高风险的会话。 2.1.3 认证方式 密码认证 多因素认证：在输入密码的情况下，还需要额外的认证，手机邮箱等 单点登录SSO：允许用户通过一次登录，访问多个系统或服务。 一次性密码(OTP) 基于公钥的认证：ssh密钥认证，x.509证书，常用于vpn，以及设备与管理系统通信的场景。 2.1.4 授权 授权是身份验证后决定用户可以访问哪些资源、执行什么操作的关键步骤。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.org/post/iam/" />
+<meta property="og:url" content="http://localhost:1313/post/iam/" />
 
 <meta property="article:section" content="Post" />
     <meta
@@ -78,7 +78,7 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
       "@type": "BlogPosting",
       "articleSection": "Post",
       "name": "一文搞懂IAM",
-      "url" : "https://example.org/post/iam/",
+      "url" : "http://localhost:1313/post/iam/",
       "headline": "一文搞懂IAM",
       "description": " 一、前言 上一份工作曾经部分iam的功能开发，但是没有深入的理解和认识IAM。碰巧最近新工作，需要有iam相关的功能。最近做了些整理，记录下。\n二、什么是IAM 直接问GPT，下面是GTP给出的结果。\nIAM（Identity and Access Management，身份与访问管理）是一套用于管理用户身份及其对资源访问权限的框架。它帮助组织控制谁（用户或设备）可以访问什么资源，并规定了在什么条件下可以访问这些资源。IAM主要有以下几个核心功能：\n身份管理：创建、修改和删除用户账户，确保每个用户有唯一的身份。 访问控制：管理用户对系统资源的访问权限，决定用户能访问哪些资源以及可以执行哪些操作。 认证：通过验证用户的身份，确保只有合法用户可以访问系统（常见认证方式有密码、双因素认证等）。 授权：在用户身份得到验证后，根据分配的权限决定用户可以访问哪些资源及进行什么操作。 审计和监控：跟踪和记录用户的活动，确保符合安全政策，并提供详细的日志用于事后审计。 IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统，帮助企业实现精细化的权限管理，提高系统的安全性。 IAM也常被称为”3A“或者”4A“。4A主要有以下几个模块：\n账号（Account） 认证（Authentication） 权限（Authorization） 审计（Audit） 3A就是不包含审计，审计这块由单独的日志模块承载。 审计这块本文不做探讨，仅探讨3A。 2.1 身份管理 什么管理很简单，就是用户，更简单的理解就是账号。每一个应用基本都有个账号系统，都需要登录。不管是云服务应用，还是独立设备应用，都得有账号。可能云服务应用支持注册账号，但设备软件应用，不支持注册，都是由默认的预制超级账号admin，创建出来。\n2.1.1 账号管理的基本功能 用户注册与创建 用户是整个系统的基本单元，一个账号对应一个用户。通常都会支持用户的增删改查。 密码管理 用户可以创建修改密码、支持设置密码复杂度，支持多重密码认证等。 账户生命周期管理 支持账户激活、停用、恢复等策略 角色与用户组 支持归类用户，将不同类型的用户进行划分。这块有的概念叫用户组、有的概念叫工作组。 从划分的方向上来讲，可以分为横向划分和纵向划分。横向的概念是对多个同级账号进行划分，纵向的概念是将子账号进行组织。 角色的概念，实际上跟授权相关。角色是对用户所具有功能的一种权限集合抽象。常见的角色包含管理员、审计员、操作员等。 属性和凭据管理 属性是指账号的个人信息，比如手机号、邮箱、图片等。这块又分为隐私数据和敏感数据。 凭据管理，通常是指账号的API密钥、证书等，这些凭据可以用于远端登录或API验证。 身份认证 用户密码用于确认用户的身份，这块跟认证相关，常见的认证方式包括用户名和密码、双因子认证、生物识别认证（人脸） 2.1.2 访问控制的基本功能 权限管理 角色和权限分配：根据用户的身份匹配不同资源的访问权限。 最小权限原则：用户或系统只获得其执行其工作的最小权限，避免不必要的权限滥用 基于角色的访问控制（RBAC）：通过将用户分配到不同的角色中，角色拥有预定义的权限集合，简化权限管理。 基于属性的访问控制（ABAC）：根据用户的属性或资源的属性动态授予权限。 会话管理 会话时间控制：限制用户会话的持续时间，强制定期重新认证。 会话状态管理：管理用户的登录会话，允许管理员强制终止异常或高风险的会话。 2.1.3 认证方式 密码认证 多因素认证：在输入密码的情况下，还需要额外的认证，手机邮箱等 单点登录SSO：允许用户通过一次登录，访问多个系统或服务。 一次性密码(OTP) 基于公钥的认证：ssh密钥认证，x.509证书，常用于vpn，以及设备与管理系统通信的场景。 2.1.4 授权 授权是身份验证后决定用户可以访问哪些资源、执行什么操作的关键步骤。",
       "wordCount" : "364",
@@ -86,7 +86,7 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://example.org/post/iam/"
+          "@id": "http://localhost:1313/post/iam/"
       },
       "author" : [
       ],
@@ -98,10 +98,10 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
       "publisher":{
           "@type":"Organization",
           "name": "Wild Bill Blog",
-          "url": "https://example.org/",
+          "url": "http://localhost:1313/",
           "logo": {
               "@type": "ImageObject",
-              "url": "https://example.org/brand.svg",
+              "url": "http://localhost:1313/brand.svg",
               "width":"32",
               "height":"32"
           }
@@ -179,8 +179,8 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
   href="/custom.css"
   media="all"
 />
-  <link href="https://example.org/post/iam/" rel="canonical" type="text/html" />
-    <link href="https://example.org/index.xml" rel="alternate" type="application/rss+xml" title="Wild Bill Blog rss Feed" />
+  <link href="http://localhost:1313/post/iam/" rel="canonical" type="text/html" />
+    <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="Wild Bill Blog rss Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
 
@@ -203,7 +203,7 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
   <div class="container flex flex-wrap">
     <div class="gblog-header__col-1 flex justify-start hidden-mobile"></div>
     <div class="gblog-header__col-2 flex align-center justify-center ">
-      <a class="gblog-header__link" rel="me" href="https://example.org/">
+      <a class="gblog-header__link" rel="me" href="http://localhost:1313/">
         <span class="gblog-brand flex align-center justify-center">
           <img
             class="gblog-brand__img"
@@ -301,7 +301,7 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
     >
         一、前言
     </h2>
-    <a data-clipboard-text="https://example.org/post/iam/#一前言" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一、前言" href="#%e4%b8%80%e5%89%8d%e8%a8%80">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#一前言" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一、前言" href="#%e4%b8%80%e5%89%8d%e8%a8%80">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -311,7 +311,7 @@ IAM（Identity and Access Management，身份与访问管理）是一套用于�
     >
         二、什么是IAM
     </h2>
-    <a data-clipboard-text="https://example.org/post/iam/#二什么是iam" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 二、什么是IAM" href="#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#二什么是iam" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 二、什么是IAM" href="#%e4%ba%8c%e4%bb%80%e4%b9%88%e6%98%afiam">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -339,7 +339,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1 身份管理
     </h3>
-    <a data-clipboard-text="https://example.org/post/iam/#21-身份管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1 身份管理" href="#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#21-身份管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1 身份管理" href="#21-%e8%ba%ab%e4%bb%bd%e7%ae%a1%e7%90%86">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -349,7 +349,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.1 账号管理的基本功能
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#211-账号管理的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.1 账号管理的基本功能" href="#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#211-账号管理的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.1 账号管理的基本功能" href="#211-%e8%b4%a6%e5%8f%b7%e7%ae%a1%e7%90%86%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -375,7 +375,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.2 访问控制的基本功能
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#212-访问控制的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.2 访问控制的基本功能" href="#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#212-访问控制的基本功能" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.2 访问控制的基本功能" href="#212-%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8a%9f%e8%83%bd">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -384,7 +384,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         权限管理
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#权限管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限管理" href="#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#权限管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限管理" href="#%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -399,7 +399,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         会话管理
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#会话管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 会话管理" href="#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#会话管理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 会话管理" href="#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -412,7 +412,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.3 认证方式
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#213-认证方式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.3 认证方式" href="#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#213-认证方式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.3 认证方式" href="#213-%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -428,7 +428,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         2.1.4 授权
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#214-授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.4 授权" href="#214-%e6%8e%88%e6%9d%83">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#214-授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2.1.4 授权" href="#214-%e6%8e%88%e6%9d%83">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -438,7 +438,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         静态授权
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#静态授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 静态授权" href="#%e9%9d%99%e6%80%81%e6%8e%88%e6%9d%83">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#静态授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 静态授权" href="#%e9%9d%99%e6%80%81%e6%8e%88%e6%9d%83">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -458,7 +458,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         动态授权
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#动态授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 动态授权" href="#%e5%8a%a8%e6%80%81%e6%8e%88%e6%9d%83">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#动态授权" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 动态授权" href="#%e5%8a%a8%e6%80%81%e6%8e%88%e6%9d%83">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -481,7 +481,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         三、如何实现IAM
     </h2>
-    <a data-clipboard-text="https://example.org/post/iam/#三如何实现iam" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 三、如何实现IAM" href="#%e4%b8%89%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0iam">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#三如何实现iam" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 三、如何实现IAM" href="#%e4%b8%89%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0iam">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -491,7 +491,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         3.1 iam选型
     </h3>
-    <a data-clipboard-text="https://example.org/post/iam/#31-iam选型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1 iam选型" href="#31-iam%e9%80%89%e5%9e%8b">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#31-iam选型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1 iam选型" href="#31-iam%e9%80%89%e5%9e%8b">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -500,7 +500,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         3.1.1 商业方案
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#311-商业方案" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.1 商业方案" href="#311-%e5%95%86%e4%b8%9a%e6%96%b9%e6%a1%88">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#311-商业方案" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.1 商业方案" href="#311-%e5%95%86%e4%b8%9a%e6%96%b9%e6%a1%88">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -514,7 +514,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         3.1.2 开源组件选型
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#312-开源组件选型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.2 开源组件选型" href="#312-%e5%bc%80%e6%ba%90%e7%bb%84%e4%bb%b6%e9%80%89%e5%9e%8b">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#312-开源组件选型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.2 开源组件选型" href="#312-%e5%bc%80%e6%ba%90%e7%bb%84%e4%bb%b6%e9%80%89%e5%9e%8b">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -523,7 +523,7 @@ IAM 通常用于云平台（如 AWS、Azure、GCP）以及企业内部的系统�
     >
         3.1.2.1 Java
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#3121-java" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.2.1 Java" href="#3121-java">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#3121-java" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.2.1 Java" href="#3121-java">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -538,7 +538,7 @@ Shiro支持认证、授权、会话管理</li>
     >
         3.1.2.2 python
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#3122-python" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.2.2 python" href="#3122-python">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#3122-python" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.1.2.2 python" href="#3122-python">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -553,7 +553,7 @@ Shiro支持认证、授权、会话管理</li>
     >
         3.2 自研
     </h3>
-    <a data-clipboard-text="https://example.org/post/iam/#32-自研" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2 自研" href="#32-%e8%87%aa%e7%a0%94">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#32-自研" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2 自研" href="#32-%e8%87%aa%e7%a0%94">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -563,7 +563,7 @@ Shiro支持认证、授权、会话管理</li>
     >
         3.2.1 session模块
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#321-session模块" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.1 session模块" href="#321-session%e6%a8%a1%e5%9d%97">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#321-session模块" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.1 session模块" href="#321-session%e6%a8%a1%e5%9d%97">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -573,7 +573,7 @@ Shiro支持认证、授权、会话管理</li>
     >
         3.2.2 Authentication模块
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#322-authentication模块" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.2 Authentication模块" href="#322-authentication%e6%a8%a1%e5%9d%97">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#322-authentication模块" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.2 Authentication模块" href="#322-authentication%e6%a8%a1%e5%9d%97">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -583,7 +583,7 @@ Shiro支持认证、授权、会话管理</li>
     >
         3.2.3 Authorization模块
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#323-authorization模块" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.3 Authorization模块" href="#323-authorization%e6%a8%a1%e5%9d%97">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#323-authorization模块" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.3 Authorization模块" href="#323-authorization%e6%a8%a1%e5%9d%97">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -593,7 +593,7 @@ Shiro支持认证、授权、会话管理</li>
     >
         3.2.4 SDK
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#324-sdk" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.4 SDK" href="#324-sdk">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#324-sdk" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3.2.4 SDK" href="#324-sdk">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -610,7 +610,7 @@ sdk主要实现的功能是：</p>
     >
         四、认证协议
     </h2>
-    <a data-clipboard-text="https://example.org/post/iam/#四认证协议" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 四、认证协议" href="#%e5%9b%9b%e8%ae%a4%e8%af%81%e5%8d%8f%e8%ae%ae">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#四认证协议" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 四、认证协议" href="#%e5%9b%9b%e8%ae%a4%e8%af%81%e5%8d%8f%e8%ae%ae">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -620,7 +620,7 @@ sdk主要实现的功能是：</p>
     >
         4.1 JWT
     </h3>
-    <a data-clipboard-text="https://example.org/post/iam/#41-jwt" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1 JWT" href="#41-jwt">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#41-jwt" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1 JWT" href="#41-jwt">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -635,7 +635,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     >
         4.1.1 传统session认证
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#411-传统session认证" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.1 传统session认证" href="#411-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#411-传统session认证" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.1 传统session认证" href="#411-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -646,7 +646,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     >
         4.1.2 传统session认证缺点
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#412-传统session认证缺点" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.2 传统session认证缺点" href="#412-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81%e7%bc%ba%e7%82%b9">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#412-传统session认证缺点" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.2 传统session认证缺点" href="#412-%e4%bc%a0%e7%bb%9fsession%e8%ae%a4%e8%af%81%e7%bc%ba%e7%82%b9">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -659,7 +659,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     >
         4.1.3 基于token的鉴权机制
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#413-基于token的鉴权机制" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.3 基于token的鉴权机制" href="#413-%e5%9f%ba%e4%ba%8etoken%e7%9a%84%e9%89%b4%e6%9d%83%e6%9c%ba%e5%88%b6">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#413-基于token的鉴权机制" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.3 基于token的鉴权机制" href="#413-%e5%9f%ba%e4%ba%8etoken%e7%9a%84%e9%89%b4%e6%9d%83%e6%9c%ba%e5%88%b6">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -669,7 +669,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     >
         4.1.4 jwt具体是什么
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#414-jwt具体是什么" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.4 jwt具体是什么" href="#414-jwt%e5%85%b7%e4%bd%93%e6%98%af%e4%bb%80%e4%b9%88">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#414-jwt具体是什么" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.4 jwt具体是什么" href="#414-jwt%e5%85%b7%e4%bd%93%e6%98%af%e4%bb%80%e4%b9%88">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -680,7 +680,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     >
         4.1.4.1 jwt构成
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#4141-jwt构成" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.4.1 jwt构成" href="#4141-jwt%e6%9e%84%e6%88%90">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#4141-jwt构成" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.4.1 jwt构成" href="#4141-jwt%e6%9e%84%e6%88%90">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -697,7 +697,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     >
         4.1.4.2 jwt安全性
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#4142-jwt安全性" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.4.2 jwt安全性" href="#4142-jwt%e5%ae%89%e5%85%a8%e6%80%a7">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#4142-jwt安全性" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.4.2 jwt安全性" href="#4142-jwt%e5%ae%89%e5%85%a8%e6%80%a7">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -707,7 +707,7 @@ JWT的声明一般被用来在身份提供者和服务者见传递被认证的�
     >
         4.1.5 什么是Bearer Token
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#415-什么是bearer-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.5 什么是Bearer Token" href="#415-%e4%bb%80%e4%b9%88%e6%98%afbearer-token">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#415-什么是bearer-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.1.5 什么是Bearer Token" href="#415-%e4%bb%80%e4%b9%88%e6%98%afbearer-token">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -718,7 +718,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2 OAuth 2.0
     </h3>
-    <a data-clipboard-text="https://example.org/post/iam/#42-oauth-20" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2 OAuth 2.0" href="#42-oauth-20">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#42-oauth-20" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2 OAuth 2.0" href="#42-oauth-20">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -728,7 +728,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2.1 工作原理
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#421-工作原理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.1 工作原理" href="#421-%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#421-工作原理" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.1 工作原理" href="#421-%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -745,7 +745,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2.2 核心组件
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#422-核心组件" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.2 核心组件" href="#422-%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#422-核心组件" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.2 核心组件" href="#422-%e6%a0%b8%e5%bf%83%e7%bb%84%e4%bb%b6">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -761,7 +761,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2.3 客户端的授权模式
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#423-客户端的授权模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3 客户端的授权模式" href="#423-%e5%ae%a2%e6%88%b7%e7%ab%af%e7%9a%84%e6%8e%88%e6%9d%83%e6%a8%a1%e5%bc%8f">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#423-客户端的授权模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3 客户端的授权模式" href="#423-%e5%ae%a2%e6%88%b7%e7%ab%af%e7%9a%84%e6%8e%88%e6%9d%83%e6%a8%a1%e5%bc%8f">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -773,7 +773,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2.3.1 授权码模式
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#4231-授权码模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3.1 授权码模式" href="#4231-%e6%8e%88%e6%9d%83%e7%a0%81%e6%a8%a1%e5%bc%8f">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#4231-授权码模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3.1 授权码模式" href="#4231-%e6%8e%88%e6%9d%83%e7%a0%81%e6%a8%a1%e5%bc%8f">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -790,7 +790,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2.3.2 简化模式
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#4232-简化模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3.2 简化模式" href="#4232-%e7%ae%80%e5%8c%96%e6%a8%a1%e5%bc%8f">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#4232-简化模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3.2 简化模式" href="#4232-%e7%ae%80%e5%8c%96%e6%a8%a1%e5%bc%8f">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -810,7 +810,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2.3.3 密码模式
     </h5>
-    <a data-clipboard-text="https://example.org/post/iam/#4233-密码模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3.3 密码模式" href="#4233-%e5%af%86%e7%a0%81%e6%a8%a1%e5%bc%8f">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#4233-密码模式" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.3.3 密码模式" href="#4233-%e5%af%86%e7%a0%81%e6%a8%a1%e5%bc%8f">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -827,7 +827,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.2.4 更新令牌
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#424-更新令牌" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.4 更新令牌" href="#424-%e6%9b%b4%e6%96%b0%e4%bb%a4%e7%89%8c">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#424-更新令牌" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.2.4 更新令牌" href="#424-%e6%9b%b4%e6%96%b0%e4%bb%a4%e7%89%8c">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -843,7 +843,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.3 OIDC协议
     </h3>
-    <a data-clipboard-text="https://example.org/post/iam/#43-oidc协议" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.3 OIDC协议" href="#43-oidc%e5%8d%8f%e8%ae%ae">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#43-oidc协议" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.3 OIDC协议" href="#43-oidc%e5%8d%8f%e8%ae%ae">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -853,7 +853,7 @@ JWT是Bearer Token的一种实现。</p>
     >
         4.3.1 ID令牌字段含义
     </h4>
-    <a data-clipboard-text="https://example.org/post/iam/#431-id令牌字段含义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.3.1 ID令牌字段含义" href="#431-id%e4%bb%a4%e7%89%8c%e5%ad%97%e6%ae%b5%e5%90%ab%e4%b9%89">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#431-id令牌字段含义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4.3.1 ID令牌字段含义" href="#431-id%e4%bb%a4%e7%89%8c%e5%ad%97%e6%ae%b5%e5%90%ab%e4%b9%89">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
@@ -921,7 +921,7 @@ Code Hash，类似于 at_hash，c_hash 是 Authorization Code 的哈希值，用
     >
         参考文档
     </h2>
-    <a data-clipboard-text="https://example.org/post/iam/#参考文档" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 参考文档" href="#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3">
+    <a data-clipboard-text="http://localhost:1313/post/iam/#参考文档" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 参考文档" href="#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>

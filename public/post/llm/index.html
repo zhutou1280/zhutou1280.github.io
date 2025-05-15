@@ -12,12 +12,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content="Hugo 0.147.3">
   <meta name="robots" content="index, follow" />
-  <meta name="description" content="Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：
-auth/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:
-tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
-简单token type simpleTokenTTLKeeper struct { // size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) &lt;-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string // token -&gt; username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return &#34;&#34;, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return &amp;tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision" />
+  <meta name="description" content=" 一些问题 什么是 embeddings 神经网络模型是什么 embedding 的类型有哪些？ RNN 是什么，可以做什么？ Transformer 构型 BERT 构型 什么是基础模型，pre-training Fine-tuning 和 post-training 是什么意思 如何让模型认识文本 tokens and embeddings llm 模型处理的一块文本称之为 token 将 token 转成数字化的表达，叫 embeddings LLM Tokenization 我们目前接触的大模型用法，都是在一个聊天对话框进行交互，并且模型不是立即生成回答，而是一个 token，一个 token 的出来。" />
 
-    <title>Etcd Auth模块解析 | Wild Bill Blog</title>
+    <title>Llm | Wild Bill Blog</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link
@@ -38,57 +35,51 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
     
   <meta
     property="og:title"
-    content="Etcd Auth模块解析"
+    content="Llm"
   />
   <meta property="og:site_name" content="Wild Bill Blog" />
-  <meta property="og:description" content="Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：
-auth/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:
-tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
-简单token type simpleTokenTTLKeeper struct { // size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) &lt;-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string // token -&gt; username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return &#34;&#34;, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return &amp;tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision" />
+  <meta property="og:description" content=" 一些问题 什么是 embeddings 神经网络模型是什么 embedding 的类型有哪些？ RNN 是什么，可以做什么？ Transformer 构型 BERT 构型 什么是基础模型，pre-training Fine-tuning 和 post-training 是什么意思 如何让模型认识文本 tokens and embeddings llm 模型处理的一块文本称之为 token 将 token 转成数字化的表达，叫 embeddings LLM Tokenization 我们目前接触的大模型用法，都是在一个聊天对话框进行交互，并且模型不是立即生成回答，而是一个 token，一个 token 的出来。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://localhost:1313/post/etcd-auth/" />
+<meta property="og:url" content="http://localhost:1313/post/llm/" />
 
 <meta property="article:section" content="Post" />
     <meta
       property="article:published_time"
-      content="2025-05-14T11:44:21+08:00"
+      content="2025-01-08T11:17:50+08:00"
     />
     <meta
       property="article:modified_time"
-      content="2025-05-14T11:44:21+08:00"
+      content="2025-01-08T11:17:50+08:00"
     />
 
 
   <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Etcd Auth模块解析" />
-  <meta name="twitter:description" content="Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：
-auth/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:
-tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &lt;-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。
-简单token type simpleTokenTTLKeeper struct { // size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) &lt;-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string // token -&gt; username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return &#34;&#34;, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return &amp;tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision" />
+<meta name="twitter:title" content="Llm" />
+  <meta name="twitter:description" content=" 一些问题 什么是 embeddings 神经网络模型是什么 embedding 的类型有哪些？ RNN 是什么，可以做什么？ Transformer 构型 BERT 构型 什么是基础模型，pre-training Fine-tuning 和 post-training 是什么意思 如何让模型认识文本 tokens and embeddings llm 模型处理的一块文本称之为 token 将 token 转成数字化的表达，叫 embeddings LLM Tokenization 我们目前接触的大模型用法，都是在一个聊天对话框进行交互，并且模型不是立即生成回答，而是一个 token，一个 token 的出来。" />
 
 <script type="application/ld+json">
   {
       "@context": "http://schema.org",
       "@type": "BlogPosting",
       "articleSection": "Post",
-      "name": "Etcd Auth模块解析",
-      "url" : "http://localhost:1313/post/etcd-auth/",
-      "headline": "Etcd Auth模块解析",
-      "description": "Auth模块 本文基于etcd 3.6版本源码进行分析 auth模块文件列表如下：\nauth\/ jwt.go token的jwt实现 metrics.go metric统计，内容是auth的版本号 nop.go 无token provider实现 options.go token参数选项 range_perm_cache.go. 权限区间缓存 simple_token.go 简单token store.go 用户、角色、权限的持久化存储逻辑 auth模块调用过程:\ntp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) \u003c-chan struct{} { return srv.applyWait.Wait(index) }, time.Duration(cfg.TokenTTL)*time.Second, ) 1. Token签发逻辑 Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。\n简单token type simpleTokenTTLKeeper struct { \/\/ size=48 (0x30) tokens map[string]time.Time donec chan struct{} stopc chan struct{} deleteTokenFunc func(string) mu *sync.Mutex simpleTokenTTL time.Duration } func (tm *simpleTokenTTLKeeper) addSimpleToken(token string) func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string) func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string) func (tm *simpleTokenTTLKeeper) run() func (tm *simpleTokenTTLKeeper) stop() type tokenSimple struct { lg *zap.Logger indexWaiter func(uint64) \u003c-chan struct{} simpleTokenKeeper *simpleTokenTTLKeeper simpleTokensMu sync.Mutex simpleTokens map[string]string \/\/ token -\u003e username simpleTokenTTL time.Duration } func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error) func (t *tokenSimple) assignSimpleTokenToUser(username string, token string) func (t *tokenSimple) disable() func (t *tokenSimple) enable() func (t *tokenSimple) genTokenPrefix() (string, error) func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool) func (t *tokenSimple) invalidateUser(username string) func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool 定时器默认每秒从内存中遍历淘汰过期token 不持久化，token存储在内存中，服务重启即失效 Go routine单线程运行 Jwt Token type tokenJWT struct { lg *zap.Logger signMethod jwt.SigningMethod key any ttl time.Duration verifyOnly bool } func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error) func (t *tokenJWT) disable() func (t *tokenJWT) enable() func (t *tokenJWT) genTokenPrefix() (string, error) func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) func (t *tokenJWT) invalidateUser(string) 支持不同签名参数选择 无需存储token 无法失效用户，invalidateUser，实现逻辑是空 无token实现 type tokenNop struct{} func (t *tokenNop) enable() {} func (t *tokenNop) disable() {} func (t *tokenNop) invalidateUser(string) {} func (t *tokenNop) genTokenPrefix() (string, error) { return \u0022\u0022, nil } func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) { return nil, false } func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) { return \u0022\u0022, ErrAuthFailed } func newTokenProviderNop() (*tokenNop, error) { return \u0026tokenNop{}, nil } 无任何实现逻辑 2. Metrics统计 metrics的普罗统计指标，仅包含authRevision",
-      "wordCount" : "871",
+      "name": "Llm",
+      "url" : "http://localhost:1313/post/llm/",
+      "headline": "Llm",
+      "description": " 一些问题 什么是 embeddings 神经网络模型是什么 embedding 的类型有哪些？ RNN 是什么，可以做什么？ Transformer 构型 BERT 构型 什么是基础模型，pre-training Fine-tuning 和 post-training 是什么意思 如何让模型认识文本 tokens and embeddings llm 模型处理的一块文本称之为 token 将 token 转成数字化的表达，叫 embeddings LLM Tokenization 我们目前接触的大模型用法，都是在一个聊天对话框进行交互，并且模型不是立即生成回答，而是一个 token，一个 token 的出来。",
+      "wordCount" : "177",
       "inLanguage": "en",
       "isFamilyFriendly": "true",
       "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "http://localhost:1313/post/etcd-auth/"
+          "@id": "http://localhost:1313/post/llm/"
       },
       "author" : [
       ],
       "copyrightHolder" : "Wild Bill Blog",
       "copyrightYear" : "2025",
-      "dateCreated": "2025-05-14T11:44:21.00Z",
-      "datePublished": "2025-05-14T11:44:21.00Z",
-      "dateModified": "2025-05-14T11:44:21.00Z",
+      "dateCreated": "2025-01-08T11:17:50.00Z",
+      "datePublished": "2025-01-08T11:17:50.00Z",
+      "dateModified": "2025-01-08T11:17:50.00Z",
       "publisher":{
           "@type":"Organization",
           "name": "Wild Bill Blog",
@@ -173,7 +164,7 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
   href="/custom.css"
   media="all"
 />
-  <link href="http://localhost:1313/post/etcd-auth/" rel="canonical" type="text/html" />
+  <link href="http://localhost:1313/post/llm/" rel="canonical" type="text/html" />
     <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="Wild Bill Blog rss Feed" />
 
 <!-- Made with Geekblog theme https://github.com/thegeeklab/hugo-geekblog -->
@@ -255,23 +246,23 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
       
 
 
-      <h1 class="gblog-post__title">Etcd Auth模块解析</h1>
+      <h1 class="gblog-post__title">Llm</h1>
 
       
         <div class="flex flex-wrap align-center gblog-post__meta gblog-post__meta--head">
           <span class="flex align-center no-wrap gblog-post__meta--update">
   <svg class="gblog-icon gblog_date"><use xlink:href="#gblog_date"></use></svg>
   <span class="gblog-post__tag">
-    <time datetime="2025-05-14T11:44:21&#43;08:00">
+    <time datetime="2025-01-08T11:17:50&#43;08:00">
       
-      May 14, 2025
+      Jan 8, 2025
     </time>
   </span>
 </span>
 
 <span class="flex align-center no-wrap gblog-post__meta--readtime">
   <svg class="gblog-icon gblog_timer"><use xlink:href="#gblog_timer"></use></svg>
-  <span class="gblog-post__tag">5 min read</span>
+  <span class="gblog-post__tag">1 min read</span>
 </span>
 
 
@@ -290,440 +281,178 @@ tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken, func(index uint64) &
       
     </header>
     <section class="gblog-markdown">
-      <p>Auth模块
-本文基于etcd 3.6版本源码进行分析
-auth模块文件列表如下：</p>
-<pre tabindex="0"><code>auth/
-    jwt.go         token的jwt实现
-    metrics.go     metric统计，内容是auth的版本号
-    nop.go         无token provider实现
-    options.go     token参数选项
-    range_perm_cache.go.   权限区间缓存
-    simple_token.go   简单token
-    store.go       用户、角色、权限的持久化存储逻辑    
-</code></pre><p>auth模块调用过程:</p>
-<pre tabindex="0"><code>    tp, err := auth.NewTokenProvider(cfg.Logger, cfg.AuthToken,
-        func(index uint64) &lt;-chan struct{} {
-            return srv.applyWait.Wait(index)
-        },
-        time.Duration(cfg.TokenTTL)*time.Second,
-    )
-</code></pre><div class="flex align-center gblog-post__anchorwrap">
-    <h2 id="1-token签发逻辑"
+      <div class="flex align-center gblog-post__anchorwrap">
+    <h2 id="一些问题"
     >
-        1. Token签发逻辑
+        一些问题
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#1-token签发逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 1. Token签发逻辑" href="#1-token%e7%ad%be%e5%8f%91%e9%80%bb%e8%be%91">
+    <a data-clipboard-text="http://localhost:1313/post/llm/#一些问题" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 一些问题" href="#%e4%b8%80%e4%ba%9b%e9%97%ae%e9%a2%98">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>Etcd token分为3种，一个是简单token、一个是jwt token、一个是无token实现。</p>
+<ol>
+<li>什么是 embeddings</li>
+<li>神经网络模型是什么</li>
+<li>embedding 的类型有哪些？</li>
+<li>RNN 是什么，可以做什么？</li>
+<li>Transformer 构型</li>
+<li>BERT 构型</li>
+<li>什么是基础模型，pre-training</li>
+<li>Fine-tuning 和 post-training 是什么意思</li>
+<li>如何让模型认识文本</li>
+</ol>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="简单token"
+    <h2 id="tokens-and-embeddings"
     >
-        简单token
-    </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#简单token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 简单token" href="#%e7%ae%80%e5%8d%95token">
-        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
-    </a>
-</div>
-<pre tabindex="0"><code>type simpleTokenTTLKeeper struct { // size=48 (0x30)
-    tokens          map[string]time.Time
-    donec           chan struct{}
-    stopc           chan struct{}
-    deleteTokenFunc func(string)
-    mu              *sync.Mutex
-    simpleTokenTTL  time.Duration
-}
-func (tm *simpleTokenTTLKeeper) addSimpleToken(token string)
-func (tm *simpleTokenTTLKeeper) deleteSimpleToken(token string)
-func (tm *simpleTokenTTLKeeper) resetSimpleToken(token string)
-func (tm *simpleTokenTTLKeeper) run()
-func (tm *simpleTokenTTLKeeper) stop()
-
-
-type tokenSimple struct {
-    lg                *zap.Logger
-    indexWaiter       func(uint64) &lt;-chan struct{}
-    simpleTokenKeeper *simpleTokenTTLKeeper
-    simpleTokensMu    sync.Mutex
-    simpleTokens      map[string]string // token -&gt; username
-    simpleTokenTTL    time.Duration
-}
-func (t *tokenSimple) assign(ctx context.Context, username string, rev uint64) (string, error)
-func (t *tokenSimple) assignSimpleTokenToUser(username string, token string)
-func (t *tokenSimple) disable()
-func (t *tokenSimple) enable()
-func (t *tokenSimple) genTokenPrefix() (string, error)
-func (t *tokenSimple) info(ctx context.Context, token string, revision uint64) (*AuthInfo, bool)
-func (t *tokenSimple) invalidateUser(username string)
-func (t *tokenSimple) isValidSimpleToken(ctx context.Context, token string) bool
-</code></pre><ul>
-<li>定时器默认每秒从内存中遍历淘汰过期token</li>
-<li>不持久化，token存储在内存中，服务重启即失效</li>
-<li>Go routine单线程运行</li>
-</ul>
-<div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="jwt-token"
-    >
-        Jwt Token
-    </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#jwt-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Jwt Token" href="#jwt-token">
-        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
-    </a>
-</div>
-<pre tabindex="0"><code>type tokenJWT struct {
-    lg         *zap.Logger
-    signMethod jwt.SigningMethod
-    key        any
-    ttl        time.Duration
-    verifyOnly bool
-}
-func (t *tokenJWT) assign(ctx context.Context, username string, revision uint64) (string, error)
-func (t *tokenJWT) disable()
-func (t *tokenJWT) enable()
-func (t *tokenJWT) genTokenPrefix() (string, error)
-func (t *tokenJWT) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool)
-func (t *tokenJWT) invalidateUser(string)
-</code></pre><ul>
-<li>支持不同签名参数选择</li>
-<li>无需存储token</li>
-<li>无法失效用户，invalidateUser，实现逻辑是空</li>
-</ul>
-<div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="无token实现"
-    >
-        无token实现
-    </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#无token实现" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 无token实现" href="#%e6%97%a0token%e5%ae%9e%e7%8e%b0">
-        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
-    </a>
-</div>
-<pre tabindex="0"><code>type tokenNop struct{}
-
-func (t *tokenNop) enable()                         {}
-func (t *tokenNop) disable()                        {}
-func (t *tokenNop) invalidateUser(string)           {}
-func (t *tokenNop) genTokenPrefix() (string, error) { return &#34;&#34;, nil }
-func (t *tokenNop) info(ctx context.Context, token string, rev uint64) (*AuthInfo, bool) {
-    return nil, false
-}
-
-func (t *tokenNop) assign(ctx context.Context, username string, revision uint64) (string, error) {
-    return &#34;&#34;, ErrAuthFailed
-}
-
-func newTokenProviderNop() (*tokenNop, error) {
-    return &amp;tokenNop{}, nil
-}
-</code></pre><ul>
-<li>无任何实现逻辑</li>
-</ul>
-<div class="flex align-center gblog-post__anchorwrap">
-    <h2 id="2-metrics统计"
-    >
-        2. Metrics统计
+        tokens and embeddings
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#2-metrics统计" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 2. Metrics统计" href="#2-metrics%e7%bb%9f%e8%ae%a1">
+    <a data-clipboard-text="http://localhost:1313/post/llm/#tokens-and-embeddings" class="gblog-post__anchor clip flex align-center" aria-label="Anchor tokens and embeddings" href="#tokens-and-embeddings">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>metrics的普罗统计指标，仅包含authRevision</p>
-<pre tabindex="0"><code>var (
-    currentAuthRevision = prometheus.NewGaugeFunc(
-        prometheus.GaugeOpts{
-            Namespace: &#34;etcd_debugging&#34;,
-            Subsystem: &#34;auth&#34;,
-            Name:      &#34;revision&#34;,
-            Help:      &#34;The current revision of auth store.&#34;,
-        },
-        func() float64 {
-            reportCurrentAuthRevMu.RLock()
-            defer reportCurrentAuthRevMu.RUnlock()
-            return reportCurrentAuthRev()
-        },
-    )
-    // overridden by auth store initialization
-    reportCurrentAuthRevMu sync.RWMutex
-    reportCurrentAuthRev   = func() float64 { return 0 }
-)
-
-func init() {
-    prometheus.MustRegister(currentAuthRevision)
-}
-</code></pre><ul>
-<li>统计auth的revision数目</li>
-</ul>
+<ol>
+<li>llm 模型处理的一块文本称之为 token</li>
+<li>将 token 转成数字化的表达，叫 embeddings</li>
+</ol>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h2 id="3-权限实现逻辑"
+    <h2 id="llm-tokenization"
     >
-        3. 权限实现逻辑
+        LLM Tokenization
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#3-权限实现逻辑" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 3. 权限实现逻辑" href="#3-%e6%9d%83%e9%99%90%e5%ae%9e%e7%8e%b0%e9%80%bb%e8%be%91">
+    <a data-clipboard-text="http://localhost:1313/post/llm/#llm-tokenization" class="gblog-post__anchor clip flex align-center" aria-label="Anchor LLM Tokenization" href="#llm-tokenization">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
+<p>我们目前接触的大模型用法，都是在一个聊天对话框进行交互，并且模型不是立即生成回答，而是一个 token，一个 token 的出来。</p>
+<p>但是 token 不是仅仅只用于输出，模型的输入也是 token。</p>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="功能列表"
+    <h3 id="分词器如何为模型准备输入"
     >
-        功能列表
+        分词器如何为模型准备输入
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#功能列表" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 功能列表" href="#%e5%8a%9f%e8%83%bd%e5%88%97%e8%a1%a8">
+    <a data-clipboard-text="http://localhost:1313/post/llm/#分词器如何为模型准备输入" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 分词器如何为模型准备输入" href="#%e5%88%86%e8%af%8d%e5%99%a8%e5%a6%82%e4%bd%95%e4%b8%ba%e6%a8%a1%e5%9e%8b%e5%87%86%e5%a4%87%e8%be%93%e5%85%a5">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>用户、角色、权限的功能接口如下</p>
-<pre tabindex="0"><code>type AuthInfo struct {
-    Username string
-    Revision uint64
-}
-
-// AuthenticateParamIndex is used for a key of context in the parameters of Authenticate()
-type AuthenticateParamIndex struct{}
-
-// AuthenticateParamSimpleTokenPrefix is used for a key of context in the parameters of Authenticate()
-type AuthenticateParamSimpleTokenPrefix struct{}
-
-// authstore定义了存储的接口
-type AuthStore interface {
-    // 启动auth特性
-    AuthEnable() error
-
-    // 关闭auth特性
-    AuthDisable()
-
-    // auth是否打开
-    IsAuthEnabled() bool
-
-    // 用户名密码认证
-    Authenticate(ctx context.Context, username, password string) (*pb.AuthenticateResponse, error)
-
-    // Recover recovers the state of auth store from the given backend
-    Recover(be AuthBackend)
-
-    // 添加新用户
-    UserAdd(r *pb.AuthUserAddRequest) (*pb.AuthUserAddResponse, error)
-
-    // 删除用户
-    UserDelete(r *pb.AuthUserDeleteRequest) (*pb.AuthUserDeleteResponse, error)
-
-    // 修改用户密码
-    UserChangePassword(r *pb.AuthUserChangePasswordRequest) (*pb.AuthUserChangePasswordResponse, error)
-
-    // 角色绑定用户
-    UserGrantRole(r *pb.AuthUserGrantRoleRequest) (*pb.AuthUserGrantRoleResponse, error)
-
-    // 查询某个用户的详细信息
-    UserGet(r *pb.AuthUserGetRequest) (*pb.AuthUserGetResponse, error)
-
-    // 撤销用户角色
-    UserRevokeRole(r *pb.AuthUserRevokeRoleRequest) (*pb.AuthUserRevokeRoleResponse, error)
-
-    // 创建新角色
-    RoleAdd(r *pb.AuthRoleAddRequest) (*pb.AuthRoleAddResponse, error)
-
-    // 角色添加新权限
-    RoleGrantPermission(r *pb.AuthRoleGrantPermissionRequest) (*pb.AuthRoleGrantPermissionResponse, error)
-
-    // 获取角色的详细信息
-    RoleGet(r *pb.AuthRoleGetRequest) (*pb.AuthRoleGetResponse, error)
-
-    // 撤销角色中的权限点
-    RoleRevokePermission(r *pb.AuthRoleRevokePermissionRequest) (*pb.AuthRoleRevokePermissionResponse, error)
-
-    // 删除角色
-    RoleDelete(r *pb.AuthRoleDeleteRequest) (*pb.AuthRoleDeleteResponse, error)
-
-    // 查询用户列表
-    UserList(r *pb.AuthUserListRequest) (*pb.AuthUserListResponse, error)
-
-    // 查询角色列表
-    RoleList(r *pb.AuthRoleListRequest) (*pb.AuthRoleListResponse, error)
-
-    // 检查用户的put权限
-    IsPutPermitted(authInfo *AuthInfo, key []byte) error
-
-    // 检查用户的range权限
-    IsRangePermitted(authInfo *AuthInfo, key, rangeEnd []byte) error
-
-    // 检查用户的delete_range权限
-    IsDeleteRangePermitted(authInfo *AuthInfo, key, rangeEnd []byte) error
-
-    // 检查用户的admin操作
-    IsAdminPermitted(authInfo *AuthInfo) error
-
-    // 生成简单token的前缀，jwt不适用
-    GenTokenPrefix() (string, error)
-
-    // 获取当前authstore的修订版本号
-    Revision() uint64
-
-    // 检查用户名密码是否匹配
-    CheckPassword(username, password string) (uint64, error)
-
-    // 关闭authStore资源
-    Close() error
-
-    // 从RPC上下文获取auth信息
-    AuthInfoFromCtx(ctx context.Context) (*AuthInfo, error)
-
-    // 从TLS RPC上下文获取auth信息
-    AuthInfoFromTLS(ctx context.Context) *AuthInfo
-
-    // 产生一个可用作root凭据的token
-    WithRoot(ctx context.Context) context.Context
-
-    // 检查用户是否有这个角色
-    HasRole(user, role string) bool
-
-    // 获取哈希加密的授权密码的强度
-    BcryptCost() int
-}
-
-
-type authStore struct {
-    // atomic operations; need 64-bit align, or 32-bit tests will crash
-    revision uint64
-
-    lg        *zap.Logger
-    be        AuthBackend
-    enabled   bool
-    enabledMu sync.RWMutex
-
-    // rangePermCache needs to be protected by rangePermCacheMu
-    // rangePermCacheMu needs to be write locked only in initialization phase or configuration changes
-    // Hot paths like Range(), needs to acquire read lock for improving performance
-    //
-    // Note that BatchTx and ReadTx cannot be a mutex for rangePermCache because they are independent resources
-    // see also: https://github.com/etcd-io/etcd/pull/13920#discussion_r849114855
-    rangePermCache   map[string]*unifiedRangePermissions // username -&gt; unifiedRangePermissions
-    rangePermCacheMu sync.RWMutex
-
-    tokenProvider TokenProvider
-    bcryptCost    int // the algorithm cost / strength for hashing auth passwords
-}
-</code></pre><ul>
-<li>etcd的持久化存储是boltdb</li>
-<li>在boltdb存储层面，etcd封装了一层backend，实现了事务、压缩、MVCC ，快照机制。</li>
-<li>Authstore的后端存储，用了etcd封装的boltdb能力，主要是以下几个方法:</li>
-</ul>
-<pre tabindex="0"><code>type AuthBackend interface {
-    CreateAuthBuckets()    // 创建auth的bucket    
-    ForceCommit()    // 强制提交
-    ReadTx() AuthReadTx    // 读事务
-    BatchTx() AuthBatchTx    // 操作事务    
-
-    GetUser(string) *authpb.User    // 获取用户
-    GetAllUsers() []*authpb.User    // 获取用户列表
-    GetRole(string) *authpb.Role    // 获取角色    
-    GetAllRoles() []*authpb.Role    // 获取角色列表
-}
-</code></pre><div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="权限定义"
-    >
-        权限定义
-    </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#权限定义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限定义" href="#%e6%9d%83%e9%99%90%e5%ae%9a%e4%b9%89">
-        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
-    </a>
-</div>
-<p>权限类型分为3种：</p>
-<ul>
-<li>READ  值为0</li>
-<li>WRITE  值为1</li>
-<li>READWRITE 值为2</li>
-</ul>
-<pre tabindex="0"><code>User {
-  name bytes       -&gt; 用户名
-  password  bytes   -&gt; 密码
-  roles  []string      -&gt; 这个用户拥有的角色列表
-  options     -&gt; 选项（是否设置密码）
-}
-
-Role {
-  name      bytes       -&gt; 角色名
-  keyPermissions []Permission  -&gt; 针对 key 的权限列表
-}
-
-Permission {
-  permType  enum     -&gt; 权限类型（READ / WRITE / READWRITE）
-  key       bytes      -&gt; 起始 key
-  range_end  bytes   -&gt; 结束 key
-}
-</code></pre><p>从这个模型定义来看：</p>
-<ul>
-<li>用户关联多个角色，使用数组存储角色列表。</li>
-<li>角色关联权限数组</li>
-<li>权限包含权限key，权限类型（3种），结束key。</li>
-</ul>
+<p>在 prompt 给模型时，首先会被分词器分成多个部分，</p>
+<p>每一个 token 都是一个数字，这个数字存在一个表中，这个分词器中的表，代表他所知的所有 token。</p>
+<p>token 不完全是一个单次一个 token，有些 token 是代表文本开始，有些 token 是整个单词，有些 token 是单词的一部分。</p>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="权限区间缓存"
+    <h3 id="tokenizer-如何拆分文本"
     >
-        权限区间缓存
+        tokenizer 如何拆分文本
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#权限区间缓存" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 权限区间缓存" href="#%e6%9d%83%e9%99%90%e5%8c%ba%e9%97%b4%e7%bc%93%e5%ad%98">
+    <a data-clipboard-text="http://localhost:1313/post/llm/#tokenizer-如何拆分文本" class="gblog-post__anchor clip flex align-center" aria-label="Anchor tokenizer 如何拆分文本" href="#tokenizer-%e5%a6%82%e4%bd%95%e6%8b%86%e5%88%86%e6%96%87%e6%9c%ac">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<p>etcd的权限key，更多的场景是区间逻辑。区间内key按字典序排列。所以使用区间树来进行组织。
-缓存定义:</p>
-<pre tabindex="0"><code>as.rangePermCache = make(map[string]*unifiedRangePermissions)  // map结构，key是用户名，value是下面的结构体指针。
-
-type unifiedRangePermissions struct {
-    readPerms  adt.IntervalTree        // 读权限点区间树
-    writePerms adt.IntervalTree        // 写权限点区间数
-}
-</code></pre><p>在每次触发用户角色、或者权限变更时，都会重新构建缓存。
-在以下函数中会触发重建：
-<code>Recover、UserAdd、UserDelete、UserChangePassword、UserGrantRole、UserRevokeRole、RoleRevokePermission、RoleDelete、RoleGrantPermission</code>
-refreshRangePermCache构建逻辑</p>
+<p>有三个因素影响拆分文本</p>
+<ol>
+<li>在模型设计阶段，模型创建者选择一个分词方法。
+常见的是 BEP（byte pair encoding），广泛被 GTP 模型使用。
+WordPiece 被 BERT 使用。</li>
+<li>选择了分词方法后，需要对参数做一些选择，比如词汇大小，如何表征特殊 token。</li>
+<li>分词器需要基于一个特殊的数据集被训练，从而达到最好的词汇来表征特征集。英文文本数据集和代码数据集或者多种语言数据集都是有区别的。</li>
+</ol>
+<p>除了处理语言模型的输入，还会生成对应的输出，将 token ID 转换成对应的文字。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h3 id="单词部分单词字符字节-token"
+    >
+        单词、部分单词、字符、字节 token
+    </h3>
+    <a data-clipboard-text="http://localhost:1313/post/llm/#单词部分单词字符字节-token" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 单词、部分单词、字符、字节 token" href="#%e5%8d%95%e8%af%8d%e9%83%a8%e5%88%86%e5%8d%95%e8%af%8d%e5%ad%97%e7%ac%a6%e5%ad%97%e8%8a%82-token">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
 <ul>
-<li>遍历系统中的所有用户    时间复杂度：O(N)</li>
-<li>合并角色中的所有权限，按unifiedRangePermissions结构体组织。
-<ul>
-<li>遍历该用户的所有角色   时间复杂度：O(N)</li>
-<li>遍历角色中的所有权限 时间复杂度：O(N)</li>
-<li>插入区间树        O(logN)</li>
-</ul>
+<li>
+<p>Word tokens
+word2vec 现在在 NLP 中用的越来越少。但是在 NLP 领域之外，比如推荐系统，用的比较多。
+缺点是，tokenizer 可能无法处理分词器训练后进入数据集的新单词。也会产生包含大量差异最小的标记的词汇表。</p>
+</li>
+<li>
+<p>subWord tokens
+这个包含全部和部分单词，能解决 word token 中的问题。</p>
+</li>
+<li>
+<p>Character Tokens
+这个对于训练模型更难，比如说 play 这个单词，subWord 方法一个 token 就够，但是字符需要 4 个 token，并且需要对这 4 个 token 进行建模，才能表征这个含义。</p>
+</li>
+<li>
+<p>Byte Tokens
+这个是用字节</p>
 </li>
 </ul>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h3 id="etcd区间树定义"
+    <h3 id="galactica"
     >
-        etcd区间树定义
+        Galactica
     </h3>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#etcd区间树定义" class="gblog-post__anchor clip flex align-center" aria-label="Anchor etcd区间树定义" href="#etcd%e5%8c%ba%e9%97%b4%e6%a0%91%e5%ae%9a%e4%b9%89">
+    <a data-clipboard-text="http://localhost:1313/post/llm/#galactica" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Galactica" href="#galactica">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
-<ul>
-<li>etcd 的 key 是字节序列，正常的 keys 是从 []byte{} 逐渐增长到各种内容</li>
-<li>etcd的key区间，权限范围是一个半开区间[Key，RangeEnd）
-<ul>
-<li>包含从key开始的所有key</li>
-<li>直到RangeEnd（不包含RangeEnd本身）</li>
-</ul>
-</li>
-<li>整个key空间（即root角色）
-<ul>
-<li>起点用空字节切片</li>
-<li>终点用字节 0x00（[]byte{0}）表示“终点是所有正常 key 的最大可能范围的下一个字节”，也就是说 从空 key 到所有合法 key 的最末尾</li>
-</ul>
-</li>
-</ul>
+<p>科学大模型</p>
 <div class="flex align-center gblog-post__anchorwrap">
-    <h2 id="4-总结分析"
+    <h2 id="模型生成机制"
     >
-        4. 总结分析
+        模型生成机制
     </h2>
-    <a data-clipboard-text="http://localhost:1313/post/etcd-auth/#4-总结分析" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 4. 总结分析" href="#4-%e6%80%bb%e7%bb%93%e5%88%86%e6%9e%90">
+    <a data-clipboard-text="http://localhost:1313/post/llm/#模型生成机制" class="gblog-post__anchor clip flex align-center" aria-label="Anchor 模型生成机制" href="#%e6%a8%a1%e5%9e%8b%e7%94%9f%e6%88%90%e6%9c%ba%e5%88%b6">
         <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
     </a>
 </div>
+<p>模型一次生成一个 token，一个 token 的输入会追加到下一次 token 生成。这种方式是自回归模型（autoRegressive model）
+BERT 文本表现模型不是自回归的。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h2 id="transformer-构型"
+    >
+        Transformer 构型
+    </h2>
+    <a data-clipboard-text="http://localhost:1313/post/llm/#transformer-构型" class="gblog-post__anchor clip flex align-center" aria-label="Anchor Transformer 构型" href="#transformer-%e6%9e%84%e5%9e%8b">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>transformer 构型的 LLM 是由 tokennizer、a stack of transformer blocks、a language modeling head 组成。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h2 id="decode-strategy"
+    >
+        decode strategy
+    </h2>
+    <a data-clipboard-text="http://localhost:1313/post/llm/#decode-strategy" class="gblog-post__anchor clip flex align-center" aria-label="Anchor decode strategy" href="#decode-strategy">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<p>从概率分布中选择单个 token 的方法称为解码策略。</p>
+<p>每次选择最高得分的 token，称为 greedy decoding。 当你设置 temperature parameter 为 0 时，就是这个策略。</p>
+<div class="flex align-center gblog-post__anchorwrap">
+    <h2 id="prompt-工程"
+    >
+        prompt 工程
+    </h2>
+    <a data-clipboard-text="http://localhost:1313/post/llm/#prompt-工程" class="gblog-post__anchor clip flex align-center" aria-label="Anchor prompt 工程" href="#prompt-%e5%b7%a5%e7%a8%8b">
+        <svg class="gblog-icon gblog_link"><use xlink:href="#gblog_link"></use></svg>
+    </a>
+</div>
+<ol>
+<li>prompt 优化方式</li>
+</ol>
 <ul>
-<li>认证分为2种方式，用户名密码认证、证书认证。 密码使用blowfish hash加密存储。如果频繁的用户名密码登录，会有较大的性能开销。</li>
-<li>每次修改用户、角色、权限信息，都会触发权限区间缓存重建。重建时间复杂度较高，当随着用户量和角色数目增加，呈指数级上升。这块也会出现性能瓶颈。</li>
-<li>Etcd权限模型使用RBAC，权限key类型对应的值分为读写、读、写。</li>
+<li>提问要具体</li>
+<li>减少幻觉产生</li>
+<li>顺序很重要。长对话内容，中间的部分往往可能被忽略。开头和结尾往往影响很大。</li>
+</ul>
+<ol start="2">
+<li>更复杂的 prompt 手段</li>
+</ol>
+<ul>
+<li>人员角色（指明 LLM 是什么角色的，比如你是一个宇宙学专家）</li>
+<li>指令（即 llm 需要做的事情）</li>
+<li>上下文。 对任务描述的额外补充信息</li>
+<li>输出格式，如果不指定，llm 会按他自己的格式输出</li>
+<li>受众</li>
+<li>预期</li>
+<li>数据</li>
 </ul>
 
     </section>

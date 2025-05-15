@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <generator uri="https://gohugo.io/" version="0.147.3">Hugo</generator>
     <title>Categories on Wild Bill Blog</title>
-            <link href="https://example.org/categories/" rel="alternate" type="text/html" title="html" />
-            <link href="https://example.org/categories/index.xml" rel="alternate" type="application/rss+xml" title="rss" />
-    <updated>2025-05-15T16:24:23+08:00</updated>
-    <id>https://example.org/categories/</id>
+            <link href="http://localhost:1313/categories/" rel="alternate" type="text/html" title="html" />
+            <link href="http://localhost:1313/categories/index.xml" rel="alternate" type="application/rss+xml" title="rss" />
+    <updated>2025-05-15T16:26:12+08:00</updated>
+    <id>http://localhost:1313/categories/</id>
 </feed>
