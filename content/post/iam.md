@@ -241,6 +241,64 @@ oauth时一个授权机制，用来授权第三方应用，获取用户数据，
 - scope：表示申请的授权范围，不可以超出上一次申请的范围。
 
 
+### 4.3 OIDC协议
+
+OpenID Connect（OIDC）是一种基于 OAuth 2.0 的身份认证协议，用于在不同的应用和系统之间实现单点登录（SSO）和身份验证。它允许应用程序从身份提供者（如 Google、GitHub 等）获取用户的身份信息，而无需管理用户的凭据。
+
+#### 4.3.1 ID令牌字段含义
+以下面内容举例：
+```
+{
+  "iss": "https://dex.example.com/",
+  "sub": "R29vZCBqb2IhIEdpdmUgdXMgYSBzdGFyIG9uIGdpdGh1Yg",
+  "aud": [
+    "kubernetes",
+    "kubeconfig-generator"
+  ],
+  "exp": 1712945837,
+  "iat": 1712945237,
+  "azp": "kubeconfig-generator",
+  "at_hash": "OamCo8c60Zdj3dVho3Km5oxA",
+  "c_hash": "HT04XtwtlUhfHvm7zf19qsGw",
+  "email": "maksim.nabokikh@palark.com",
+  "email_verified": true,
+  "groups": [
+    "administrators",
+    "developers"
+  ],
+  "name": "Maksim Nabokikh",
+  "preferred_username": "maksim.nabokikh"
+}
+```
+- iss: https://dex.example.com/
+这是 Issuer，即签发此令牌的服务器。在这个例子中，签发者是 https://dex.example.com/，表明令牌来自该身份提供者 (Identity Provider, IdP)。
+- sub: R29vZCBqb2IhIEdpdmUgdXMgYSBzdGFyIG9uIGdpdGh1Yg
+Subject，通常是唯一标识用户的 ID。这是用户的标识符，可能经过了编码处理，但它在身份提供者中唯一地表示这个用户。
+- aud: ["kubernetes", "kubeconfig-generator"]
+Audience，这个令牌的目标受众，通常是应用的标识符。在这个例子中，令牌是为 kubernetes 和 kubeconfig-generator 这两个客户端生成的。这意味着只有这些客户端可以使用此令牌。
+- exp: 1712945837
+Expiration Time，表示令牌过期的时间（Unix 时间戳格式）。在此时间之后，令牌将不再有效。
+- iat: 1712945237
+Issued At，表示令牌签发的时间（Unix 时间戳格式）。
+- azp: kubeconfig-generator
+Authorized Party，即最终被授权使用此令牌的客户端。在这里是 kubeconfig-generator。
+- at_hash: OamCo8c60Zdj3dVho3Km5oxA
+Access Token Hash，如果该令牌是在认证和授权请求中产生的，at_hash 是 Access Token 的哈希值，用于验证 Access Token。
+- c_hash: HT04XtwtlUhfHvm7zf19qsGw
+Code Hash，类似于 at_hash，c_hash 是 Authorization Code 的哈希值，用于验证授权码的完整性。
+- email: maksim.nabokikh@palark.com
+用户的 电子邮件地址。这是一个自定义的 claim，提供了用户的联系信息。
+- email_verified: true
+电子邮件是否已经经过验证。true 表示该电子邮件地址已经过验证。
+- groups: ["administrators", "developers"]
+用户所属的 组，这些组可能决定用户在不同系统中的权限或角色。
+- name: Maksim Nabokikh
+用户的 全名。这是一个自定义的 claim，用于更好地识别用户。
+- preferred_username: maksim.nabokikh
+用户的 首选用户名。这通常是在系统中显示给其他人的用户名。
+
+
+
 ## 参考文档
 1. [https://docs.authing.cn/v2/concepts/authentication.html](https://docs.authing.cn/v2/concepts/authentication.html)
 
